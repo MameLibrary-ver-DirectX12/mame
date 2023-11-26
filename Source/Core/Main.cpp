@@ -10,7 +10,7 @@
 #include <d3dcompiler.h>
 
 #include <DirectXTex.h>
-
+#include <d3dx12.h>
 
 #ifdef _DEBUG
 #include <iostream>
@@ -255,31 +255,14 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
     // ----- 頂点バッファー生成 -----
 #pragma region 頂点バッファー生成
 
-    // ---  頂点ヒープの設定 ---
-    D3D12_HEAP_PROPERTIES heapprop = {};
-
-    heapprop.Type = D3D12_HEAP_TYPE_UPLOAD;                     // CPUからアクセス可能
-    heapprop.CPUPageProperty = D3D12_CPU_PAGE_PROPERTY_UNKNOWN; // 考えなくていい
-    heapprop.MemoryPoolPreference = D3D12_MEMORY_POOL_UNKNOWN;  // CUSTOM以外のときはこれでよい
-
-    // --- リソース設定 ---
-    D3D12_RESOURCE_DESC resDesc = {};
-
-    resDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
-    resDesc.Width = sizeof(vertices);
-    resDesc.Height = 1;
-    resDesc.DepthOrArraySize = 1;
-    resDesc.MipLevels = 1;
-    resDesc.Format = DXGI_FORMAT_UNKNOWN;
-    resDesc.SampleDesc.Count = 1;
-    resDesc.Flags = D3D12_RESOURCE_FLAG_NONE;
-    resDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
-
     // --- UPLOAD ( 確保は可能 ) ---
     ID3D12Resource* vertexBuffer = nullptr;
 
+    auto heapProp = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD);
+    auto resDesc  = CD3DX12_RESOURCE_DESC::Buffer(sizeof(vertices));
+
     result = device_->CreateCommittedResource(
-        &heapprop,
+        &heapProp,
         D3D12_HEAP_FLAG_NONE,
         &resDesc,
         D3D12_RESOURCE_STATE_GENERIC_READ,
@@ -313,9 +296,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
     ID3D12Resource* idxBuffer = nullptr;
 
-    resDesc.Width = sizeof(indices);
+    heapProp = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD);
+    resDesc  = CD3DX12_RESOURCE_DESC::Buffer(sizeof(indices));
+
     result = device_->CreateCommittedResource(
-        &heapprop,
+        &heapProp,
         D3D12_HEAP_FLAG_NONE,
         &resDesc,
         D3D12_RESOURCE_STATE_GENERIC_READ,
@@ -664,16 +649,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
     cmdList_->CopyTextureRegion(&dst, 0, 0, 0, &src, nullptr);
 
-    D3D12_RESOURCE_BARRIER barrierDesc = {};
+    auto barrier = CD3DX12_RESOURCE_BARRIER::Transition(texBuffer,
+        D3D12_RESOURCE_STATE_COPY_DEST, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE);
 
-    barrierDesc.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
-    barrierDesc.Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE;
-    barrierDesc.Transition.pResource = texBuffer;
-    barrierDesc.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
-    barrierDesc.Transition.StateBefore = D3D12_RESOURCE_STATE_COPY_DEST;
-    barrierDesc.Transition.StateAfter = D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE;
-
-    cmdList_->ResourceBarrier(1, &barrierDesc);
+    cmdList_->ResourceBarrier(1, &barrier);
     cmdList_->Close();
 
     // コマンドリストの実行
@@ -800,14 +779,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
         // バックバッファのインデックスを取得
         UINT bbIdx = swapChain_->GetCurrentBackBufferIndex();
 
-        D3D12_RESOURCE_BARRIER barrierDesc = {};
-        barrierDesc.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
-        barrierDesc.Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE;
-        barrierDesc.Transition.pResource = backBuffers[bbIdx];
-        barrierDesc.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
-        barrierDesc.Transition.StateBefore = D3D12_RESOURCE_STATE_PRESENT;
-        barrierDesc.Transition.StateAfter = D3D12_RESOURCE_STATE_RENDER_TARGET;
-        cmdList_->ResourceBarrier(1, &barrierDesc);
+        barrier = CD3DX12_RESOURCE_BARRIER::Transition(backBuffers[bbIdx],
+            D3D12_RESOURCE_STATE_PRESENT, D3D12_RESOURCE_STATE_RENDER_TARGET);
+
+        cmdList_->ResourceBarrier(1, &barrier);
 
         cmdList_->SetPipelineState(pipelineState);
 
@@ -844,9 +819,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
         cmdList_->DrawIndexedInstanced(6, 1, 0, 0, 0);
 
-        barrierDesc.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET;
-        barrierDesc.Transition.StateAfter = D3D12_RESOURCE_STATE_PRESENT;
-        cmdList_->ResourceBarrier(1, &barrierDesc);
+        barrier = CD3DX12_RESOURCE_BARRIER::Transition(backBuffers[bbIdx],
+            D3D12_RESOURCE_STATE_RENDER_TARGET, D3D12_RESOURCE_STATE_PRESENT);
+        cmdList_->ResourceBarrier(1, &barrier);
 
         // 命令のクローズ
         cmdList_->Close();
