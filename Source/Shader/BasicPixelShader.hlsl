@@ -5,6 +5,8 @@ SamplerState samplerState : register(s0);
 
 float4 main(Output psIn) : SV_TARGET
 {
-    return float4(textureMap.Sample(samplerState, psIn.texcoord));
-
+    float3 light = normalize(float3(1, -1, 1));
+    float brightness = dot(-light, psIn.normal.xyz);
+    
+    return float4(brightness.xxx, 1.0f);
 }

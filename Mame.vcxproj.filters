@@ -10,9 +10,24 @@
     <Filter Include="Mame\Shader">
       <UniqueIdentifier>{1303e615-d9f7-4656-815f-307557deb7e8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Mame\Resource">
+      <UniqueIdentifier>{1d362912-e2ec-4fe8-a063-9b11532091de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Mame\Graphics">
+      <UniqueIdentifier>{d5ce9d7a-0cf2-4b94-b06f-e4abd9eed0b0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Core\Main.cpp">
+      <Filter>Mame\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Resource\Sprite.cpp">
+      <Filter>Mame\Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Graphics\Graphics.cpp">
+      <Filter>Mame\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Core\Application.cpp">
       <Filter>Mame\Core</Filter>
     </ClCompile>
   </ItemGroup>
@@ -26,5 +41,16 @@
     <None Include="Source\Shader\BasicPixelShader.hlsl">
       <Filter>Mame\Shader</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Source\Resource\Sprite.h">
+      <Filter>Mame\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Graphics\Graphics.h">
+      <Filter>Mame\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Core\Application.h">
+      <Filter>Mame\Core</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
