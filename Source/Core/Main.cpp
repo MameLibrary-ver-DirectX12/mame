@@ -245,10 +245,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
     Vertex vertices[] =
     {
-        { { -0.5f, -0.7f, 0.0f }, { 0.0f, 1.0f } }, // 左下
-        { { -0.5f,  0.7f, 0.0f }, { 0.0f, 0.0f } }, // 左上
-        { {  0.5f, -0.7f, 0.0f }, { 1.0f, 1.0f } }, // 右下
-        { {  0.5f,  0.7f, 0.0f }, { 1.0f, 0.0f } }, // 右上
+        { {  -1.0f, -1.0f, 0.0f }, { 0.0f, 1.0f } }, // 左下
+        { {  -1.0f,  1.0f, 0.0f }, { 0.0f, 0.0f } }, // 左上
+        { {   1.0f, -1.0f, 0.0f }, { 1.0f, 1.0f } }, // 右下
+        { {   1.0f,  1.0f, 0.0f }, { 1.0f, 0.0f } }, // 右上
     };
 
 
@@ -326,59 +326,24 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
     ID3DBlob* errorBlob = nullptr;
 
+    // --- VertexShader ---
     result = D3DCompileFromFile(L"./Source/Shader/BasicVertexShader.hlsl",
         nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE,
         "main", "vs_5_0",
         D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION,
         0, &vsBlob_, &errorBlob);
 
-#if 1
     _ASSERT_EXPR(!FAILED(result), "shader file not found");
-#else
-    if (FAILED(result))
-    {
-        if (result == HRESULT_FROM_WIN32(ERROR_FILE_NOT_FOUND))
-        {
-            ::OutputDebugStringA("ファイルが見当たりません");
-        }
-        else
-        {
-            std::string errStr;
-            errStr.resize(errorBlob->GetBufferSize());
-            std::copy_n((char*)errorBlob->GetBufferPointer(), errorBlob->GetBufferSize(), errStr.begin());
-            errStr += "\n";
-            OutputDebugStringA(errStr.c_str());
-        }
-        exit(1);
-    }
-#endif
 
+    // -- PixelShader ---
     result = D3DCompileFromFile(L"./Source/Shader/BasicPixelShader.hlsl",
         nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE,
         "main", "ps_5_0",
         D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION,
         0, &psBlob_, &errorBlob);
 
-#if 1
     _ASSERT_EXPR(!FAILED(result), "shader file not found");
-#else
-    if (FAILED(result))
-    {
-        if (result == HRESULT_FROM_WIN32(ERROR_FILE_NOT_FOUND))
-        {
-            ::OutputDebugStringA("ファイルが見当たりません");
-        }
-        else
-        {
-            std::string errStr;
-            errStr.resize(errorBlob->GetBufferSize());
-            std::copy_n((char*)errorBlob->GetBufferPointer(), errorBlob->GetBufferSize(), errStr.begin());
-            errStr += "\n";
-            OutputDebugStringA(errStr.c_str());
-        }
-        exit(1);
-    }
-#endif
+
 
     D3D12_INPUT_ELEMENT_DESC inputLayout[] =
     {
@@ -679,8 +644,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
     cmdList_->Reset(cmdAllocator_, nullptr);
 
 
-
-
     // --- シェーダーリソースビュー ---
 
     ID3D12DescriptorHeap* basicDescHeap = nullptr;
@@ -695,9 +658,19 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
     _ASSERT_EXPR(SUCCEEDED(result), "Error! CreateDescriptorHeap");
 
     // ----- 定数バッファー作成 -----
-    ID3D12Resource* constantBuffer = nullptr;
+    DirectX::XMFLOAT3 eye       = { 0, 0, -5 };
+    DirectX::XMFLOAT3 target    = { 0, 0, 0 };
+    DirectX::XMFLOAT3 up        = { 0, 1, 0 };
 
-    DirectX::XMMATRIX matrix = DirectX::XMMatrixIdentity();
+    DirectX::XMMATRIX W = DirectX::XMMatrixRotationY(DirectX::XM_PIDIV4);
+    DirectX::XMMATRIX V = DirectX::XMMatrixLookAtLH(DirectX::XMLoadFloat3(&eye), DirectX::XMLoadFloat3(&target), DirectX::XMLoadFloat3(&up));
+    DirectX::XMMATRIX P = DirectX::XMMatrixPerspectiveFovLH(DirectX::XM_PIDIV2, // 視野角
+        static_cast<float>(WINDOW_WIDTH) / static_cast<float>(WINDOW_HEIGHT),   // アスペクト比
+        1.0f,   // near
+        10.0f   // far
+    );
+
+    ID3D12Resource* constantBuffer = nullptr;
 
     heapProp = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD);
     resDesc = CD3DX12_RESOURCE_DESC::Buffer((sizeof(DirectX::XMMATRIX) + 0xff) & ~0xff);
@@ -715,7 +688,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
     DirectX::XMMATRIX* mapMatrix;                                    // マップ先を示すポインタ
     result = constantBuffer->Map(0, nullptr, (void**)&mapMatrix);   // マップ
     _ASSERT_EXPR(SUCCEEDED(result), "map error");
-    *mapMatrix = matrix;
+    *mapMatrix = W * V * P;
 
 
     D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc = {};
@@ -756,6 +729,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
     MSG msg = {};
     unsigned int frame = 0;
+    float angle = 0.0f;
 
     while (true)
     {
@@ -770,6 +744,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
         {
             break;
         }
+
+        angle += 1.0f;
+        W = DirectX::XMMatrixRotationY(DirectX::XMConvertToRadians(angle));
+        *mapMatrix = W * V * P;
 
         // DirectX処理
 
