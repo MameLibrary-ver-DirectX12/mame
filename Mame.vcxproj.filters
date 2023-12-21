@@ -82,6 +82,36 @@
     <Filter Include="Mame\Resource\Texture">
       <UniqueIdentifier>{0080b7b5-a7e3-4bb2-8264-f9c3f0ae0fda}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Mame\Game">
+      <UniqueIdentifier>{c5a677d6-1371-4668-8e76-04056f61bcc1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Mame\Game\Character">
+      <UniqueIdentifier>{248fd9e5-a8a7-48b8-bd39-82dec825e2b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Mame\Game\Stage">
+      <UniqueIdentifier>{28972c34-d23a-4a72-9652-676fd3018d21}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Mame\Shader\SkyMap">
+      <UniqueIdentifier>{eb231e59-f83b-42e3-86a7-718c1532daeb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Mame\Graphics\SkyMap">
+      <UniqueIdentifier>{0aee0d59-3118-45dd-9c3b-9f7c72424165}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Mame\Scene\Shop">
+      <UniqueIdentifier>{f50cafe1-106f-4df3-bbde-3c0597bc2963}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Mame\Game\Wave">
+      <UniqueIdentifier>{ab9f7d40-889a-4ad4-991b-ac86fe89ee7f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Mame\Game\Character\Player">
+      <UniqueIdentifier>{fcbd2e59-0800-4414-b8b6-e9db6ddff8ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Mame\Game\Shop">
+      <UniqueIdentifier>{40456426-15a0-4b56-abd7-dd8ba583f931}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Mame\Resource\Audio">
+      <UniqueIdentifier>{1fa94e30-83fc-4cb2-b5c9-811b19036e11}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Core\Main.cpp">
@@ -186,6 +216,43 @@
     <ClCompile Include="Source\Resource\ModelResourceManager.cpp">
       <Filter>Mame\Resource\Model</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Game\Character\Character.cpp">
+      <Filter>Mame\Game\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Stage\Stage.cpp">
+      <Filter>Mame\Game\Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Stage\StageManager.cpp">
+      <Filter>Mame\Game\Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Stage\StageNormal.cpp">
+      <Filter>Mame\Game\Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Graphics\PipelineState.cpp">
+      <Filter>Mame\Graphics\Buffer</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Graphics\SkyMap.cpp">
+      <Filter>Mame\Graphics\SkyMap</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\ShopScene.cpp">
+      <Filter>Mame\Scene\Shop</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Wave\WaveManager.cpp">
+      <Filter>Mame\Game\Wave</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Character\Player.cpp">
+      <Filter>Mame\Game\Character\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Character\PlayerManager.cpp">
+      <Filter>Mame\Game\Character\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Shop\Shop.cpp">
+      <Filter>Mame\Game\Shop</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Resource\Audio\Audio.cpp">
+      <Filter>Mame\Resource\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Resource\Audio\AudioManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Source\Shader\Sprite.hlsli">
@@ -196,6 +263,9 @@
     </None>
     <None Include="Source\Shader\FbxModel.hlsli">
       <Filter>Mame\Shader\FbxModel</Filter>
+    </None>
+    <None Include="Source\Shader\SkyMap.hlsli">
+      <Filter>Mame\Shader\SkyMap</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -322,6 +392,46 @@
     <ClInclude Include="Source\Resource\ModelResourceManager.h">
       <Filter>Mame\Resource\Model</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Game\Character\Character.h">
+      <Filter>Mame\Game\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Stage\Stage.h">
+      <Filter>Mame\Game\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Stage\StageManager.h">
+      <Filter>Mame\Game\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Stage\StageNormal.h">
+      <Filter>Mame\Game\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Graphics\PipelineState.h">
+      <Filter>Mame\Graphics\Buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Graphics\SkyMap.h">
+      <Filter>Mame\Graphics\SkyMap</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\ShopScene.h">
+      <Filter>Mame\Scene\Shop</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Wave\WaveManager.h">
+      <Filter>Mame\Game\Wave</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Character\Player.h">
+      <Filter>Mame\Game\Character\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Character\PlayerManager.h">
+      <Filter>Mame\Game\Character\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Shop\Shop.h">
+      <Filter>Mame\Game\Shop</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Other\Common.h">
+      <Filter>Mame\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Resource\Audio\Audio.h">
+      <Filter>Mame\Resource\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Resource\Audio\AudioManager.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Source\Shader\SpritePS.hlsl">
@@ -347,6 +457,12 @@
     </FxCompile>
     <FxCompile Include="Source\Shader\FbxModelPS.hlsl">
       <Filter>Mame\Shader\FbxModel</Filter>
+    </FxCompile>
+    <FxCompile Include="Source\Shader\SkyMapPS.hlsl">
+      <Filter>Mame\Shader\SkyMap</Filter>
+    </FxCompile>
+    <FxCompile Include="Source\Shader\SkyMapVS.hlsl">
+      <Filter>Mame\Shader\SkyMap</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

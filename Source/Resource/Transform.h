@@ -49,6 +49,12 @@ public:// Setter,Getter, etc...
 	[[nodiscard]] const float GetPositionZ() const { return position.z; }
 
 	void SetPosition(const DirectX::XMFLOAT3& pos) { position = pos; }
+	void SetPosition(const float& x, const float& y, const float& z)
+	{
+		position.x = x;
+		position.y = y;
+		position.z = z;
+	}
 	void SetPositionX(const float& posX) { position.x = posX; }
 	void SetPositionY(const float& posY) { position.y = posY; }
 	void SetPositionZ(const float& posZ) { position.z = posZ; }

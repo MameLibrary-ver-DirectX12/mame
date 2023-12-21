@@ -48,7 +48,7 @@ ModelResource::ModelResource(const char* fbxFilename, bool triangulate, float sa
 {
     // ----- fbx or cereal ì«Ç›çûÇ› -----
     std::filesystem::path cerealFilename(fbxFilename);
-    cerealFilename.replace_extension("cereal");
+    cerealFilename.replace_extension("mame");
     if (std::filesystem::exists(cerealFilename.c_str()))
     {
         std::ifstream ifs(cerealFilename.c_str(), std::ios::binary);
@@ -260,6 +260,21 @@ void ModelResource::FetchMeshes(FbxScene* fbxScene, std::vector<Mesh>& meshes)
                     }
                 }
 
+                // ----- weights ÇÃçáåvÇ™ 1 Çí¥Ç¶ÇƒÇ¢ÇΩéûÇÃÇΩÇﬂÇÃê≥ãKâª -----
+                for (auto& influence : boneInfluences)
+                {
+                    float t = 0;
+                    for (auto& bone : influence)
+                    {
+                        t += bone.boneWeight_;
+                    }
+
+                    for (auto& bone : influence)
+                    {
+                        bone.boneWeight_ /= t;
+                    }
+                }
+
                 if (fbxMesh->GetElementNormalCount() > 0)
                 {
                     FbxVector4 normal;
@@ -274,7 +289,7 @@ void ModelResource::FetchMeshes(FbxScene* fbxScene, std::vector<Mesh>& meshes)
                     bool unmappedUv;
                     fbxMesh->GetPolygonVertexUV(polygonIndex, positionInPolygon, uvNames[0], uv, unmappedUv);
                     vertex.texcoord_.x = static_cast<float>(uv[0]);
-                    vertex.texcoord_.y = static_cast<float>(uv[1]);
+                    vertex.texcoord_.y = 1.0f - static_cast<float>(uv[1]);
                 }
                 if (fbxMesh->GenerateTangentsData(0, false))
                 {
@@ -296,9 +311,9 @@ void ModelResource::FetchMeshes(FbxScene* fbxScene, std::vector<Mesh>& meshes)
             mesh.boundingBox_[0].x = std::min<float>(mesh.boundingBox_[0].x, v.position_.x);
             mesh.boundingBox_[0].y = std::min<float>(mesh.boundingBox_[0].y, v.position_.y);
             mesh.boundingBox_[0].z = std::min<float>(mesh.boundingBox_[0].z, v.position_.z);
-            mesh.boundingBox_[1].x = std::min<float>(mesh.boundingBox_[1].x, v.position_.x);
-            mesh.boundingBox_[1].y = std::min<float>(mesh.boundingBox_[1].y, v.position_.y);
-            mesh.boundingBox_[1].z = std::min<float>(mesh.boundingBox_[1].z, v.position_.z);
+            mesh.boundingBox_[1].x = std::max<float>(mesh.boundingBox_[1].x, v.position_.x);
+            mesh.boundingBox_[1].y = std::max<float>(mesh.boundingBox_[1].y, v.position_.y);
+            mesh.boundingBox_[1].z = std::max<float>(mesh.boundingBox_[1].z, v.position_.z);
         }
     }
 }
@@ -388,7 +403,7 @@ void ModelResource::FetchSkeleton(FbxMesh* fbxMesh, Skeleton& bindPose)
         {
             FbxCluster* cluster = skin->GetCluster(clusterIndex);
 
-            Skeleton::Bone bone = bindPose.bones_.at(clusterIndex);
+            Skeleton::Bone& bone = bindPose.bones_.at(clusterIndex);
             bone.name_ = cluster->GetLink()->GetName();
             bone.uniqueId_ = cluster->GetLink()->GetUniqueID();
             bone.parentIndex_ = bindPose.IndexOf(cluster->GetLink()->GetParent()->GetUniqueID());
@@ -435,6 +450,7 @@ void ModelResource::FetchAnimations(FbxScene* fbxScene, std::vector<Animation>& 
             keyframe.nodes_.resize(nodeCount);
             for (size_t nodeIndex = 0; nodeIndex < nodeCount; ++nodeIndex)
             {
+                //FbxNode* fbxNode = nodeList_[sceneView_.nodes_.at(nodeIndex).uniqueId_];
                 FbxNode* fbxNode = fbxScene->FindNodeByName(sceneView_.nodes_.at(nodeIndex).name_.c_str());
                 if (fbxNode)
                 {
@@ -482,20 +498,20 @@ void ModelResource::FetchBoneInfluences(const FbxMesh* fbxMesh, std::vector<std:
             }
         }
 
-        // ----- weights ÇÃçáåvÇ™ 1 Çí¥Ç¶ÇƒÇ¢ÇΩéûÇÃÇΩÇﬂÇÃê≥ãKâª -----
-        for (auto& influence : boneInfluences)
-        {
-            float t = 0;
-            for (auto& bone : influence)
-            {
-                t += bone.boneWeight_;
-            }
+        //// ----- weights ÇÃçáåvÇ™ 1 Çí¥Ç¶ÇƒÇ¢ÇΩéûÇÃÇΩÇﬂÇÃê≥ãKâª -----
+        //for (auto& influence : boneInfluences)
+        //{
+        //    float t = 0;
+        //    for (auto& bone : influence)
+        //    {
+        //        t += bone.boneWeight_;
+        //    }
 
-            for (auto& bone : influence)
-            {
-                bone.boneWeight_ /= t;
-            }
-        }
+        //    for (auto& bone : influence)
+        //    {
+        //        bone.boneWeight_ /= t;
+        //    }
+        //}
     }
 }
 

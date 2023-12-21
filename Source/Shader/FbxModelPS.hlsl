@@ -6,9 +6,7 @@ SamplerState samplerState : register(s0);
 
 float4 main(PSIn psIn) : SV_TARGET
 {
-
-    float4 color = colorMap.Sample(samplerState, psIn.texcoord);
-    
+    float4 color = colorMap.Sample(samplerState, psIn.texcoord) * psIn.color;
 
     return float4(color.rgb, 1.0f);
 }

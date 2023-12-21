@@ -865,8 +865,8 @@ void Sprite::Transform::DrawDebug()
 {
     if (ImGui::TreeNode("Transform"))
     {
-        ImGui::DragFloat2(reinterpret_cast<const char*>(u8"位置"), &position_.x);
-        ImGui::DragFloat2(reinterpret_cast<const char*>(u8"サイズ"), &size_.x);
+        ImGui::DragFloat2(reinterpret_cast<const char*>(u8"position"), &position_.x);
+        ImGui::DragFloat2(reinterpret_cast<const char*>(u8"size"), &size_.x);
 
         if (ImGui::Button(reinterpret_cast<const char*>(u8"sizeFactor使用する")))
         {
@@ -879,10 +879,10 @@ void Sprite::Transform::DrawDebug()
             SetSize(sizeFactor);
         }
 
-        ImGui::ColorEdit4(reinterpret_cast<const char*>(u8"色"), &color_.x);
-        ImGui::DragFloat(reinterpret_cast<const char*>(u8"回転"), &angle_);
-        ImGui::DragFloat2(reinterpret_cast<const char*>(u8"uv座標"), &texPos_.x);
-        ImGui::DragFloat2(reinterpret_cast<const char*>(u8"uvサイズ"), &texSize_.x);
+        ImGui::ColorEdit4(reinterpret_cast<const char*>(u8"color"), &color_.x);
+        ImGui::DragFloat(reinterpret_cast<const char*>(u8"angle"), &angle_);
+        ImGui::DragFloat2(reinterpret_cast<const char*>(u8"texPos"), &texPos_.x);
+        ImGui::DragFloat2(reinterpret_cast<const char*>(u8"texSize"), &texSize_.x);
 
         ImGui::TreePop();
     }

@@ -11,6 +11,8 @@
 
 #include "../Scene/SceneManager.h"
 #include "../Scene/TitleScene.h"
+#include "../Scene/GameScene.h"
+#include "../Scene/ShopScene.h"
 
 // コンストラクタ
 Application::Application(HWND hwnd)
@@ -29,7 +31,9 @@ Application::~Application()
 // 初期化
 bool Application::Initialize()
 {
-    SceneManager::Instance().ChangeScene(new TitleScene);
+    //SceneManager::Instance().ChangeScene(new TitleScene);
+    SceneManager::Instance().ChangeScene(new GameScene);
+    //SceneManager::Instance().ChangeScene(new ShopScene);
 
     return true;
 }

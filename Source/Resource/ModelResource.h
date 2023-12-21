@@ -79,13 +79,13 @@ namespace DirectX
 class ModelResource
 {
 public:
-    ModelResource(const char* fbxFilename, bool triangulate = false, float samplingRate = 0);
+    ModelResource(const char* fbxFilename, bool triangulate = true, float samplingRate = 0);
     ~ModelResource() {}
 
     static const int MAX_BONE_INFLUENCES = 4;
     static const int MAX_BONES = 256;
 
-public:// 構造体
+public:// --- 構造体 ---
     struct Skeleton
     {
         struct Bone
@@ -252,7 +252,7 @@ public:// 構造体
     struct Constants
     {
         DirectX::XMFLOAT4X4     world_;
-        DirectX::XMFLOAT4       materialColor_;
+        DirectX::XMFLOAT4       materialColor_ = { 1 ,1, 1, 1 };
         DirectX::XMFLOAT4X4     boneTransforms[MAX_BONES]
         {
             {
@@ -351,22 +351,26 @@ public:// 構造体
         float       boneWeight_;
     };
 
-public:// 取得・設定
+public:// --- 取得・設定 ---
     std::vector<Mesh>& GetMeshes() { return meshes_; }
     std::unordered_map<uint64_t, Material>& GetMaterials() { return materials_; }
+    std::vector<Animation>* GetAnimationClips() { return &animationClips_; }
+    
     Constants* GetConstants() { return &constants_; }
+    Scene* GetScene() { return &sceneView_; }
 
-private:
-        void CreateObject(const char* fbxFilename);
 
-        void FetchScene(const char* fbxFilename, bool triangulate, float sampringRate);
-        void FetchMeshes(FbxScene* fbxScene, std::vector<Mesh>& meshes);
-        void FetchMaterials(FbxScene* fbxScene, std::unordered_map<uint64_t, Material>& materials);
-        void FetchSkeleton(FbxMesh* fbxMesh, Skeleton& bindPose);
-        void FetchAnimations(FbxScene* fbxScene, std::vector<Animation>& animationClips, float samplingRate);
-        void FetchBoneInfluences(const FbxMesh* fbxMesh, std::vector<std::vector<BoneInfluence>>& boneInfluences);
+private:// --- 内部関数 ---
+    void CreateObject(const char* fbxFilename);
 
-        void ComputeBoundingBox();
+    void FetchScene(const char* fbxFilename, bool triangulate, float sampringRate);
+    void FetchMeshes(FbxScene* fbxScene, std::vector<Mesh>& meshes);
+    void FetchMaterials(FbxScene* fbxScene, std::unordered_map<uint64_t, Material>& materials);
+    void FetchSkeleton(FbxMesh* fbxMesh, Skeleton& bindPose);
+    void FetchAnimations(FbxScene* fbxScene, std::vector<Animation>& animationClips, float samplingRate);
+    void FetchBoneInfluences(const FbxMesh* fbxMesh, std::vector<std::vector<BoneInfluence>>& boneInfluences);
+
+    void ComputeBoundingBox();
 
 public:
     DirectX::XMFLOAT3 boundingBox_[2]
@@ -375,7 +379,7 @@ public:
         { -D3D12_FLOAT32_MAX, -D3D12_FLOAT32_MAX, -D3D12_FLOAT32_MAX }
     };
 
-private:// メンバ変数
+private:// --- メンバ変数 ---
     Scene                                   sceneView_;
     Constants                               constants_;    
     std::unordered_map<uint64_t, FbxNode*>  nodeList_;

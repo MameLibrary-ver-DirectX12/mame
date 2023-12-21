@@ -599,7 +599,7 @@ ID3D12GraphicsCommandList* Graphics::Begin()
     frameResource.commandList_->ResourceBarrier(1, &resourceBarrier);
 
     // --- レンダーターゲット設定 ---
-    FLOAT clearColor[4] = { 0, 0, 1, 1 };
+    FLOAT clearColor[4] = { 0, 0, 0, 1 };
     D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle = frameResource.renderTargetViewDescriptor_->GetCpuHandle();
     D3D12_CPU_DESCRIPTOR_HANDLE dsvHandle = frameResource.depthStencilViewDescriptor_->GetCpuHandle();
     frameResource.commandList_->OMSetRenderTargets(1, &rtvHandle, false, &dsvHandle);

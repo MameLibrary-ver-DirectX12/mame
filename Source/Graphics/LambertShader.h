@@ -4,6 +4,7 @@
 #include <wrl.h>
 
 #include "ConstantBuffer.h"
+#include "PipelineState.h"
 
 class LambertShader
 {
@@ -17,9 +18,9 @@ private:
     Microsoft::WRL::ComPtr<ID3DBlob> vertexShader_;
     Microsoft::WRL::ComPtr<ID3DBlob> pixelShader_;
 
-    Microsoft::WRL::ComPtr<ID3D12PipelineState> pipelineState_;
     Microsoft::WRL::ComPtr<ID3D12RootSignature> rootSignature_;
 
+    std::unique_ptr<PipelineState> pipelineState_;
     std::unique_ptr<ConstantBuffer> sceneConstantBuffer_ = {};
 };
 

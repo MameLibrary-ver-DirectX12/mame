@@ -1,14 +1,21 @@
 #pragma once
 #include "BaseScene.h"
 
-#include "../Resource/Sprite.h"
-#include "../Game/Stage/StageNormal.h"
+#include <memory>
 
-class GameScene : public BaseScene
+#include "../Resource/Sprite.h"
+
+class ShopScene : public BaseScene
 {
 public:
-    GameScene();
-    ~GameScene() override {}
+    enum class STATE
+    {
+        FadeIn,
+    };
+
+public:
+    ShopScene();
+    ~ShopScene() override {}
 
     void CreateResource()                               override; // リソース生成
     void Initialize()                                   override; // 初期化
@@ -18,8 +25,8 @@ public:
     void DrawDebug()                                    override; // ImGui用
 
 private:
-    std::unique_ptr<StageNormal> stage_;
-    std::unique_ptr<StageNormal> safeZone_;
+
+
 
 };
 

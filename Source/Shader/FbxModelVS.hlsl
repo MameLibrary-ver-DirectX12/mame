@@ -32,15 +32,9 @@ PSIn main(VSIn vsIn)
     psIn.worldTangent = normalize(mul(vsIn.tangent, worldMatrix));
     psIn.worldTangent.w = sigma;
         
-    psIn.texcoord = float2(vsIn.texcoord.x, 1 - vsIn.texcoord.y);
+    psIn.texcoord = vsIn.texcoord;
     
     psIn.color = materialColor;
-    
-    //PSIn psIn;
-    //psIn.position = mul(vsIn.position, mul(worldMatrix, viewProjection));
-    //psIn.worldNormal = mul(vsIn.normal, worldMatrix);
-    //psIn.color = materialColor;
-    //psIn.texcoord = float2(vsIn.texcoord.x, 1 - vsIn.texcoord.y);
     
     return psIn;
 }

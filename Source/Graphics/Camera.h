@@ -32,7 +32,14 @@ public:
     void Initialize();
     void SetPerSpectiveFov();
 
+    // --- GameópÉJÉÅÉâ ---
+    void InitializeGame();
+    void UpdateGame(const float& elapsedTime);
+    void SetPerSpectiveFovGame();
+
     void DrawDebug();
+
+    DirectX::XMFLOAT3 offset = { 0, 1, 2 };
 
 private:
     Transform transform;

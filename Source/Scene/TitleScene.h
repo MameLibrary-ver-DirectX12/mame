@@ -5,9 +5,13 @@
 
 #include "../AI/StateMachine.h"
 
+#include "../Graphics/SkyMap.h"
+
 #include "../Resource/Sprite.h"
 #include "../Resource/Model.h"
 
+#include "../Game/Stage/StageNormal.h"
+#include "../Game/Character/Player.h"
 
 class TitleScene : public BaseScene
 {
@@ -31,9 +35,6 @@ public:
     void Render(ID3D12GraphicsCommandList* commandList) override; // 描画処理
     void DrawDebug()                                    override; // ImGui用
 
-private:
-    void CreateRootSignature();     // ルートシグネチャ生成
-    void CreateGraphicsPipeline();  // グラフィックスパイプライン作成
 
 public:// 取得・設定
 #pragma region [Get, Set] Function
@@ -61,16 +62,8 @@ private:
     int currentState_ = 0; // 現在のステート
     // ------------------------------------------------
 
-
-
-    std::shared_ptr<Model> model_;
-
-    // ---------- 表示に関するもの --------------------
-    D3D12_GRAPHICS_PIPELINE_STATE_DESC graphicsPipeline_ = {};
-    
-    Microsoft::WRL::ComPtr<ID3D12PipelineState> pipelineState_ = {};
-    Microsoft::WRL::ComPtr<ID3D12RootSignature> rootSignature_ = {};
-
-    // -----------------------------------------------
+    std::unique_ptr<Stage>  stage_;
+    std::unique_ptr<SkyMap> skyMap_;
+    std::unique_ptr<Player> player_;
 };
 

@@ -116,6 +116,9 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)External\DirectXTK12\Bin\Windows10_2022\x64\Debug;$(SolutionDir)External\DirectXTex\DirectXTex\Bin\Desktop_2022_Win10\x64\$(Configuration)\;C:\Program Files\Autodesk\FBX\FBX SDK\2020.2\lib\vs2019\x64\debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
+    <FxCompile>
+      <ShaderModel>5.0</ShaderModel>
+    </FxCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -147,6 +150,14 @@
     <ClCompile Include="External\ImGui\imgui_widgets.cpp" />
     <ClCompile Include="Source\Core\Application.cpp" />
     <ClCompile Include="Source\Core\Main.cpp" />
+    <ClCompile Include="Source\Game\Character\Character.cpp" />
+    <ClCompile Include="Source\Game\Character\Player.cpp" />
+    <ClCompile Include="Source\Game\Character\PlayerManager.cpp" />
+    <ClCompile Include="Source\Game\Shop\Shop.cpp" />
+    <ClCompile Include="Source\Game\Stage\Stage.cpp" />
+    <ClCompile Include="Source\Game\Stage\StageManager.cpp" />
+    <ClCompile Include="Source\Game\Stage\StageNormal.cpp" />
+    <ClCompile Include="Source\Game\Wave\WaveManager.cpp" />
     <ClCompile Include="Source\Graphics\Camera.cpp" />
     <ClCompile Include="Source\Graphics\ConstantBuffer.cpp" />
     <ClCompile Include="Source\Graphics\Descriptor.cpp" />
@@ -155,11 +166,15 @@
     <ClCompile Include="Source\Graphics\IndexBuffer.cpp" />
     <ClCompile Include="Source\Graphics\LambertShader.cpp" />
     <ClCompile Include="Source\Graphics\NoiseTexture.cpp" />
+    <ClCompile Include="Source\Graphics\PipelineState.cpp" />
     <ClCompile Include="Source\Graphics\Shader.cpp" />
+    <ClCompile Include="Source\Graphics\SkyMap.cpp" />
     <ClCompile Include="Source\Graphics\VertexBuffer.cpp" />
     <ClCompile Include="Source\Input\GamePad.cpp" />
     <ClCompile Include="Source\Input\Input.cpp" />
     <ClCompile Include="Source\Input\Mouse.cpp" />
+    <ClCompile Include="Source\Resource\Audio\Audio.cpp" />
+    <ClCompile Include="Source\Resource\Audio\AudioManager.cpp" />
     <ClCompile Include="Source\Resource\Model.cpp" />
     <ClCompile Include="Source\Resource\ModelResource.cpp" />
     <ClCompile Include="Source\Resource\ModelResourceManager.cpp" />
@@ -169,12 +184,14 @@
     <ClCompile Include="Source\Scene\GameScene.cpp" />
     <ClCompile Include="Source\Scene\LoadingScene.cpp" />
     <ClCompile Include="Source\Scene\SceneManager.cpp" />
+    <ClCompile Include="Source\Scene\ShopScene.cpp" />
     <ClCompile Include="Source\Scene\State\TitleState.cpp" />
     <ClCompile Include="Source\Scene\TitleScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Source\Shader\FbxModel.hlsli" />
     <None Include="Source\Shader\ImGui.hlsli" />
+    <None Include="Source\Shader\SkyMap.hlsli" />
     <None Include="Source\Shader\Sprite.hlsli" />
   </ItemGroup>
   <ItemGroup>
@@ -191,6 +208,14 @@
     <ClInclude Include="Source\AI\StateMachine.h" />
     <ClInclude Include="Source\Core\Application.h" />
     <ClInclude Include="Source\Core\HighResolutionTimer.h" />
+    <ClInclude Include="Source\Game\Character\Character.h" />
+    <ClInclude Include="Source\Game\Character\Player.h" />
+    <ClInclude Include="Source\Game\Character\PlayerManager.h" />
+    <ClInclude Include="Source\Game\Shop\Shop.h" />
+    <ClInclude Include="Source\Game\Stage\Stage.h" />
+    <ClInclude Include="Source\Game\Stage\StageManager.h" />
+    <ClInclude Include="Source\Game\Stage\StageNormal.h" />
+    <ClInclude Include="Source\Game\Wave\WaveManager.h" />
     <ClInclude Include="Source\Graphics\Camera.h" />
     <ClInclude Include="Source\Graphics\ConstantBuffer.h" />
     <ClInclude Include="Source\Graphics\Descriptor.h" />
@@ -199,14 +224,19 @@
     <ClInclude Include="Source\Graphics\IndexBuffer.h" />
     <ClInclude Include="Source\Graphics\LambertShader.h" />
     <ClInclude Include="Source\Graphics\NoiseTexture.h" />
+    <ClInclude Include="Source\Graphics\PipelineState.h" />
     <ClInclude Include="Source\Graphics\Shader.h" />
+    <ClInclude Include="Source\Graphics\SkyMap.h" />
     <ClInclude Include="Source\Graphics\VertexBuffer.h" />
     <ClInclude Include="Source\Graphics\ImGuiJaGryphRanges.h" />
     <ClInclude Include="Source\Input\GamePad.h" />
     <ClInclude Include="Source\Input\Input.h" />
     <ClInclude Include="Source\Input\Mouse.h" />
+    <ClInclude Include="Source\Other\Common.h" />
     <ClInclude Include="Source\Other\Easing.h" />
     <ClInclude Include="Source\Other\Misc.h" />
+    <ClInclude Include="Source\Resource\Audio\Audio.h" />
+    <ClInclude Include="Source\Resource\Audio\AudioManager.h" />
     <ClInclude Include="Source\Resource\Model.h" />
     <ClInclude Include="Source\Resource\ModelResource.h" />
     <ClInclude Include="Source\Resource\ModelResourceManager.h" />
@@ -217,6 +247,7 @@
     <ClInclude Include="Source\Scene\LoadingScene.h" />
     <ClInclude Include="Source\Scene\BaseScene.h" />
     <ClInclude Include="Source\Scene\SceneManager.h" />
+    <ClInclude Include="Source\Scene\ShopScene.h" />
     <ClInclude Include="Source\Scene\State\TitleState.h" />
     <ClInclude Include="Source\Scene\TitleScene.h" />
   </ItemGroup>
@@ -245,6 +276,20 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Source\Shader\SkyMapPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Source\Shader\SkyMapVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
     </FxCompile>
     <FxCompile Include="Source\Shader\SpriteDissolvePS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
