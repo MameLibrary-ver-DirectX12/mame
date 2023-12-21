@@ -112,6 +112,9 @@
     <Filter Include="Mame\Resource\Audio">
       <UniqueIdentifier>{1fa94e30-83fc-4cb2-b5c9-811b19036e11}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Mame\Game\Skill">
+      <UniqueIdentifier>{c82eb29c-6cd1-4e38-8bed-74425469a175}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Core\Main.cpp">
@@ -252,7 +255,12 @@
     <ClCompile Include="Source\Resource\Audio\Audio.cpp">
       <Filter>Mame\Resource\Audio</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Resource\Audio\AudioManager.cpp" />
+    <ClCompile Include="Source\Resource\Audio\AudioManager.cpp">
+      <Filter>Mame\Resource\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Skill\Skill.cpp">
+      <Filter>Mame\Game\Skill</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Source\Shader\Sprite.hlsli">
@@ -431,7 +439,12 @@
     <ClInclude Include="Source\Resource\Audio\Audio.h">
       <Filter>Mame\Resource\Audio</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Resource\Audio\AudioManager.h" />
+    <ClInclude Include="Source\Resource\Audio\AudioManager.h">
+      <Filter>Mame\Resource\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Skill\Skill.h">
+      <Filter>Mame\Game\Skill</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Source\Shader\SpritePS.hlsl">
