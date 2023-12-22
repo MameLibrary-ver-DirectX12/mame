@@ -112,6 +112,9 @@
     <Filter Include="Mame\Resource\Audio">
       <UniqueIdentifier>{1fa94e30-83fc-4cb2-b5c9-811b19036e11}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Mame\Game\CutIn">
+      <UniqueIdentifier>{dae4207e-0f5a-4c62-b736-2040de7fbce2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Core\Main.cpp">
@@ -253,6 +256,9 @@
       <Filter>Mame\Resource\Audio</Filter>
     </ClCompile>
     <ClCompile Include="Source\Resource\Audio\AudioManager.cpp" />
+    <ClCompile Include="Source\Game\CutIn\ChickenCutIn.cpp">
+      <Filter>Mame\Game\CutIn</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Source\Shader\Sprite.hlsli">
@@ -432,6 +438,9 @@
       <Filter>Mame\Resource\Audio</Filter>
     </ClInclude>
     <ClInclude Include="Source\Resource\Audio\AudioManager.h" />
+    <ClInclude Include="Source\Game\CutIn\ChickenCutIn.h">
+      <Filter>Mame\Game\CutIn</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Source\Shader\SpritePS.hlsl">
