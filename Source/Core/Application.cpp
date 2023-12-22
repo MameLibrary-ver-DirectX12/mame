@@ -14,7 +14,7 @@
 #include "../Scene/GameScene.h"
 #include "../Scene/ShopScene.h"
 
-// コンストラクタ
+// --- コンストラクタ ---
 Application::Application(HWND hwnd)
     : hwnd_(hwnd),
     input_(hwnd),
@@ -22,23 +22,23 @@ Application::Application(HWND hwnd)
 {
 }
 
-// デストラクタ
+// --- デストラクタ ---
 Application::~Application()
 {
     graphics_.WaitIdle();
 }
 
-// 初期化
+// --- 初期化 ---
 bool Application::Initialize()
 {
     //SceneManager::Instance().ChangeScene(new TitleScene);
-    SceneManager::Instance().ChangeScene(new GameScene);
-    //SceneManager::Instance().ChangeScene(new ShopScene);
+    //SceneManager::Instance().ChangeScene(new GameScene);
+    SceneManager::Instance().ChangeScene(new ShopScene);
 
     return true;
 }
 
-// 終了化
+// --- 終了化 ---
 bool Application::Finalize()
 {
     SceneManager::Instance().Clear();
@@ -46,7 +46,7 @@ bool Application::Finalize()
     return true;
 }
 
-// 更新
+// --- 更新 ---
 void Application::Update(const float& elapsedTime)
 {
     // --- ImGuiフレーム開始処理 ---
@@ -60,7 +60,7 @@ void Application::Update(const float& elapsedTime)
 
 }
 
-// 描画
+// --- 描画 ---
 void Application::Render()
 {
     ID3D12GraphicsCommandList* commandList = Graphics::Instance().Begin();
@@ -73,7 +73,7 @@ void Application::Render()
     // ※ ----- ※ これより下に何も書かない事　※ ----- ※
 }
 
-// アプリケーションループ
+// --- アプリケーションループ ---
 int Application::Run()
 {
     MSG msg{};
@@ -129,7 +129,7 @@ void Application::CalculateFrameStats()
 
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
-// メッセージハンドラー
+// --- メッセージハンドラー ---
 LRESULT Application::HandleMessage(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 {
     ImGui_ImplWin32_WndProcHandler(hwnd, msg, wparam, lparam);

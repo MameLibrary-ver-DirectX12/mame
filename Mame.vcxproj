@@ -155,6 +155,7 @@
     <ClCompile Include="Source\Game\Character\PlayerManager.cpp" />
     <ClCompile Include="Source\Game\CutIn\ChickenCutIn.cpp" />
     <ClCompile Include="Source\Game\Shop\Shop.cpp" />
+    <ClCompile Include="Source\Game\Skill\Skill.cpp" />
     <ClCompile Include="Source\Game\Stage\Stage.cpp" />
     <ClCompile Include="Source\Game\Stage\StageManager.cpp" />
     <ClCompile Include="Source\Game\Stage\StageNormal.cpp" />
@@ -214,6 +215,7 @@
     <ClInclude Include="Source\Game\Character\PlayerManager.h" />
     <ClInclude Include="Source\Game\CutIn\ChickenCutIn.h" />
     <ClInclude Include="Source\Game\Shop\Shop.h" />
+    <ClInclude Include="Source\Game\Skill\Skill.h" />
     <ClInclude Include="Source\Game\Stage\Stage.h" />
     <ClInclude Include="Source\Game\Stage\StageManager.h" />
     <ClInclude Include="Source\Game\Stage\StageNormal.h" />

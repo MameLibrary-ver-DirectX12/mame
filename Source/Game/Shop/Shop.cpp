@@ -17,6 +17,7 @@ void Shop::CreateResource()
     // --- Sprite ---
     {
         whiteSprite_ = new Sprite("./Resources/Image/white.png");
+        shopBaseSprite_ = new Sprite("./Resources/Image/Shop/ShopBase.png");
     }
 
     // --- Model ---
@@ -40,6 +41,14 @@ void Shop::Initialize()
     turret_->GetTransform()->SetPosition(30, 25, -40);
     turret_->GetTransform()->SetScaleFactor(7);
 
+    // --- Sprite ---
+#pragma region Sprite Initialize
+    {
+        shopBaseSprite_->GetTransform()->SetPos(650, 50);
+        shopBaseSprite_->GetTransform()->SetSize(540, 560);
+    }
+#pragma endregion Sprite Initialize
+
 }
 
 // --- I—¹‰» ---
@@ -49,6 +58,7 @@ void Shop::Finalize()
     // --- Sprite ---
     {
         SafeDeletePtr(whiteSprite_);
+        SafeDeletePtr(shopBaseSprite_);
     }
 
     // --- Model ---
@@ -75,6 +85,7 @@ void Shop::Render(ID3D12GraphicsCommandList* commandList)
     {
         whiteSprite_->GetTransform()->SetSize(0);
         whiteSprite_->Render(commandList);
+        shopBaseSprite_->Render(commandList);
     }
 
     // --- Model ---
@@ -95,6 +106,7 @@ void Shop::DrawDebug()
     ImGui::Begin("Shop");
 
     whiteSprite_->DrawDebug();
+    shopBaseSprite_->DrawDebug();
 
     //podium_->DrawDebug();
     turret_->DrawDebug();

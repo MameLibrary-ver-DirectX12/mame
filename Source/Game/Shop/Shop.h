@@ -68,6 +68,7 @@ private:
 
     // ---------- Sprite --------------------------------
     Sprite* whiteSprite_ = nullptr;
+    Sprite* shopBaseSprite_ = nullptr;
 
     // --------------------------------------------------
 
