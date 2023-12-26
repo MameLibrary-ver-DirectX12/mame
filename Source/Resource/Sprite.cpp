@@ -645,9 +645,7 @@ void Sprite::UseDefaultPixelShader()
     graphicsPipeline_.BlendState.RenderTarget[0].RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL;
 
     // --- 深度ステンシルステート ---
-    graphicsPipeline_.DepthStencilState.DepthEnable = true;
-    graphicsPipeline_.DepthStencilState.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;
-    graphicsPipeline_.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_ALWAYS;
+    graphicsPipeline_.DepthStencilState.DepthEnable = false;
     graphicsPipeline_.DepthStencilState.StencilEnable = false;
 
     // --- ラスタライザーステート ---

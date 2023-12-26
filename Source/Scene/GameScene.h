@@ -4,6 +4,8 @@
 #include "../Resource/Sprite.h"
 #include "../Game/Stage/StageNormal.h"
 
+#include "../Game/CutIn/ChickenCutIn.h"
+
 class GameScene : public BaseScene
 {
 public:
@@ -20,6 +22,8 @@ public:
 private:
     std::unique_ptr<StageNormal> stage_;
     std::unique_ptr<StageNormal> safeZone_;
+
+    std::unique_ptr<ChickenCutIn> chickenCutIn_;
 
 };
 

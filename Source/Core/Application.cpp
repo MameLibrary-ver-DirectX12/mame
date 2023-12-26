@@ -32,8 +32,8 @@ Application::~Application()
 bool Application::Initialize()
 {
     //SceneManager::Instance().ChangeScene(new TitleScene);
-    //SceneManager::Instance().ChangeScene(new GameScene);
-    SceneManager::Instance().ChangeScene(new ShopScene);
+    SceneManager::Instance().ChangeScene(new GameScene);
+    //SceneManager::Instance().ChangeScene(new ShopScene);
 
     return true;
 }

@@ -5,8 +5,7 @@ Player::Player()
     //: Character("./Resources/Model/Character/golem.fbx", true)
     //: Character("./Resources/Model/Character/nico.fbx", true)
     //: Character("./Resources/Model/Character/sword.fbx", true)
-    : Character("./Resources/Model/Character/playerEx.fbx", true)
-    //: Character("./Resources/Model/Character/Player.fbx", true)
+    : Character("./Resources/Model/Character/Player.fbx", true)
 {
     SetName("Player");
 

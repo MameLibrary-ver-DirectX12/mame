@@ -21,6 +21,8 @@ void GameScene::CreateResource()
 {
     stage_ = std::make_unique<StageNormal>("./Resources/Model/Stage/StageBase.fbx");
     safeZone_ = std::make_unique<StageNormal>("./Resources/Model/Stage/SafeZone.fbx");
+
+    chickenCutIn_ = std::make_unique<ChickenCutIn>();
 }
 
 // ----- 初期化 -----
@@ -55,6 +57,8 @@ void GameScene::Update(const float& elapsedTime)
         return;
     }
 
+    chickenCutIn_->Play(elapsedTime);
+
     // --- カメラ更新 ---
     //Camera::Instance().UpdateGame(elapsedTime);
 
@@ -78,7 +82,7 @@ void GameScene::Render(ID3D12GraphicsCommandList* commandList)
         // --- プレイヤー ---
         PlayerManager::Instnace().Render(commandList);
 
-
+        chickenCutIn_->Render(commandList);
     }
 }
 
@@ -96,6 +100,9 @@ void GameScene::DrawDebug()
 
     // --- カメラ ---
     Camera::Instance().DrawDebug();
+
+    chickenCutIn_->DrawDebug();
+    if (ImGui::Button("initialize")) chickenCutIn_->GetStateMachine()->ChangeState(0);
 
     ImGui::End();
 }

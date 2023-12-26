@@ -3,6 +3,10 @@
 #include <vector>
 #include "State.h"
 
+#include "../../External/ImGui/imgui.h"
+#include "../../External/ImGui/imgui_impl_win32.h"
+#include "../../External/ImGui/imgui_impl_dx12.h"
+
 template <class T>
 class StateMachine
 {
