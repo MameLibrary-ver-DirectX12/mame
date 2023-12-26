@@ -46,10 +46,20 @@ void Camera::UpdateGame(const float& elapsedTime)
     DirectX::XMFLOAT3 ownerPos = GetTransform()->GetPosition();
     DirectX::XMFLOAT3 playerPos = PlayerManager::Instnace().GetPlayer()->GetTransform()->GetPosition();
 
-    ownerPos.x = playerPos.x + offset.x;
-    ownerPos.y = playerPos.y + offset.y;
-    ownerPos.z = playerPos.z + offset.z;
+    float length = std::fabs(ownerPos.z - playerPos.z);
 
+    // --- ƒJƒƒ‰‚ð“®‚©‚· ---
+    if (length > moveLength_)
+    {
+        float direction = (playerPos.z - ownerPos.z > 0) ? 1 : -1;
+
+        GetTransform()->AddPositionZ(moveSpeed_ * direction * elapsedTime);
+    }
+
+    // --- •â³ ---
+    ownerPos = GetTransform()->GetPosition();
+    if (ownerPos.z <= -45.0f)   ownerPos.z = -45.0f;
+    if (ownerPos.z >= 0.0f)     ownerPos.z = 0.0f;
     GetTransform()->SetPosition(ownerPos);
 }
 
@@ -82,6 +92,9 @@ void Camera::DrawDebug()
         transform.DrawDebug();
 
         ImGui::DragFloat3("offset", &offset.x);
+
+        ImGui::DragFloat("moveLength", &moveLength_);
+        ImGui::DragFloat("moveSpeed", &moveSpeed_);
 
         ImGui::EndMenu();
     }

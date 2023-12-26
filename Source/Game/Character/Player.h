@@ -1,8 +1,20 @@
 #pragma once
 #include "Character.h"
+#include "../../AI/StateMachine.h"
+#include "../../Input/Input.h"
 
 class Player : public Character
 {
+public:// --- 定数 ---
+#pragma region 定数
+    enum class STATE
+    {
+        Idle,
+        Move,
+    };
+
+#pragma endregion 定数
+
 public:
     Player();
     ~Player();
@@ -15,10 +27,25 @@ public:
         const DirectX::XMMATRIX world = {})             override;   // 描画
     void DrawDebug()                                    override;   // ImGui用
 
-private:
-    int animationIndex_ = 0;
+public:// --- 取得・設定 ---
+    StateMachine<State<Player>>* GetStateMachine() { return stateMachine_.get(); }
+    void ChangeState(STATE state) { GetStateMachine()->ChangeState(static_cast<UINT>(state)); }
 
-    std::unique_ptr<Character> arm_; // 腕
+    // --- 速度 ---
+    DirectX::XMFLOAT3 GetVelocity() { return velocity_; }
+    void SetVelocity(DirectX::XMFLOAT3 velocity) { velocity_ = velocity; }
+
+
+
+private:
+    // ---------- ステートマシン -----------------------------------
+    std::unique_ptr<StateMachine<State<Player>>> stateMachine_;
+
+    // ------------------------------------------------------------
+
+    DirectX::XMFLOAT3 velocity_ = {};
+
+    int animationIndex_ = 0;
 
 };
 

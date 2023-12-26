@@ -49,9 +49,10 @@ namespace ChickenState
     {
         float maxTime = 0.2f;
         if (easingTimer_ < maxTime)
-        {
-            float pos0 = Easing::InSine(easingTimer_, maxTime, -280.0f, 2000.0f);
-            float pos1 = Easing::InSine(easingTimer_, maxTime, -440.0f, -2000.0f);
+        {         
+            float pos0 = Easing::InCubic(easingTimer_, maxTime, -280.0f, -2000.0f);
+            float pos1 = Easing::InCubic(easingTimer_, maxTime, -440.0f,  2000.0f);
+
 
             owner_->GetBlackSprite0()->GetTransform()->SetPosX(pos0);
             owner_->GetBlackSprite1()->GetTransform()->SetPosX(pos1);

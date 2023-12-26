@@ -118,6 +118,9 @@
     <Filter Include="Mame\Game\Skill">
       <UniqueIdentifier>{c82eb29c-6cd1-4e38-8bed-74425469a175}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Mame\Game\Character\Enemy">
+      <UniqueIdentifier>{9767a008-7fe7-4003-951f-b36779afd357}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Core\Main.cpp">
@@ -268,6 +271,14 @@
     <ClCompile Include="Source\Game\Skill\Skill.cpp">
       <Filter>Mame\Game\Skill</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Game\CutIn\ChickenState.cpp" />
+    <ClCompile Include="Source\Game\Character\Enemy.cpp">
+      <Filter>Mame\Game\Character\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Character\EnemyManager.cpp">
+      <Filter>Mame\Game\Character\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Character\PlayerState.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Source\Shader\Sprite.hlsli">
@@ -456,6 +467,14 @@
     <ClInclude Include="Source\Game\Skill\Skill.h">
       <Filter>Mame\Game\Skill</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Game\CutIn\ChickenState.h" />
+    <ClInclude Include="Source\Game\Character\Enemy.h">
+      <Filter>Mame\Game\Character\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Character\EnemyManager.h">
+      <Filter>Mame\Game\Character\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Character\PlayerState.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Source\Shader\SpritePS.hlsl">

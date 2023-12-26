@@ -53,14 +53,14 @@ void GameScene::Update(const float& elapsedTime)
     
     if (gamePad.GetButtonDown() & GamePad::BTN_A)
     {
-        SceneManager::Instance().ChangeScene(new LoadingScene(new TitleScene));
-        return;
+        //SceneManager::Instance().ChangeScene(new LoadingScene(new TitleScene));
+        //return;
     }
 
     chickenCutIn_->Play(elapsedTime);
 
     // --- カメラ更新 ---
-    //Camera::Instance().UpdateGame(elapsedTime);
+    Camera::Instance().UpdateGame(elapsedTime);
 
     // --- プレイヤー更新 ---
     PlayerManager::Instnace().Update(elapsedTime);
@@ -82,7 +82,7 @@ void GameScene::Render(ID3D12GraphicsCommandList* commandList)
         // --- プレイヤー ---
         PlayerManager::Instnace().Render(commandList);
 
-        chickenCutIn_->Render(commandList);
+        //chickenCutIn_->Render(commandList);
     }
 }
 

@@ -151,8 +151,11 @@
     <ClCompile Include="Source\Core\Application.cpp" />
     <ClCompile Include="Source\Core\Main.cpp" />
     <ClCompile Include="Source\Game\Character\Character.cpp" />
+    <ClCompile Include="Source\Game\Character\Enemy.cpp" />
+    <ClCompile Include="Source\Game\Character\EnemyManager.cpp" />
     <ClCompile Include="Source\Game\Character\Player.cpp" />
     <ClCompile Include="Source\Game\Character\PlayerManager.cpp" />
+    <ClCompile Include="Source\Game\Character\PlayerState.cpp" />
     <ClCompile Include="Source\Game\CutIn\ChickenCutIn.cpp" />
     <ClCompile Include="Source\Game\CutIn\ChickenState.cpp" />
     <ClCompile Include="Source\Game\Shop\Shop.cpp" />
@@ -212,8 +215,11 @@
     <ClInclude Include="Source\Core\Application.h" />
     <ClInclude Include="Source\Core\HighResolutionTimer.h" />
     <ClInclude Include="Source\Game\Character\Character.h" />
+    <ClInclude Include="Source\Game\Character\Enemy.h" />
+    <ClInclude Include="Source\Game\Character\EnemyManager.h" />
     <ClInclude Include="Source\Game\Character\Player.h" />
     <ClInclude Include="Source\Game\Character\PlayerManager.h" />
+    <ClInclude Include="Source\Game\Character\PlayerState.h" />
     <ClInclude Include="Source\Game\CutIn\ChickenCutIn.h" />
     <ClInclude Include="Source\Game\CutIn\ChickenState.h" />
     <ClInclude Include="Source\Game\Shop\Shop.h" />
