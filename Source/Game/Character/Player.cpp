@@ -50,6 +50,14 @@ void Player::Update(const float& elapsedTime)
     Character::UpdateAnimation(elapsedTime);
 
     GetStateMachine()->Update(elapsedTime);
+
+    // --- ˆÊ’u•â³ ---
+    DirectX::XMFLOAT3 pos = GetTransform()->GetPosition();
+    if (pos.x >=  43.0f) pos.x =  43.0f;
+    if (pos.x <= -43.0f) pos.x = -43.0f;
+    if (pos.z >=  14.0f) pos.z =  14.0f;
+    if (pos.z <= -84.0f) pos.z = -84.0f;
+    GetTransform()->SetPosition(pos);
 }
 
 // --- •`‰æ ---
