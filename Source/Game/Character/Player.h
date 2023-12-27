@@ -35,7 +35,18 @@ public:// --- 取得・設定 ---
     DirectX::XMFLOAT3 GetVelocity() { return velocity_; }
     void SetVelocity(DirectX::XMFLOAT3 velocity) { velocity_ = velocity; }
 
-
+    // --- スキル ---
+    int GetFlowerNum() { return flowerNum_; }
+    void SetFlowerNum(int num) { flowerNum_ = num; }
+    bool UseFlower() 
+    { 
+        if (flowerNum_)
+        {
+            --flowerNum_;
+            return true;
+        }
+        return false;
+    }
 
 private:
     // ---------- ステートマシン -----------------------------------
@@ -46,6 +57,9 @@ private:
     DirectX::XMFLOAT3 velocity_ = {};
 
     int animationIndex_ = 0;
+
+    // ----- スキル -----
+    int flowerNum_ = 0; // 所持している花の数
 
 };
 

@@ -1,11 +1,17 @@
 #pragma once
 #include "Character.h"
 
-class Enemy : public Character
+class Flower : public Character
 {
+public:// --- ’è” ---
+    enum class FlowerType
+    {
+        Blue,
+    };
+
 public:
-    Enemy(const char* fbxFilename, bool triangulate = true, float samplingRate = 0);
-    ~Enemy() {}
+    Flower(const char* fbxFilename);
+    ~Flower() override {}
 
     void Initialize()                       override {} // ‰Šú‰» 
     void Finalize()                         override {} // I—¹‰»
@@ -14,5 +20,12 @@ public:
         const DirectX::XMMATRIX world = {}) override;   // •`‰æ
 
     void DrawDebug()                        override {} // ImGui—p
+
+public:// --- æ“¾Eİ’è ---
+    int GetFlowerType() { return static_cast<int>(type_); }
+    void SetFlowerType(FlowerType type) { type_ = type; }
+
+private:
+    FlowerType type_ = FlowerType::Blue; // ‰Ô‚Ìí—Ş
 };
 

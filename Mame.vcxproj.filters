@@ -121,6 +121,12 @@
     <Filter Include="Mame\Game\Character\Enemy">
       <UniqueIdentifier>{9767a008-7fe7-4003-951f-b36779afd357}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Mame\Game\Character\Flower">
+      <UniqueIdentifier>{26c09975-d09c-46b3-a93f-ae3e20402679}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Mame\Game\Character\Bee">
+      <UniqueIdentifier>{b0c12e71-e343-493d-a869-559c0704ffde}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Core\Main.cpp">
@@ -278,7 +284,24 @@
     <ClCompile Include="Source\Game\Character\EnemyManager.cpp">
       <Filter>Mame\Game\Character\Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Game\Character\PlayerState.cpp" />
+    <ClCompile Include="Source\Game\Character\Flower.cpp">
+      <Filter>Mame\Game\Character\Flower</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Character\PlayerState.cpp">
+      <Filter>Mame\Game\Character\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Character\FlowerManager.cpp">
+      <Filter>Mame\Game\Character\Flower</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Character\Bee.cpp">
+      <Filter>Mame\Game\Character\Bee</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Character\BeeManager.cpp">
+      <Filter>Mame\Game\Character\Bee</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Character\BeeState.cpp">
+      <Filter>Mame\Game\Character\Bee</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Source\Shader\Sprite.hlsli">
@@ -474,7 +497,24 @@
     <ClInclude Include="Source\Game\Character\EnemyManager.h">
       <Filter>Mame\Game\Character\Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Game\Character\PlayerState.h" />
+    <ClInclude Include="Source\Game\Character\Flower.h">
+      <Filter>Mame\Game\Character\Flower</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Character\PlayerState.h">
+      <Filter>Mame\Game\Character\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Character\FlowerManager.h">
+      <Filter>Mame\Game\Character\Flower</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Character\BeeManager.h">
+      <Filter>Mame\Game\Character\Bee</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Character\Bee.h">
+      <Filter>Mame\Game\Character\Bee</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Character\BeeState.h">
+      <Filter>Mame\Game\Character\Bee</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Source\Shader\SpritePS.hlsl">
