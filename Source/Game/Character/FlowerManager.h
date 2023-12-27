@@ -1,5 +1,7 @@
 #pragma once
 #include "Flower.h"
+#include <vector>
+#include <set>
 
 class FlowerManager
 {
@@ -20,7 +22,16 @@ public:
     void Render(ID3D12GraphicsCommandList* commandList);
     void DrawDebug();
 
-private:
+    int SearchPairIndex();  // –I‚ÉƒyƒA‚ğŒ©‚Â‚¯‚Ä‚ ‚°‚é
 
+    void Register(Flower* flower);  // “o˜^
+    void Clear();                   // ‘Síœ
+    void Remove(Flower* flower);    // íœ
+
+    Flower* GetFlower(const int& index) const { return flowers_.at(index); }
+
+private:
+    std::vector<Flower*>    flowers_ = {};
+    std::set<Flower*>       removes_ = {};
 };
 

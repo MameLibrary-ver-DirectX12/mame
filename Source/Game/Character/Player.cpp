@@ -18,7 +18,6 @@ Player::Player()
         GetStateMachine()->RegisterState(new PlayerState::IdleState(this));
         GetStateMachine()->RegisterState(new PlayerState::MoveState(this));
 
-        //SetState(STATE::Idle);
         GetStateMachine()->SetState(static_cast<UINT>(STATE::Move));
     }
     

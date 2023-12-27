@@ -25,7 +25,11 @@ public:// --- æ“¾Eİ’è ---
     int GetFlowerType() { return static_cast<int>(type_); }
     void SetFlowerType(FlowerType type) { type_ = type; }
 
+    bool GetIsPaired() { return isPaired_; }
+    void SetIsPaired(bool pair) { isPaired_ = pair; }
+
 private:
     FlowerType type_ = FlowerType::Blue; // ‰Ô‚Ìí—Ş
+    bool isPaired_ = false; // –I‚ª©•ª‚Ì‚±‚Æ‚ğŒ©‚Â‚¯‚Ä‚é‚©(ˆê‚Â‚É‚Â‚«ˆê‚Â‚Ì‚½‚ß)
 };
 

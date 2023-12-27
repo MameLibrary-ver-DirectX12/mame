@@ -157,6 +157,7 @@
     <ClCompile Include="Source\Game\Character\Enemy.cpp" />
     <ClCompile Include="Source\Game\Character\EnemyManager.cpp" />
     <ClCompile Include="Source\Game\Character\Flower.cpp" />
+    <ClCompile Include="Source\Game\Character\FlowerBleu.cpp" />
     <ClCompile Include="Source\Game\Character\FlowerManager.cpp" />
     <ClCompile Include="Source\Game\Character\Player.cpp" />
     <ClCompile Include="Source\Game\Character\PlayerManager.cpp" />
@@ -226,6 +227,7 @@
     <ClInclude Include="Source\Game\Character\Enemy.h" />
     <ClInclude Include="Source\Game\Character\EnemyManager.h" />
     <ClInclude Include="Source\Game\Character\Flower.h" />
+    <ClInclude Include="Source\Game\Character\FlowerBleu.h" />
     <ClInclude Include="Source\Game\Character\FlowerManager.h" />
     <ClInclude Include="Source\Game\Character\Player.h" />
     <ClInclude Include="Source\Game\Character\PlayerManager.h" />

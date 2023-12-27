@@ -302,6 +302,9 @@
     <ClCompile Include="Source\Game\Character\BeeState.cpp">
       <Filter>Mame\Game\Character\Bee</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Game\Character\FlowerBleu.cpp">
+      <Filter>Mame\Game\Character\Flower</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Source\Shader\Sprite.hlsli">
@@ -514,6 +517,9 @@
     </ClInclude>
     <ClInclude Include="Source\Game\Character\BeeState.h">
       <Filter>Mame\Game\Character\Bee</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Character\FlowerBleu.h">
+      <Filter>Mame\Game\Character\Flower</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

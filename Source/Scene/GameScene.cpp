@@ -10,6 +10,8 @@
 #include "LoadingScene.h"
 #include "SceneManager.h"
 
+#include "../Game/Character/FlowerManager.h"
+#include "../Game/Character/FlowerBleu.h"
 
 // ----- コンストラクタ -----
 GameScene::GameScene()
@@ -35,6 +37,9 @@ void GameScene::Initialize()
     PlayerManager::Instnace().Initialize();
     PlayerManager::Instnace().GetPlayer()->GetTransform()->SetScaleFactor(0.5f);
 
+    // --- お花初期化 ---
+    FlowerManager::Instance().Initialize();
+
     stage_->GetTransform()->SetScaleFactor(10.0f);
     safeZone_->GetTransform()->SetScaleFactor(10.0f);
 }
@@ -44,6 +49,9 @@ void GameScene::Finalize()
 {
     // --- プレイヤー終了化 ---
     PlayerManager::Instnace().Finalize();
+
+    // --- お花終了化 ---
+    FlowerManager::Instance().Finalize();
 }
 
 // ----- 更新 -----
@@ -64,6 +72,9 @@ void GameScene::Update(const float& elapsedTime)
 
     // --- プレイヤー更新 ---
     PlayerManager::Instnace().Update(elapsedTime);
+
+    // --- お花更新 ---
+    FlowerManager::Instance().Update(elapsedTime);
 }
 
 // ----- 描画 -----
@@ -78,6 +89,9 @@ void GameScene::Render(ID3D12GraphicsCommandList* commandList)
         // --- ステージ ---
         stage_->Render(commandList, stage_->GetTransform()->CalcWorldMatrix(1.0f));
         safeZone_->Render(commandList, safeZone_->GetTransform()->CalcWorldMatrix(1.0f));
+
+        // --- お花 ---
+        FlowerManager::Instance().Render(commandList);
 
         // --- プレイヤー ---
         PlayerManager::Instnace().Render(commandList);
@@ -101,8 +115,17 @@ void GameScene::DrawDebug()
     // --- カメラ ---
     Camera::Instance().DrawDebug();
 
+    // --- お花 ---
+    FlowerManager::Instance().DrawDebug();
+
     chickenCutIn_->DrawDebug();
     if (ImGui::Button("initialize")) chickenCutIn_->GetStateMachine()->ChangeState(0);
+
+    if (ImGui::Button("flower"))
+    {
+        FlowerBleu* flowerBleu = new FlowerBleu;
+        flowerBleu->Initialize();
+    }
 
     ImGui::End();
 }
