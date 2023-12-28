@@ -17,6 +17,9 @@ public:
 
     // --- Transform ---
     Transform* GetTransform() { return model_->GetTransform(); }
+    DirectX::XMFLOAT4 GetColor() { return model_->GetColor(); }
+    void SetColor(const DirectX::XMFLOAT4& color) { model_->SetColor(color); }
+    void SetColor(const float& r, const float& g, const float& b, const float& a) { model_->SetColor({ r, g, b, a }); }
 
     // --- アニメーション再生 ---
     void PlayAnimation(

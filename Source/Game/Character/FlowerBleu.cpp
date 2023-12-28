@@ -27,6 +27,12 @@ void FlowerBleu::Initialize()
 
         GetTransform()->SetPosition(playerPos);
     }
+
+    // –I‚ª–¨‚ğÌæ‚Å‚«‚é”ÍˆÍ‚ğİ’è‚·‚é 
+    Flower::SetRadius(3.0f);
+
+    // Ìæ‚É‚©‚©‚éŠÔ‚ğİ’è‚·‚é
+    Flower::SetCollectTime(1.5f);
 }
 
 // --- I—¹‰» ---

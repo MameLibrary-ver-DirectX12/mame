@@ -26,11 +26,27 @@ public:
     void DrawDebug()                        override;   // ImGui用
 
 public:// --- 取得・設定 ---
+#pragma region [Get, Set] Function
     StateMachine<State<Bee>>* GetStateMachine() { return stateMachine_.get(); }
-    void ChangeState(STATE state) { GetStateMachine()->ChangeState(static_cast<UINT>(state)); }
+    void ChangeState(const STATE& state) { GetStateMachine()->ChangeState(static_cast<UINT>(state)); }
+
+    float GetMoveSpeed() { return moveSpeed_; }
+    void SetMoveSpeed(const float& speed) { moveSpeed_ = speed; }
 
     int GetFlowerIndex() { return flowerIndex_; }
-    void SetFlowerIndex(int index) { flowerIndex_ = index; }
+    void SetFlowerIndex(const int& index) { flowerIndex_ = index; }
+
+    float GetRadius() { return radius_; }
+    void SetRadius(const float& radius) { radius_ = radius; }
+
+    float GetMaxCollectTime() { return maxCollectTime_; }
+    void SetMaxCollectTime(const float& time) { maxCollectTime_ = time; }
+
+    float GetCollectTimer() { return collectTimer_; }
+    void SetCollectTimer(const float& time) { collectTimer_ = time; }
+    void AddCollectTimer(const float& time) { collectTimer_ += time; }
+
+#pragma endregion [Get, Set] Function
 
 private:
     // ---------- ステートマシン ------------------------------
@@ -38,7 +54,13 @@ private:
 
     // -------------------------------------------------------
 
+    float moveSpeed_ = 0.0f; // 移動速度
+
     int flowerIndex_ = 0; // 花の番号
 
+    float radius_ = 0;  // 蜂の体の大きさ
+
+    float maxCollectTime_ = 0.0f;   // はちみつ採取にかかる時間
+    float collectTimer_ = 0.0f;     // はちみつ採取する時用のタイマー
 };
 

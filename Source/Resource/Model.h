@@ -44,6 +44,8 @@ public:
 
 public:// --- 取得・設定 ---
     Transform* GetTransform() { return &transform_; }
+    DirectX::XMFLOAT4 GetColor() { return modelResource_.GetConstants()->materialColor_; }
+    void SetColor(const DirectX::XMFLOAT4& color) { modelResource_.GetConstants()->materialColor_ = color; }
 
 private:// --- 内部関数 ---
     // ブレンド率の計算更新処理

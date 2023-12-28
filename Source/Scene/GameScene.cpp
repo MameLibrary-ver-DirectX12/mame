@@ -12,6 +12,8 @@
 
 #include "../Game/Character/FlowerManager.h"
 #include "../Game/Character/FlowerBleu.h"
+#include "../Game/Character/Bee.h"
+#include "../Game/Character/BeeManager.h"
 
 // ----- コンストラクタ -----
 GameScene::GameScene()
@@ -50,8 +52,11 @@ void GameScene::Finalize()
     // --- プレイヤー終了化 ---
     PlayerManager::Instnace().Finalize();
 
-    // --- お花終了化 ---
+    // --- お花 終了化 ---
     FlowerManager::Instance().Finalize();
+
+    // --- 蜂 終了化 ---
+    BeeManager::Instance().Finalize();
 }
 
 // ----- 更新 -----
@@ -73,8 +78,11 @@ void GameScene::Update(const float& elapsedTime)
     // --- プレイヤー更新 ---
     PlayerManager::Instnace().Update(elapsedTime);
 
-    // --- お花更新 ---
+    // --- お花 更新 ---
     FlowerManager::Instance().Update(elapsedTime);
+
+    // --- 蜂 更新 ---
+    BeeManager::Instance().Update(elapsedTime);
 }
 
 // ----- 描画 -----
@@ -92,6 +100,9 @@ void GameScene::Render(ID3D12GraphicsCommandList* commandList)
 
         // --- お花 ---
         FlowerManager::Instance().Render(commandList);
+
+        // --- 蜂 ---
+        BeeManager::Instance().Render(commandList);
 
         // --- プレイヤー ---
         PlayerManager::Instnace().Render(commandList);
@@ -118,6 +129,9 @@ void GameScene::DrawDebug()
     // --- お花 ---
     FlowerManager::Instance().DrawDebug();
 
+    // --- 蜂 ---
+    BeeManager::Instance().DrawDebug();
+
     chickenCutIn_->DrawDebug();
     if (ImGui::Button("initialize")) chickenCutIn_->GetStateMachine()->ChangeState(0);
 
@@ -126,6 +140,13 @@ void GameScene::DrawDebug()
         FlowerBleu* flowerBleu = new FlowerBleu;
         flowerBleu->Initialize();
     }
+
+    if (ImGui::Button("bee"))
+    {
+        Bee* bee = new Bee;
+        bee->Initialize();
+    }
+
 
     ImGui::End();
 }

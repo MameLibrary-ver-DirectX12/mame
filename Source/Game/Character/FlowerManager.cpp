@@ -55,9 +55,14 @@ void FlowerManager::Render(ID3D12GraphicsCommandList* commandList)
 // --- ImGui—p ---
 void FlowerManager::DrawDebug()
 {
-    for (Flower*& flower : flowers_)
+    if (ImGui::BeginMenu("FlowerManager"))
     {
-        flower->DrawDebug();
+        for (Flower*& flower : flowers_)
+        {
+            flower->DrawDebug();
+        }
+
+        ImGui::EndMenu();
     }
 }
 
