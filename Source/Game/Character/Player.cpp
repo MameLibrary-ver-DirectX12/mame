@@ -6,8 +6,8 @@ Player::Player()
     //: Character("./Resources/Model/Character/golem.fbx", true)
     //: Character("./Resources/Model/Character/nico.fbx", true)
     //: Character("./Resources/Model/Character/sword.fbx", true)
-    //: Character("./Resources/Model/Character/Player.fbx", true)
-    : Character("./Resources/Model/cube.fbx", true)
+    : Character("./Resources/Model/Character/Player.fbx", true)
+    //: Character("./Resources/Model/cube.fbx", true)
 {
     SetName("Player");
 
@@ -63,7 +63,7 @@ void Player::Update(const float& elapsedTime)
 void Player::Render(ID3D12GraphicsCommandList* commandList, const DirectX::XMMATRIX world)
 {
     GetTransform()->SetScaleFactor(1.0f);
-    Character::Render(commandList, GetTransform()->CalcWorldMatrix(1.0f));
+    Character::Render(commandList, GetTransform()->CalcWorldMatrix(0.1f));
 }
 
 // --- ImGui ---

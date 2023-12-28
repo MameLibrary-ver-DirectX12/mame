@@ -101,11 +101,7 @@ private:// Transform
 
         // --- Set ---
         void SetPos(const DirectX::XMFLOAT2& pos) { position_ = pos; }
-        void SetPos(const float& x, const float& y)
-        {
-            position_.x = x;
-            position_.y = y;
-        }
+        void SetPos(const float& x, const float& y) { position_ = { x, y }; }
         void SetPosX(const float& posX) { position_.x = posX; }
         void SetPosY(const float& posY) { position_.y = posY; }
 
