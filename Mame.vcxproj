@@ -110,6 +110,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)External\DirectXTK12\Inc;$(SolutionDir)External\DirectXTex\DirectXTex\;%(AdditionalIncludeDirectories);C:\Program Files\Autodesk\FBX\FBX SDK\2020.2\include;$(SolutionDir)External\cereal\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

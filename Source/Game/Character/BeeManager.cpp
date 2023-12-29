@@ -17,6 +17,7 @@ void BeeManager::Finalize()
     {
         bee->Finalize();
     }
+    Clear();
 }
 
 // --- XV ---

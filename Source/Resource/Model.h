@@ -3,6 +3,7 @@
 #include <vector>
 
 #include "ModelResource.h"
+#include "../Graphics/Graphics.h"
 #include "../Graphics/ConstantBuffer.h"
 #include "Transform.h"
 
@@ -66,7 +67,7 @@ private:// --- “à•”ŠÖ” ---
 
 private:// --- ƒƒ“ƒo•Ï” ---
     ModelResource modelResource_;
-    std::vector<std::unique_ptr<ConstantBuffer>> constantBuffers_;
+    std::vector<std::unique_ptr<ConstantBuffer>> constantBuffers_[3];
 
     // ---------- Transform ----------
     Transform transform_;

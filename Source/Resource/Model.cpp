@@ -9,10 +9,13 @@
 Model::Model(const char* fbxFilename, bool triangulate, float samplingRate)
     : modelResource_(fbxFilename, triangulate, samplingRate)
 {
-    constantBuffers_.resize(modelResource_.GetMeshes().size());
-    for (auto& c : constantBuffers_)
+    for (int i = 0; i < 3; ++i)
     {
-        c = std::make_unique<ConstantBuffer>(sizeof(ModelResource::Constants));
+        constantBuffers_[i].resize(modelResource_.GetMeshes().size());
+        for (auto& c : constantBuffers_[i])
+        {
+            c = std::make_unique<ConstantBuffer>(sizeof(ModelResource::Constants));
+        }
     }
 }
 
@@ -69,10 +72,10 @@ void Model::Render(ID3D12GraphicsCommandList* commandList, const DirectX::XMMATR
             }
         }
 
-        constantBuffers_[mesh_index]->UpdateSubresource(modelResource_.GetConstants());
+        constantBuffers_[Graphics::Instance().GetCurrentBufferIndex()][mesh_index]->UpdateSubresource(modelResource_.GetConstants());
 
         // --- 定数バッファー更新 ---
-        commandList->SetGraphicsRootDescriptorTable(1, constantBuffers_[mesh_index]->GetDescriptor()->GetGpuHandle());
+        commandList->SetGraphicsRootDescriptorTable(1, constantBuffers_[Graphics::Instance().GetCurrentBufferIndex()][mesh_index]->GetDescriptor()->GetGpuHandle());
 
         // --- サブセット ---
         for (const ModelResource::Mesh::Subset&  subset : mesh.subsets_)

@@ -62,7 +62,7 @@ namespace PlayerState
 
 
         float speed = 10.0f * elapsedTime;
-        float maxSpeed = 0.3f;
+        float maxSpeed = 18.0f * elapsedTime;
 
         DirectX::XMFLOAT3 velocity = owner_->GetVelocity();
         velocity.x += speed * ay;

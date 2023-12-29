@@ -17,6 +17,7 @@ void FlowerManager::Finalize()
     {
         flower->Finalize();
     }
+    Clear();
 }
 
 // --- XV ---
