@@ -7,7 +7,7 @@ Enemy::Enemy(const char* fbxFilename, bool triangulate, float samplingRate)
 }
 
 // --- •`‰æ ---
-void Enemy::Render(ID3D12GraphicsCommandList* commandList, const DirectX::XMMATRIX world)
+void Enemy::Render(ID3D12GraphicsCommandList* commandList, const DirectX::XMMATRIX& world)
 {
     Character::Render(commandList, GetTransform()->CalcWorldMatrix(0.01f));
 }

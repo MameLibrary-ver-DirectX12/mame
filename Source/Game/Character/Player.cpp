@@ -60,7 +60,7 @@ void Player::Update(const float& elapsedTime)
 }
 
 // --- •`‰æ ---
-void Player::Render(ID3D12GraphicsCommandList* commandList, const DirectX::XMMATRIX world)
+void Player::Render(ID3D12GraphicsCommandList* commandList, const DirectX::XMMATRIX& world)
 {
     GetTransform()->SetScaleFactor(1.0f);
     Character::Render(commandList, GetTransform()->CalcWorldMatrix(0.1f));

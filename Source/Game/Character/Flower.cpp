@@ -7,7 +7,7 @@ Flower::Flower(const char* fbxFilename)
 }
 
 // --- •`‰æ ---
-void Flower::Render(ID3D12GraphicsCommandList* commandList, const DirectX::XMMATRIX world)
+void Flower::Render(ID3D12GraphicsCommandList* commandList, const DirectX::XMMATRIX& world)
 {
     Character::Render(commandList, GetTransform()->CalcWorldMatrix(0.01f));
 }

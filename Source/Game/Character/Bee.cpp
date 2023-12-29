@@ -50,7 +50,7 @@ void Bee::Update(const float& elapsedTime)
 }
 
 // --- •`‰æ ---
-void Bee::Render(ID3D12GraphicsCommandList* commandList, const DirectX::XMMATRIX world)
+void Bee::Render(ID3D12GraphicsCommandList* commandList, const DirectX::XMMATRIX& world)
 {
     Character::Render(commandList, GetTransform()->CalcWorldMatrix(1.0f));
 }

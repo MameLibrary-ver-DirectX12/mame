@@ -164,6 +164,9 @@
     <ClCompile Include="Source\Game\Character\PlayerState.cpp" />
     <ClCompile Include="Source\Game\CutIn\ChickenCutIn.cpp" />
     <ClCompile Include="Source\Game\CutIn\ChickenState.cpp" />
+    <ClCompile Include="Source\Game\PoisonHoney\PoisonHoney.cpp" />
+    <ClCompile Include="Source\Game\PoisonHoney\PoisonHoneyManager.cpp" />
+    <ClCompile Include="Source\Game\PoisonHoney\PoisonHoneyNormal.cpp" />
     <ClCompile Include="Source\Game\Shop\Shop.cpp" />
     <ClCompile Include="Source\Game\Skill\Skill.cpp" />
     <ClCompile Include="Source\Game\Stage\Stage.cpp" />
@@ -234,6 +237,9 @@
     <ClInclude Include="Source\Game\Character\PlayerState.h" />
     <ClInclude Include="Source\Game\CutIn\ChickenCutIn.h" />
     <ClInclude Include="Source\Game\CutIn\ChickenState.h" />
+    <ClInclude Include="Source\Game\PoisonHoney\PoisonHoney.h" />
+    <ClInclude Include="Source\Game\PoisonHoney\PoisonHoneyManager.h" />
+    <ClInclude Include="Source\Game\PoisonHoney\PoisonHoneyNormal.h" />
     <ClInclude Include="Source\Game\Shop\Shop.h" />
     <ClInclude Include="Source\Game\Skill\Skill.h" />
     <ClInclude Include="Source\Game\Stage\Stage.h" />

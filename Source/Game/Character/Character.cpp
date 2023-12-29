@@ -8,7 +8,7 @@ Character::Character(const char* fbxFilename, bool triangulate, float samplingRa
 }
 
 // --- •`‰æ ---
-void Character::Render(ID3D12GraphicsCommandList* commandList, const DirectX::XMMATRIX world)
+void Character::Render(ID3D12GraphicsCommandList* commandList, const DirectX::XMMATRIX& world)
 {
     model_->Render(commandList, world);
 }

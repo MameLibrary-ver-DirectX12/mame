@@ -46,7 +46,7 @@ void FlowerBleu::Update(const float& elapsedTime)
 }
 
 // --- •`‰æ ---
-void FlowerBleu::Render(ID3D12GraphicsCommandList* commandList, const DirectX::XMMATRIX world)
+void FlowerBleu::Render(ID3D12GraphicsCommandList* commandList, const DirectX::XMMATRIX& world)
 {
     GetTransform()->SetScaleFactor(100);
     Flower::Render(commandList, GetTransform()->CalcWorldMatrix(1.0f));

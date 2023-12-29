@@ -127,6 +127,9 @@
     <Filter Include="Mame\Game\Character\Bee">
       <UniqueIdentifier>{b0c12e71-e343-493d-a869-559c0704ffde}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Mame\Game\PoisonHoney">
+      <UniqueIdentifier>{db7c29fb-54fe-4f12-8962-e05f77cbe895}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Core\Main.cpp">
@@ -304,6 +307,15 @@
     </ClCompile>
     <ClCompile Include="Source\Game\Character\FlowerBleu.cpp">
       <Filter>Mame\Game\Character\Flower</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\PoisonHoney\PoisonHoney.cpp">
+      <Filter>Mame\Game\PoisonHoney</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\PoisonHoney\PoisonHoneyManager.cpp">
+      <Filter>Mame\Game\PoisonHoney</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\PoisonHoney\PoisonHoneyNormal.cpp">
+      <Filter>Mame\Game\PoisonHoney</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -520,6 +532,15 @@
     </ClInclude>
     <ClInclude Include="Source\Game\Character\FlowerBleu.h">
       <Filter>Mame\Game\Character\Flower</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\PoisonHoney\PoisonHoneyNormal.h">
+      <Filter>Mame\Game\PoisonHoney</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\PoisonHoney\PoisonHoney.h">
+      <Filter>Mame\Game\PoisonHoney</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\PoisonHoney\PoisonHoneyManager.h">
+      <Filter>Mame\Game\PoisonHoney</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
