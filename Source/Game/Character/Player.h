@@ -35,6 +35,10 @@ public:// --- æ“¾Eİ’è ---
     DirectX::XMFLOAT3 GetVelocity() { return velocity_; }
     void SetVelocity(DirectX::XMFLOAT3 velocity) { velocity_ = velocity; }
 
+    // --- ”¼Œa ---
+    float GetRadius() { return radius_; }
+    void SetRadius(const float& radius) { radius_ = radius; }
+
     // --- ƒXƒLƒ‹ ---
     int GetFlowerNum() { return flowerNum_; }
     void SetFlowerNum(int num) { flowerNum_ = num; }
@@ -55,6 +59,8 @@ private:
     // ------------------------------------------------------------
 
     DirectX::XMFLOAT3 velocity_ = {};
+
+    float radius_ = 0.0f;
 
     int animationIndex_ = 0;
 

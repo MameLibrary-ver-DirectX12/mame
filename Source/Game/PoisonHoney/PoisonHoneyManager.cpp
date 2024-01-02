@@ -48,7 +48,7 @@ void PoisonHoneyManager::Render(ID3D12GraphicsCommandList* commandList)
 {
     for (PoisonHoney*& poisonHoney : poisonHoneies_)
     {
-        poisonHoney->Render(commandList);
+        if (poisonHoney->GetIsRender()) poisonHoney->Render(commandList);
     }
 }
 

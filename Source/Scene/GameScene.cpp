@@ -15,6 +15,9 @@
 #include "../Game/Character/Bee.h"
 #include "../Game/Character/BeeManager.h"
 
+#include "../Game/PoisonHoney/PoisonHoneyManager.h"
+#include "../Game/PoisonHoney/PoisonHoneyNormal.h"
+
 // ----- コンストラクタ -----
 GameScene::GameScene()
 {
@@ -32,15 +35,18 @@ void GameScene::CreateResource()
 // ----- 初期化 -----
 void GameScene::Initialize()
 {
-    // --- カメラ初期化 ---
+    // --- カメラ 初期化 ---
     Camera::Instance().InitializeGame();
 
-    // --- プレイヤー初期化 ---
+    // --- プレイヤー 初期化 ---
     PlayerManager::Instnace().Initialize();
     PlayerManager::Instnace().GetPlayer()->GetTransform()->SetScaleFactor(0.5f);
 
-    // --- お花初期化 ---
+    // --- お花 初期化 ---
     FlowerManager::Instance().Initialize();
+
+    // --- ポイズンハニー 初期化 ---
+    PoisonHoneyManager::Instance().Initialize();
 
     stage_->GetTransform()->SetScaleFactor(10.0f);
     safeZone_->GetTransform()->SetScaleFactor(10.0f);
@@ -49,14 +55,17 @@ void GameScene::Initialize()
 // ----- 終了化 -----
 void GameScene::Finalize()
 {
-    // --- プレイヤー終了化 ---
-    PlayerManager::Instnace().Finalize();
+    // --- ポイズンハニー 終了化 ---
+    PoisonHoneyManager::Instance().Finalize();
 
     // --- お花 終了化 ---
     FlowerManager::Instance().Finalize();
 
     // --- 蜂 終了化 ---
     BeeManager::Instance().Finalize();
+
+    // --- プレイヤー終了化 ---
+    PlayerManager::Instnace().Finalize();
 }
 
 // ----- 更新 -----
@@ -77,6 +86,9 @@ void GameScene::Update(const float& elapsedTime)
 
     // --- プレイヤー更新 ---
     PlayerManager::Instnace().Update(elapsedTime);
+
+    // --- ポイズンハニー 更新 ---
+    PoisonHoneyManager::Instance().Update(elapsedTime);
 
     // --- お花 更新 ---
     FlowerManager::Instance().Update(elapsedTime);
@@ -103,6 +115,9 @@ void GameScene::Render(ID3D12GraphicsCommandList* commandList)
 
         // --- 蜂 ---
         BeeManager::Instance().Render(commandList);
+
+        // --- ポイズンハニー ---
+        PoisonHoneyManager::Instance().Render(commandList);
 
         // --- プレイヤー ---
         PlayerManager::Instnace().Render(commandList);
@@ -132,6 +147,9 @@ void GameScene::DrawDebug()
     // --- 蜂 ---
     BeeManager::Instance().DrawDebug();
 
+    // --- ポイズンハニー ---
+    PoisonHoneyManager::Instance().DrawDebug();
+
     chickenCutIn_->DrawDebug();
     if (ImGui::Button("initialize")) chickenCutIn_->GetStateMachine()->ChangeState(0);
 
@@ -145,6 +163,12 @@ void GameScene::DrawDebug()
     {
         Bee* bee = new Bee;
         bee->Initialize();
+    }
+
+    if (ImGui::Button("poison"))
+    {
+        PoisonHoneyNormal* poison = new PoisonHoneyNormal;
+        poison->Initialize();
     }
 
 
