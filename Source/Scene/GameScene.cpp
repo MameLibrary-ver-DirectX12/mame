@@ -30,6 +30,8 @@ void GameScene::CreateResource()
     safeZone_ = std::make_unique<StageNormal>("./Resources/Model/Stage/SafeZone.fbx");
 
     chickenCutIn_ = std::make_unique<ChickenCutIn>();
+
+    ui_ = std::make_unique<GameUI>();
 }
 
 // ----- 初期化 -----
@@ -47,6 +49,8 @@ void GameScene::Initialize()
 
     // --- ポイズンハニー 初期化 ---
     PoisonHoneyManager::Instance().Initialize();
+
+    ui_->Initialize();
 
     stage_->GetTransform()->SetScaleFactor(10.0f);
     safeZone_->GetTransform()->SetScaleFactor(10.0f);
@@ -124,6 +128,8 @@ void GameScene::Render(ID3D12GraphicsCommandList* commandList)
 
         //chickenCutIn_->Render(commandList);
     }
+
+    ui_->Render(commandList);
 }
 
 // ----- ImGui用 -----
@@ -149,6 +155,8 @@ void GameScene::DrawDebug()
 
     // --- ポイズンハニー ---
     PoisonHoneyManager::Instance().DrawDebug();
+
+    ui_->DrawDebug();
 
     chickenCutIn_->DrawDebug();
     if (ImGui::Button("initialize")) chickenCutIn_->GetStateMachine()->ChangeState(0);

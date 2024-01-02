@@ -6,6 +6,8 @@
 
 #include "../Game/CutIn/ChickenCutIn.h"
 
+#include "../Game/UI/UI.h"
+
 class GameScene : public BaseScene
 {
 public:
@@ -24,6 +26,8 @@ private:
     std::unique_ptr<StageNormal> safeZone_;
 
     std::unique_ptr<ChickenCutIn> chickenCutIn_;
+
+    std::unique_ptr<GameUI> ui_;
 
 };
 
