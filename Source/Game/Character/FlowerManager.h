@@ -23,6 +23,7 @@ public:
     void DrawDebug();
 
     int SearchPairIndex();  // –I‚ÉƒyƒA‚ğŒ©‚Â‚¯‚Ä‚ ‚°‚é
+    void RemovePair(const int& index);
 
     void Register(Flower* flower);  // “o˜^
     void Clear();                   // ‘Síœ

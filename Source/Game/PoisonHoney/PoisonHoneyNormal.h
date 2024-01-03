@@ -5,7 +5,7 @@ class PoisonHoneyNormal : public PoisonHoney
 {
 public:
     PoisonHoneyNormal();
-    ~PoisonHoneyNormal();
+    ~PoisonHoneyNormal() override;
 
     void Initialize()                       override;
     void Finalize()                         override;

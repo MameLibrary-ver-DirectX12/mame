@@ -48,3 +48,7 @@ IndexBuffer::IndexBuffer(void* pData, UINT dataNum, UINT sizeOfStructure)
     memcpy(map, pData, dataNum * sizeOfStructure);
     buffer_->Unmap(0, nullptr);
 }
+
+IndexBuffer::~IndexBuffer()
+{
+}

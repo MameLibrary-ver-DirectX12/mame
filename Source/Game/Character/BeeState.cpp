@@ -2,6 +2,8 @@
 #include "FlowerManager.h"
 #include "Bee.h"
 
+#include "../PoisonHoney/PoisonHoneyNormal.h"
+
 // ----- SearchState -----
 namespace BeeState
 {
@@ -121,11 +123,46 @@ namespace BeeState
     // --- 初期化 ---
     void MoveToStoragePlaceState::Initialize()
     {
+        // 置きに行く場所を設定
+        targetPos = {};
     }
 
     // --- 更新 ---
     void MoveToStoragePlaceState::Update(const float& elapsedTime)
     {
+        // XZ平面で判定したいのでYに0を代入する
+        DirectX::XMFLOAT3 beePos = { owner_->GetTransform()->GetPositionX() , 0, owner_->GetTransform()->GetPositionZ() };
+
+        DirectX::XMVECTOR targetVec = DirectX::XMLoadFloat3(&targetPos);
+        DirectX::XMVECTOR beeVec = DirectX::XMLoadFloat3(&beePos);
+        DirectX::XMVECTOR Vec = DirectX::XMVectorSubtract(targetVec, beeVec);
+
+        // 置き場についたか判定
+        float vecLength = DirectX::XMVectorGetX(DirectX::XMVector3LengthSq(Vec));
+        float length = 2.0f + owner_->GetRadius();
+        if (vecLength < length)
+        {
+            // 次のステートに行く (探す)
+            owner_->ChangeState(Bee::STATE::Search);
+
+            // ペア解除
+            FlowerManager::Instance().RemovePair(owner_->GetFlowerIndex());
+
+            PoisonHoneyNormal* poison = new PoisonHoneyNormal;
+            poison->Initialize();
+
+            return;
+        }
+
+        // 進む速度設定
+        float speed = owner_->GetMoveSpeed() * elapsedTime;
+
+        // 進む方向を設定 (花に向かう)
+        DirectX::XMFLOAT3 addPos;
+        DirectX::XMStoreFloat3(&addPos, DirectX::XMVectorScale(DirectX::XMVector3Normalize(Vec), speed));
+
+        // 移動
+        owner_->GetTransform()->AddPosition(addPos);
     }
 
     // --- 終了化 ---

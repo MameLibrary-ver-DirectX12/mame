@@ -80,7 +80,7 @@ class ModelResource
 {
 public:
     ModelResource(const char* fbxFilename, bool triangulate = true, float samplingRate = 0);
-    ~ModelResource() {}
+    ~ModelResource();
 
     static const int MAX_BONE_INFLUENCES = 4;
     static const int MAX_BONES = 256;

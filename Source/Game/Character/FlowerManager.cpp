@@ -91,6 +91,24 @@ int FlowerManager::SearchPairIndex()
     return -1; // Ž¸”s
 }
 
+// --- ƒyƒA‰ðœ ---
+void FlowerManager::RemovePair(const int& index)
+{
+    int num = -1;
+
+    for (Flower*& flower : flowers_)
+    {
+        ++num; // ”Ô†‚ð”‚¦‚é
+
+        if (num != index) continue;
+     
+        // ƒyƒA‰ðœ
+        flower->SetIsPaired(false);
+
+        return;
+    }
+}
+
 // --- “o˜^ ---
 void FlowerManager::Register(Flower* flower)
 {

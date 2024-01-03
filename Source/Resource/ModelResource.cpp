@@ -7,6 +7,7 @@
 
 #include "../Graphics/Graphics.h"
 #include "../Other/Misc.h"
+#include "../Other/Common.h"
 
 
 // ----- inline -----
@@ -69,6 +70,10 @@ ModelResource::ModelResource(const char* fbxFilename, bool triangulate, float sa
 
     // --- バウンディングボックス ---
     ComputeBoundingBox();
+}
+
+ModelResource::~ModelResource()
+{
 }
 
 // ----- リソース生成 -----

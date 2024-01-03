@@ -50,5 +50,8 @@ namespace BeeState
         void Initialize()                       override;
         void Update(const float& elapsedTime)   override;
         void Finalize()                         override;
+
+    private:
+        DirectX::XMFLOAT3 targetPos = {};
     };
 }

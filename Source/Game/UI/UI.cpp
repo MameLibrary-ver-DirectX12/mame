@@ -11,6 +11,7 @@ GameUI::GameUI()
 // --- ‰Šú‰» ---
 void GameUI::Initialize()
 {
+    numSprite_->GetTransform()->SetPos(200, 250);
     numSprite_->GetTransform()->SetSize(60, 100);
     numSprite_->GetTransform()->SetTexSize(60, 100);
 }
@@ -39,6 +40,8 @@ void GameUI::DrawDebug()
 
 void GameUI::NumRender(ID3D12GraphicsCommandList* commandList, const int& num, const float& firstPosX, const float& secondPosX, const float& thirdPosX)
 {
+    if (num < 0) return;
+
     float texSize = 60.0f;
     float one       = num       % 10 * texSize;
     float ten       = num / 10  % 10 * texSize;

@@ -551,12 +551,12 @@ void Sprite::Render(ID3D12GraphicsCommandList* commandList, const int& noiseText
 
     NoiseTexture::Instance().PSSetShaderResourceView(commandList, noiseTextureType);
 
-    DissolveConstants* dissolve;
-    dissolveConstantBuffer_->Map(0, nullptr, reinterpret_cast<void**>(&dissolve));
-    dissolve->dissolveValue_ = dissolve_.GetDissolveValue();
-    dissolve->edgeThrehold_ = dissolve_.GetEdgeThrehold();
-    dissolve->edgeColor_ = dissolve_.GetEdgeColor();
-    dissolveConstantBuffer_->Unmap(0, nullptr);
+    //DissolveConstants* dissolve;
+    //dissolveConstantBuffer_->Map(0, nullptr, reinterpret_cast<void**>(&dissolve));
+    //dissolve->dissolveValue_ = dissolve_.GetDissolveValue();
+    //dissolve->edgeThrehold_ = dissolve_.GetEdgeThrehold();
+    //dissolve->edgeColor_ = dissolve_.GetEdgeColor();
+    //dissolveConstantBuffer_->Unmap(0, nullptr);
 
     //commandList->SetGraphicsRootDescriptorTable(3, dissolveConstantsDescriptor_->GetGpuHandle());
 

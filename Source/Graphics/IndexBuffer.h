@@ -7,7 +7,7 @@ class IndexBuffer
 {
 public:
     IndexBuffer(void* pData, UINT dataNum, UINT sizeOfStructure);
-    ~IndexBuffer() {}
+    ~IndexBuffer();
 
     D3D12_INDEX_BUFFER_VIEW* GetIndexBufferView() { return &bufferView_; }
 

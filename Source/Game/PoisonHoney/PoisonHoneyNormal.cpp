@@ -37,7 +37,7 @@ void PoisonHoneyNormal::Initialize()
     PoisonHoney::SetDirection(PlayerManager::Instnace().GetPlayer()->GetTransform()->CalcForward());
 
     // スピード設定
-    PoisonHoney::SetSpeed(10.0f);
+    PoisonHoney::SetSpeed(30.0f);
 
     // 判定用半径設定
     PoisonHoney::SetRadius(2.0f);
@@ -53,6 +53,12 @@ void PoisonHoneyNormal::Update(const float& elapsedTime)
 {
     // --- ステートマシンでの処理 ---
     PoisonHoney::Update(elapsedTime);
+
+    // 画面外に出た玉を消去する
+    if (GetTransform()->GetPositionZ() < -100.0f)
+    {
+        PoisonHoneyManager::Instance().Remove(this);
+    }
 }
 
 // --- 描画 ---

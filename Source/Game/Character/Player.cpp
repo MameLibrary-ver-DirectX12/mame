@@ -39,6 +39,9 @@ void Player::Initialize()
 
     // --- îºåaê›íË ---
     SetRadius(4.0f);
+
+    // èâä˙ÇÕâEå¸Ç´Ç≈ê›íËÇ∑ÇÈ
+    GetTransform()->SetRotationY(DirectX::XMConvertToRadians(180));
 }
 
 // --- èIóπâª ---

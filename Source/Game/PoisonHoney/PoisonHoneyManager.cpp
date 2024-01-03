@@ -21,7 +21,7 @@ void PoisonHoneyManager::Finalize()
 
 // --- 更新 ---
 void PoisonHoneyManager::Update(const float& elapsedTime)
-{
+{   
     // 更新
     for (PoisonHoney*& poisonHoney : poisonHoneies_)
     {
@@ -31,14 +31,12 @@ void PoisonHoneyManager::Update(const float& elapsedTime)
     // 開放
     for (PoisonHoney* poisonHoney : removes_)
     {
-        std::vector<PoisonHoney*>::iterator it = std::find(poisonHoneies_.begin(), poisonHoneies_.end(), poisonHoney);
+        auto it = std::find(poisonHoneies_.begin(), poisonHoneies_.end(), poisonHoney);
 
         if (it != poisonHoneies_.end())
         {
             poisonHoneies_.erase(it);
         }
-
-        SafeDeletePtr(poisonHoney);
     }
     removes_.clear();
 }
