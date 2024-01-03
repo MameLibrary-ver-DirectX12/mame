@@ -535,8 +535,8 @@ void Sprite::Render(ID3D12GraphicsCommandList* commandList, const int& noiseText
         v[i].color_.z = transform_.GetColorB();
         v[i].color_.w = transform_.GetColorA();
 
-        v[i].texcoord_.x = texcoords[i].x / transform_.GetTexSizeX();
-        v[i].texcoord_.y = texcoords[i].y / transform_.GetTexSizeY();
+        v[i].texcoord_.x = texcoords[i].x / transform_.GetOriginalSizeX();
+        v[i].texcoord_.y = texcoords[i].y / transform_.GetOriginalSizeY();
     }
 
 

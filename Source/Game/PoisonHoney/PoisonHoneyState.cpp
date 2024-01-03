@@ -92,6 +92,8 @@ namespace PoisonHoneyState
 
         // •`‰æƒtƒ‰ƒO‚ð—§‚Ä‚é
         owner_->SetIsRender(true);
+
+        owner_->SetIsAbleAttack(false);
     }
 
     void AttackState::Update(const float& elapsedTime)

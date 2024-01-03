@@ -99,6 +99,9 @@ void GameScene::Update(const float& elapsedTime)
 
     // --- –I XV ---
     BeeManager::Instance().Update(elapsedTime);
+
+    // --- UIXV ---
+    ui_->Update(elapsedTime);
 }
 
 // ----- •`‰æ -----

@@ -1,5 +1,6 @@
 #include "Player.h"
 #include "PlayerState.h"
+#include "../PoisonHoney/PoisonHoneyManager.h"
 
 // --- コンストラクタ ---
 Player::Player()
@@ -59,6 +60,13 @@ void Player::Update(const float& elapsedTime)
     if (pos.z >=  14.0f) pos.z =  14.0f;
     if (pos.z <= -84.0f) pos.z = -84.0f;
     GetTransform()->SetPosition(pos);
+
+     // 攻撃
+    GamePad& gamePad = Input::Instance().GetGamePad();
+    if (gamePad.GetButtonDown() & GamePad::BTN_A)
+    {
+        PoisonHoneyManager::Instance().Shot(PoisonHoneyManager::TYPE::Normal);
+    }
 }
 
 // --- 描画 ---

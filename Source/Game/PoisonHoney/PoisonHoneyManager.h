@@ -33,6 +33,10 @@ public:
     void Clear();                                           // 全削除
     void Remove(PoisonHoney* poisonHoney);                  // 削除
 
+    int GetAbleAttckNum(TYPE type);
+
+    bool Shot(TYPE type);   // 攻撃
+
 private:
     int possessionNum_[static_cast<int>(TYPE::Max)] = {};   // 各ポイズンハニーの所持数
 

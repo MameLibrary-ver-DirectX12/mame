@@ -265,7 +265,11 @@ private:// Transform
 #pragma endregion
 
         // ----- オリジナルサイズ -----
+        DirectX::XMFLOAT2 GetOriginalSize() { return originalSize_; }
+        float GetOriginalSizeX() { return originalSize_.x; }
+        float GetOriginalSizeY() { return originalSize_.y; }
         void SetOriginalSize(DirectX::XMFLOAT2 size) { originalSize_ = size; }
+
 
         // ----- 振動 -----
 #pragma region 振動

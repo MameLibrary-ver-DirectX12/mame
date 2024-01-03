@@ -1,7 +1,7 @@
 #pragma once
 #include "../../Resource/Sprite.h"
 
-#include "../PoisonHoney/PoisonHoneyManager.h"
+
 
 class GameUI
 {
@@ -15,7 +15,9 @@ public:
     void Render(ID3D12GraphicsCommandList* commandList);
     void DrawDebug();
 
+    void NumRender(ID3D12GraphicsCommandList* commandList, const int& num, const float& firstPosX, const float& secondPosX, const float& thirdPosX);
+
 private:
-    std::unique_ptr<Sprite> poisonHoneyNum_[static_cast<UINT>(PoisonHoneyManager::TYPE::Max)];
+    std::unique_ptr<Sprite> numSprite_;
 };
 

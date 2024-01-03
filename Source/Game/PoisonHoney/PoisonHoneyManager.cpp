@@ -96,3 +96,45 @@ void PoisonHoneyManager::Remove(PoisonHoney* poisonHoney)
     // Á‹ŽƒŠƒXƒg‚É“o˜^
     removes_.insert(poisonHoney);
 }
+
+// --- UŒ‚‰Â”\‚Èƒ|ƒCƒYƒ“ƒnƒj[‚Ì” ---
+int PoisonHoneyManager::GetAbleAttckNum(TYPE type)
+{
+    int total = 0;
+
+    for (PoisonHoney*& poisonHoney : poisonHoneies_)
+    {
+        // ˆá‚¤Ží—Þ
+        if (poisonHoney->GetType() != static_cast<UINT>(type)) continue;
+
+        // UŒ‚‰Â”\”‚ðƒJƒEƒ“ƒg‚·‚é
+        if (poisonHoney->GetIsAbleAttack())
+        {
+            ++total;
+        }
+
+    }
+
+    return total;
+}
+
+// --- UŒ‚ ---
+bool PoisonHoneyManager::Shot(TYPE type)
+{
+    int num = 0;
+
+    for (PoisonHoney*& poisonHoney : poisonHoneies_)
+    {
+        // ˆá‚¤Ží—Þ
+        if (poisonHoney->GetType() != static_cast<UINT>(type)) continue;
+
+        // UŒ‚‚Å‚«‚È‚¢
+        if (!poisonHoney->GetIsAbleAttack()) continue;
+
+        // UŒ‚
+        poisonHoney->SetState(PoisonHoney::STATE::Attack);
+        return true;
+    }
+
+    return false;
+}
