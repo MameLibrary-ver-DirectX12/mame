@@ -101,7 +101,9 @@ namespace PoisonHoneyState
 
         // ˆÊ’uE•ûŒü‚ðÝ’è
         owner_->GetTransform()->SetPosition(PlayerManager::Instnace().GetPlayer()->GetTransform()->GetPosition());
+        PlayerManager::Instnace().GetPlayer()->GetTransform()->AddRotationY(DirectX::XMConvertToRadians(90.0f));
         owner_->SetDirection(PlayerManager::Instnace().GetPlayer()->GetTransform()->CalcForward());
+        PlayerManager::Instnace().GetPlayer()->GetTransform()->AddRotationY(DirectX::XMConvertToRadians(-90.0f));
     }
 
     void AttackState::Update(const float& elapsedTime)

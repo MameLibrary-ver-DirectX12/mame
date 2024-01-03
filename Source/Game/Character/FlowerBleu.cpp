@@ -19,7 +19,9 @@ void FlowerBleu::Initialize()
     // プレイヤーの前方向に設置する
     {
         DirectX::XMFLOAT3 playerPos = PlayerManager::Instnace().GetPlayer()->GetTransform()->GetPosition();
+        PlayerManager::Instnace().GetPlayer()->GetTransform()->AddRotationY(DirectX::XMConvertToRadians(90.0f));
         DirectX::XMFLOAT3 playerFront = PlayerManager::Instnace().GetPlayer()->GetTransform()->CalcForward();
+        PlayerManager::Instnace().GetPlayer()->GetTransform()->AddRotationY(DirectX::XMConvertToRadians(-90.0f));
         float length = 3.0f;
         DirectX::XMStoreFloat3(&playerPos, DirectX::XMVectorAdd(DirectX::XMLoadFloat3(&playerPos),
             DirectX::XMVectorScale(DirectX::XMVector3Normalize(DirectX::XMLoadFloat3(&playerFront)), length)));

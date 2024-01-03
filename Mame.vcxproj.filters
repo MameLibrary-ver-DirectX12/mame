@@ -130,6 +130,9 @@
     <Filter Include="Mame\Game\PoisonHoney">
       <UniqueIdentifier>{db7c29fb-54fe-4f12-8962-e05f77cbe895}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Mame\Game\UI">
+      <UniqueIdentifier>{dbd8bd93-4939-4756-ab3c-2a9dfa7cec60}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Core\Main.cpp">
@@ -270,7 +273,6 @@
     <ClCompile Include="Source\Resource\Audio\Audio.cpp">
       <Filter>Mame\Resource\Audio</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Resource\Audio\AudioManager.cpp" />
     <ClCompile Include="Source\Game\CutIn\ChickenCutIn.cpp">
       <Filter>Mame\Game\CutIn</Filter>
     </ClCompile>
@@ -280,7 +282,6 @@
     <ClCompile Include="Source\Game\Skill\Skill.cpp">
       <Filter>Mame\Game\Skill</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Game\CutIn\ChickenState.cpp" />
     <ClCompile Include="Source\Game\Character\Enemy.cpp">
       <Filter>Mame\Game\Character\Enemy</Filter>
     </ClCompile>
@@ -316,6 +317,16 @@
     </ClCompile>
     <ClCompile Include="Source\Game\PoisonHoney\PoisonHoneyNormal.cpp">
       <Filter>Mame\Game\PoisonHoney</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Resource\Audio\AudioManager.cpp">
+      <Filter>Mame\Resource\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\CutIn\ChickenState.cpp" />
+    <ClCompile Include="Source\Game\PoisonHoney\PoisonHoneyState.cpp">
+      <Filter>Mame\Game\PoisonHoney</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\UI\UI.cpp">
+      <Filter>Mame\Game\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -495,7 +506,6 @@
     <ClInclude Include="Source\Resource\Audio\Audio.h">
       <Filter>Mame\Resource\Audio</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Resource\Audio\AudioManager.h" />
     <ClInclude Include="Source\Game\CutIn\ChickenCutIn.h">
       <Filter>Mame\Game\CutIn</Filter>
     </ClInclude>
@@ -505,7 +515,6 @@
     <ClInclude Include="Source\Game\Skill\Skill.h">
       <Filter>Mame\Game\Skill</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Game\CutIn\ChickenState.h" />
     <ClInclude Include="Source\Game\Character\Enemy.h">
       <Filter>Mame\Game\Character\Enemy</Filter>
     </ClInclude>
@@ -541,6 +550,16 @@
     </ClInclude>
     <ClInclude Include="Source\Game\PoisonHoney\PoisonHoneyManager.h">
       <Filter>Mame\Game\PoisonHoney</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Resource\Audio\AudioManager.h">
+      <Filter>Mame\Resource\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\CutIn\ChickenState.h" />
+    <ClInclude Include="Source\Game\PoisonHoney\PoisonHoneyState.h">
+      <Filter>Mame\Game\PoisonHoney</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\UI\UI.h">
+      <Filter>Mame\Game\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

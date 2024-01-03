@@ -35,32 +35,32 @@ namespace PlayerState
 
         float ax = gamePad.GetAxisLX();
         float ay = gamePad.GetAxisLY();
+        float length = sqrtf(ax * ax + ay * ay);
 
-#if 0
-        // todo : ‰ñ“]ˆ—ì‚ç‚È‚¯‚ê‚Î
         // ‰ñ“]ˆ—
-        DirectX::XMFLOAT4 rotate = owner_->GetTransform()->GetRotation();
-        
-        if (ay != 0 || ax != 0)
         {
-            DirectX::XMFLOAT3 rot = { ay, 0, ax };
-            DirectX::XMStoreFloat3(&rotateVec, DirectX::XMVector3Normalize(DirectX::XMLoadFloat3(&rot)));
+            if (ax != 0 && ay != 0)
+            {
+                ax /= length;
+                ay /= length;
+
+                DirectX::XMFLOAT3 frontVec = owner_->GetTransform()->CalcForward();
+                float dot = frontVec.x * ax + frontVec.z * ay;
+
+                float cross = frontVec.z * ax - frontVec.x * ay;
+
+                float speed = 10.0f * elapsedTime;
+
+                float rotY = (cross > 0.0f) ? acosf(dot) * speed : -acosf(dot) * speed;
+                owner_->GetTransform()->SetRotationY(rotY + owner_->GetTransform()->GetRotationY());
+                //owner_->GetTransform()->SetRotationY(rotY + owner_->GetTransform()->GetRotationY());
+            } 
         }
 
-        DirectX::XMVECTOR rotVec = DirectX::XMLoadFloat3(&rotateVec);
-        DirectX::XMFLOAT3 front = owner_->GetTransform()->CalcForward();
-        DirectX::XMVECTOR frontVec = DirectX::XMLoadFloat3(&front);
-        float agnel = DirectX::XMVectorGetX(DirectX::XMVector3Dot(frontVec, rotVec));
-        
+        ax = gamePad.GetAxisLX();
+        ay = gamePad.GetAxisLY();
 
-        rotate.y = acosf(agnel);
-        //rotate.y = rotate.y + DirectX::XMConvertToRadians(180.0f);
-        //rotate.y -= ay * 10.0f * elapsedTime;
-
-        owner_->GetTransform()->SetRotation(rotate);
-#endif
-
-
+        // ˆÚ“®ˆ—
         float speed = 10.0f * elapsedTime;
         float maxSpeed = 18.0f * elapsedTime;
 
