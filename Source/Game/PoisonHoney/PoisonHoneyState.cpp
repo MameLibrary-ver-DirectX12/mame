@@ -93,7 +93,15 @@ namespace PoisonHoneyState
         // 描画フラグを立てる
         owner_->SetIsRender(true);
 
+        // 攻撃可能フラグを false にする
         owner_->SetIsAbleAttack(false);
+
+        // 角度を設定
+        owner_->GetTransform()->SetRotationY(PlayerManager::Instnace().GetPlayer()->GetTransform()->GetRotationY());
+
+        // 位置・方向を設定
+        owner_->GetTransform()->SetPosition(PlayerManager::Instnace().GetPlayer()->GetTransform()->GetPosition());
+        owner_->SetDirection(PlayerManager::Instnace().GetPlayer()->GetTransform()->CalcForward());
     }
 
     void AttackState::Update(const float& elapsedTime)
