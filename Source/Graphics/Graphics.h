@@ -62,6 +62,9 @@ public:// 取得・設定
     // --- ディスクリプタヒープの取得 ---
     DescriptorHeap* GetSrvCbvUavDescriptorHeap() const { return srvCbvUavDescriptorHeap_.get(); }
     DescriptorHeap* GetSamplerDescriptorHeap() const { return samplerDescriptorHeap_.get(); }
+    
+    DescriptorHeap* GetRtvDescriptorHeap() { return renderTargetViewDescriptorHeap_.get(); }
+    DescriptorHeap* GetDsvDescriptorHeap() { return depthStencilViewDescriptorHeap_.get(); }
 
     // --- スクリーンサイズ取得 ---
     const float GetScreenWidth() const { return screenWidth_; }
@@ -141,6 +144,7 @@ private:
     std::unique_ptr<ImGuiRenderer> imguiRenderer_;
 
     UINT bufferCount_ = 0;
+    //std::vector<ID3D12Resource*> backBuffers_;
 
 #pragma endregion
 

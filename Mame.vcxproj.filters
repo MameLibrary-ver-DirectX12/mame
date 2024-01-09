@@ -321,12 +321,17 @@
     <ClCompile Include="Source\Resource\Audio\AudioManager.cpp">
       <Filter>Mame\Resource\Audio</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Game\CutIn\ChickenState.cpp" />
     <ClCompile Include="Source\Game\PoisonHoney\PoisonHoneyState.cpp">
       <Filter>Mame\Game\PoisonHoney</Filter>
     </ClCompile>
     <ClCompile Include="Source\Game\UI\UI.cpp">
       <Filter>Mame\Game\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\CutIn\ChickenState.cpp">
+      <Filter>Mame\Game\CutIn</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Graphics\FrameBuffer.cpp">
+      <Filter>Mame\Graphics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -554,12 +559,17 @@
     <ClInclude Include="Source\Resource\Audio\AudioManager.h">
       <Filter>Mame\Resource\Audio</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Game\CutIn\ChickenState.h" />
     <ClInclude Include="Source\Game\PoisonHoney\PoisonHoneyState.h">
       <Filter>Mame\Game\PoisonHoney</Filter>
     </ClInclude>
     <ClInclude Include="Source\Game\UI\UI.h">
       <Filter>Mame\Game\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\CutIn\ChickenState.h">
+      <Filter>Mame\Game\CutIn</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Graphics\FrameBuffer.h">
+      <Filter>Mame\Graphics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

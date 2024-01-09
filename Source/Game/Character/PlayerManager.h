@@ -24,8 +24,12 @@ public:
 public:// --- æ“¾Eİ’è ---
     std::unique_ptr<Player>& GetPlayer() { return player_; }
 
+    int GetFlowerNum() { return flowerNum_; }
+    void SetFlowerNum(const int& flowerNum) { flowerNum_ = flowerNum; }
 
 private:
     std::unique_ptr<Player> player_ = nullptr;
+
+    int flowerNum_ = 0;     // ‚Á‚Ä‚¢‚é‰Ô‚Ì”
 };
 

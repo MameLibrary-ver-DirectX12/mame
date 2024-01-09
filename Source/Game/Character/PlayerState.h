@@ -26,7 +26,13 @@ namespace PlayerState
         void Finalize()                         override;
 
     private:
-        DirectX::XMFLOAT3 rotateVec = {};
+        void Move(const float& elapsedTime);
+        void Rotate(const float& elapsedTime);
+
+        void InputMove(); // キーボード入力をスティックの値に変換
+
+    private:
+        DirectX::XMFLOAT2 stick_ = {};
     };
 }
 

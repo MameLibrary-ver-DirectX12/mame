@@ -32,6 +32,8 @@ void GameScene::CreateResource()
     chickenCutIn_ = std::make_unique<ChickenCutIn>();
 
     ui_ = std::make_unique<GameUI>();
+
+    //frameBuffer_ = std::make_unique<FrameBuffer>();
 }
 
 // ----- ‰Šú‰» -----
@@ -108,6 +110,9 @@ void GameScene::Update(const float& elapsedTime)
 void GameScene::Render(ID3D12GraphicsCommandList* commandList)
 {
     Camera::Instance().SetPerSpectiveFovGame();
+
+    //frameBuffer_->Activate(commandList);
+    //frameBuffer_->Deactivate(commandList);
 
     // --- Model ---
     {

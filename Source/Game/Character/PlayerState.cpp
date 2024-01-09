@@ -31,34 +31,25 @@ namespace PlayerState
     // --- 更新 ---
     void MoveState::Update(const float& elapsedTime)
     {
+        // 移動処理
+        Move(elapsedTime);
+
+        // 回転処理
+        Rotate(elapsedTime);
+    }
+
+    // --- 終了化 ---
+    void MoveState::Finalize()
+    {
+    }
+
+    // --- 移動 ---
+    void MoveState::Move(const float& elapsedTime)
+    {
         GamePad& gamePad = Input::Instance().GetGamePad();
 
         float ax = gamePad.GetAxisLX();
         float ay = gamePad.GetAxisLY();
-        float length = sqrtf(ax * ax + ay * ay);
-
-        // 回転処理
-        {
-            if (ax != 0 && ay != 0)
-            {
-                ax /= length;
-                ay /= length;
-
-                DirectX::XMFLOAT3 frontVec = owner_->GetTransform()->CalcForward();
-                float dot = frontVec.x * ax + frontVec.z * ay;
-
-                float cross = frontVec.z * ax - frontVec.x * ay;
-
-                float speed = 10.0f * elapsedTime;
-
-                float rotY = (cross > 0.0f) ? acosf(dot) * speed : -acosf(dot) * speed;
-                owner_->GetTransform()->SetRotationY(rotY + owner_->GetTransform()->GetRotationY());
-                //owner_->GetTransform()->SetRotationY(rotY + owner_->GetTransform()->GetRotationY());
-            } 
-        }
-
-        ax = gamePad.GetAxisLX();
-        ay = gamePad.GetAxisLY();
 
         // 移動処理
         float speed = 10.0f * elapsedTime;
@@ -68,8 +59,8 @@ namespace PlayerState
         velocity.x += speed * ay;
         velocity.z += speed * -ax;
 
-        if (velocity.x >=  maxSpeed) velocity.x =  maxSpeed;
-        if (velocity.z >=  maxSpeed) velocity.z =  maxSpeed;
+        if (velocity.x >= maxSpeed) velocity.x = maxSpeed;
+        if (velocity.z >= maxSpeed) velocity.z = maxSpeed;
         if (velocity.x <= -maxSpeed) velocity.x = -maxSpeed;
         if (velocity.z <= -maxSpeed) velocity.z = -maxSpeed;
 
@@ -103,8 +94,87 @@ namespace PlayerState
         owner_->SetVelocity(velocity);
     }
 
-    // --- 終了化 ---
-    void MoveState::Finalize()
+    // --- 回転 ---
+    void MoveState::Rotate(const float& elapsedTime)
     {
+        GamePad& gamePad = Input::Instance().GetGamePad();
+
+        stick_.x = gamePad.GetAxisLX();
+        stick_.y = gamePad.GetAxisLY();
+        float length = sqrtf(stick_.x * stick_.x + stick_.y * stick_.y);
+
+        // キーボード入力をスティックの値に変換
+        InputMove();
+
+        if (stick_.x != 0 || stick_.y != 0)
+        {
+            stick_.x /= length;
+            stick_.y /= length;
+
+            DirectX::XMFLOAT3 frontVec = owner_->GetTransform()->CalcForward();
+            float dot = frontVec.x * stick_.x + frontVec.z * stick_.y;
+
+            float cross = frontVec.z * stick_.x - frontVec.x * stick_.y;
+
+            float speed = 10.0f * elapsedTime;
+
+            float rotY = (cross > 0.0f) ? acosf(dot) * speed : -acosf(dot) * speed;
+            owner_->GetTransform()->SetRotationY(rotY + owner_->GetTransform()->GetRotationY());
+            //owner_->GetTransform()->SetRotationY(rotY + owner_->GetTransform()->GetRotationY());
+        }
+    }
+
+    // --- キーボード入力をスティックの値に変換 ---
+    void MoveState::InputMove()
+    {
+        // キーボード入力でも回転するようにする
+        GamePad& gamePad = Input::Instance().GetGamePad();
+
+        // 入力があれば値を変化させる
+        if (GetAsyncKeyState('A'))
+        {
+            stick_.x = -1;
+        }
+        else if (GetAsyncKeyState('D'))
+        {
+            stick_.x = 1;
+        }
+
+        if (GetAsyncKeyState('S'))
+        {
+            if (GetAsyncKeyState('A'))
+            {
+                stick_.x = -0.5;
+                stick_.y = -0.5;
+            }
+            else if (GetAsyncKeyState('D'))
+            {
+                stick_.x = 0.5;
+                stick_.y = -0.5;
+            }
+            else
+            {
+                stick_.y = -1;
+            }
+
+        }
+        else if (GetAsyncKeyState('W'))
+        {
+            if (GetAsyncKeyState('A'))
+            {
+                stick_.x = -0.5;
+                stick_.y = 0.5;
+            }
+            else if (GetAsyncKeyState('D'))
+            {
+                stick_.x = 0.5;
+                stick_.y = 0.5;
+            }
+            else
+            {
+                stick_.y = 1;
+            }
+        }
+
     }
 }

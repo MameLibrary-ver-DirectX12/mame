@@ -53,6 +53,15 @@ Graphics::Graphics(const HWND& hwnd, const UINT& bufferCount)
 
     // --- Shader ---
     shader_ = std::make_unique<Shader>();
+
+    //HRESULT result;
+    //backBuffers_.resize(bufferCount_);
+    //for (int i = 0; i < bufferCount_; ++i)
+    //{
+    //    result = swapChain_->GetBuffer(1, IID_PPV_ARGS(&backBuffers_[i]));
+    //    _ASSERT_EXPR(SUCCEEDED(result), HRTrace(result));
+    //    
+    //}
 }
 
 // デストラクタ
@@ -323,7 +332,11 @@ void Graphics::CreateFrameResource(const UINT& bufferCount)
         // ----- デプスステンシル -----
 #pragma region デプスステンシル
         // --- ヒーププロパティの設定 ---
-        CD3DX12_HEAP_PROPERTIES heapProp = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT);
+
+        D3D12_HEAP_PROPERTIES heapProp = {};
+        heapProp.Type = D3D12_HEAP_TYPE_DEFAULT; // DEFAULT なのであとは UNKNOWN でよい
+        heapProp.CPUPageProperty = D3D12_CPU_PAGE_PROPERTY_UNKNOWN;
+        heapProp.MemoryPoolPreference = D3D12_MEMORY_POOL_UNKNOWN;
 
         // --- リソースの設定 ---
         D3D12_RESOURCE_DESC resourceDesc = {};

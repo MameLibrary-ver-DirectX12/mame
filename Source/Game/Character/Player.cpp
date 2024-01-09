@@ -2,6 +2,9 @@
 #include "PlayerState.h"
 #include "../PoisonHoney/PoisonHoneyManager.h"
 
+#include "FlowerBleu.h"
+#include "Bee.h"
+
 // --- コンストラクタ ---
 Player::Player()
     //: Character("./Resources/Model/Character/golem.fbx", true)
@@ -70,6 +73,20 @@ void Player::Update(const float& elapsedTime)
     {
         PoisonHoneyManager::Instance().Shot(PoisonHoneyManager::TYPE::Normal);
     }
+
+    // お花設置
+    if (gamePad.GetButtonDown() & GamePad::BTN_X)
+    {
+        FlowerBleu* flowerBleu = new FlowerBleu;
+        flowerBleu->Initialize();
+    }
+
+    if (gamePad.GetButtonDown() & GamePad::BTN_Y)
+    {
+        Bee* bee = new Bee;
+        bee->Initialize();
+    }
+
 }
 
 // --- 描画 ---

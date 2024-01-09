@@ -1,6 +1,8 @@
 #pragma once
 #include "BaseScene.h"
 
+#include "../Graphics/FrameBuffer.h"
+
 #include "../Resource/Sprite.h"
 #include "../Game/Stage/StageNormal.h"
 
@@ -28,6 +30,8 @@ private:
     std::unique_ptr<ChickenCutIn> chickenCutIn_;
 
     std::unique_ptr<GameUI> ui_;
+
+    std::unique_ptr<FrameBuffer> frameBuffer_;
 
 };
 
