@@ -17,6 +17,7 @@ public:
 
     // --- Transform ---
     Transform* GetTransform() { return model_->GetTransform(); }
+    void SetColor(const DirectX::XMFLOAT4 color) { model_->SetColor(color); }
 
     void SetName(const std::string& name) { model_->SetName(name); }
     std::string GetName() { return model_->GetName(); }

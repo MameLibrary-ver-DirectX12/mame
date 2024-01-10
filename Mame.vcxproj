@@ -152,6 +152,7 @@
     <ClCompile Include="Source\Core\Application.cpp" />
     <ClCompile Include="Source\Core\Main.cpp" />
     <ClCompile Include="Source\Game\Character\Bee.cpp" />
+    <ClCompile Include="Source\Game\Character\BeeEnemy.cpp" />
     <ClCompile Include="Source\Game\Character\BeeManager.cpp" />
     <ClCompile Include="Source\Game\Character\BeeState.cpp" />
     <ClCompile Include="Source\Game\Character\Character.cpp" />
@@ -160,6 +161,7 @@
     <ClCompile Include="Source\Game\Character\Flower.cpp" />
     <ClCompile Include="Source\Game\Character\FlowerBleu.cpp" />
     <ClCompile Include="Source\Game\Character\FlowerManager.cpp" />
+    <ClCompile Include="Source\Game\Character\Honey.cpp" />
     <ClCompile Include="Source\Game\Character\Player.cpp" />
     <ClCompile Include="Source\Game\Character\PlayerManager.cpp" />
     <ClCompile Include="Source\Game\Character\PlayerState.cpp" />
@@ -228,6 +230,7 @@
     <ClInclude Include="Source\Core\Application.h" />
     <ClInclude Include="Source\Core\HighResolutionTimer.h" />
     <ClInclude Include="Source\Game\Character\Bee.h" />
+    <ClInclude Include="Source\Game\Character\BeeEnemy.h" />
     <ClInclude Include="Source\Game\Character\BeeManager.h" />
     <ClInclude Include="Source\Game\Character\BeeState.h" />
     <ClInclude Include="Source\Game\Character\Character.h" />
@@ -236,6 +239,7 @@
     <ClInclude Include="Source\Game\Character\Flower.h" />
     <ClInclude Include="Source\Game\Character\FlowerBleu.h" />
     <ClInclude Include="Source\Game\Character\FlowerManager.h" />
+    <ClInclude Include="Source\Game\Character\Honey.h" />
     <ClInclude Include="Source\Game\Character\Player.h" />
     <ClInclude Include="Source\Game\Character\PlayerManager.h" />
     <ClInclude Include="Source\Game\Character\PlayerState.h" />
@@ -327,6 +331,12 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Source\Shader\SpriteChargePS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
     </FxCompile>
     <FxCompile Include="Source\Shader\SpriteDissolvePS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>

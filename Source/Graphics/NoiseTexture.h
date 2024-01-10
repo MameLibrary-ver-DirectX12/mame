@@ -22,7 +22,7 @@ public:
     void PSSetShaderResourceView(ID3D12GraphicsCommandList* commandList, const int& noiseTextureType);
 
 private:
-    static const int MAX_NOISE_TEXTURE_NUM = 1; // ç≈ëÂñáêî
+    static const int MAX_NOISE_TEXTURE_NUM = 2; // ç≈ëÂñáêî
     Microsoft::WRL::ComPtr<ID3D12Resource> noiseTexture_[MAX_NOISE_TEXTURE_NUM];
 
     Descriptor* shaderResourceViewDescriptor_[MAX_NOISE_TEXTURE_NUM] = {};

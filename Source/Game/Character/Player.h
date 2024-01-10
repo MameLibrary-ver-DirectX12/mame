@@ -52,6 +52,9 @@ public:// --- 取得・設定 ---
         return false;
     }
 
+    float GetFlowerTimer() { return flowerTimer_; }
+    float GetFlowerMaxTime() { return flowerMaxTimer_; }
+
 private:
     // ---------- ステートマシン -----------------------------------
     std::unique_ptr<StateMachine<State<Player>>> stateMachine_;
@@ -66,6 +69,10 @@ private:
 
     // ----- スキル -----
     int flowerNum_ = 0; // 所持している花の数
+
+    float flowerTimer_ = 0.0f;
+    float flowerMaxTimer_ = 0.0f;
+    bool isAbleUseFlower_ = false;  // 花が設置可能か
 
 };
 

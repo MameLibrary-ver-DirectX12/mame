@@ -4,6 +4,7 @@
 #include <d3dx12.h>
 #include <string>
 #include "../Graphics/Descriptor.h"
+#include "../Graphics/ConstantBuffer.h"
 
 class Sprite
 {
@@ -18,12 +19,14 @@ public:
         const int& noiseTextureType = 0/*NoiseTexture Class で読み込んでるテクスチャ指定*/);
     void DrawDebug();
 
+    void SetChargeValue(const float& value) { charge_.value_ = value; }
 
 public:
     // ----- ピクセルシェーダー切り替え用関数 -----
     void UseDefaultPixelShader();
     void UseDissolvePixelShader();
     void UseEmissivePixelShader();    
+    void UseChargePixelShader();
 
 private:// Transform
 #pragma region Transform
@@ -328,6 +331,7 @@ private:// 変数
     Microsoft::WRL::ComPtr<ID3DBlob> psBlob_;
     Microsoft::WRL::ComPtr<ID3DBlob> psDissolveBlob_;
     Microsoft::WRL::ComPtr<ID3DBlob> psEmissiveBlob_;
+    Microsoft::WRL::ComPtr<ID3DBlob> psChargeBlob_;
 
     // ---------- 表示に関するあれこれ ----------
 #pragma region 表示に関するあれこれ
@@ -371,6 +375,14 @@ private:// 変数
     Descriptor* dissolveConstantsDescriptor_ = nullptr;
     Microsoft::WRL::ComPtr<ID3D12Resource> dissolveConstantBuffer_;
     
+    // 仮で作ってる
+    std::unique_ptr<ConstantBuffer> chargeConstants_;
+    struct ChargeConstant
+    {
+        float value_ = 0;
+        float dummy_[3] = {};
+    }charge_;
+
 
     D3D12_GRAPHICS_PIPELINE_STATE_DESC graphicsPipeline_ = {};
 

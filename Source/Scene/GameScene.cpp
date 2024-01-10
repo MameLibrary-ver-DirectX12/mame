@@ -18,6 +18,8 @@
 #include "../Game/PoisonHoney/PoisonHoneyManager.h"
 #include "../Game/PoisonHoney/PoisonHoneyNormal.h"
 
+#define FRAME_BUFFER 0
+
 // ----- コンストラクタ -----
 GameScene::GameScene()
 {
@@ -26,14 +28,17 @@ GameScene::GameScene()
 // ----- リソース生成 -----
 void GameScene::CreateResource()
 {
-    stage_ = std::make_unique<StageNormal>("./Resources/Model/Stage/StageBase.fbx");
-    safeZone_ = std::make_unique<StageNormal>("./Resources/Model/Stage/SafeZone.fbx");
+    stage_ = std::make_unique<StageNormal>("./Resources/Model/Stage/stage.fbx");
 
     chickenCutIn_ = std::make_unique<ChickenCutIn>();
 
+    honey_ = std::make_unique<Honey>();
+
     ui_ = std::make_unique<GameUI>();
 
-    //frameBuffer_ = std::make_unique<FrameBuffer>();
+#if FRAME_BUFFER
+    frameBuffer_ = std::make_unique<FrameBuffer>();
+#endif
 }
 
 // ----- 初期化 -----
@@ -52,10 +57,12 @@ void GameScene::Initialize()
     // --- ポイズンハニー 初期化 ---
     PoisonHoneyManager::Instance().Initialize();
 
+    honey_->Initialize();
+
     ui_->Initialize();
 
+    stage_->SetColor({ 0.8f,1.0f,1.0f,1.0f });
     stage_->GetTransform()->SetScaleFactor(10.0f);
-    safeZone_->GetTransform()->SetScaleFactor(10.0f);
 }
 
 // ----- 終了化 -----
@@ -102,8 +109,12 @@ void GameScene::Update(const float& elapsedTime)
     // --- 蜂 更新 ---
     BeeManager::Instance().Update(elapsedTime);
 
+    // --- はちみつ 更新 ---
+    honey_->Update(elapsedTime);
+
     // --- UI更新 ---
     ui_->Update(elapsedTime);
+
 }
 
 // ----- 描画 -----
@@ -111,8 +122,10 @@ void GameScene::Render(ID3D12GraphicsCommandList* commandList)
 {
     Camera::Instance().SetPerSpectiveFovGame();
 
-    //frameBuffer_->Activate(commandList);
-    //frameBuffer_->Deactivate(commandList);
+#if FRAME_BUFFER
+    frameBuffer_->Activate(commandList);
+    frameBuffer_->Deactivate(commandList);
+#endif
 
     // --- Model ---
     {
@@ -120,7 +133,7 @@ void GameScene::Render(ID3D12GraphicsCommandList* commandList)
 
         // --- ステージ ---
         stage_->Render(commandList, stage_->GetTransform()->CalcWorldMatrix(1.0f));
-        safeZone_->Render(commandList, safeZone_->GetTransform()->CalcWorldMatrix(1.0f));
+    
 
         // --- お花 ---
         FlowerManager::Instance().Render(commandList);
@@ -133,6 +146,9 @@ void GameScene::Render(ID3D12GraphicsCommandList* commandList)
 
         // --- プレイヤー ---
         PlayerManager::Instnace().Render(commandList);
+
+        // --- はちみつ ---
+        honey_->Render(commandList);
 
         //chickenCutIn_->Render(commandList);
     }
@@ -147,7 +163,7 @@ void GameScene::DrawDebug()
 
     // --- ステージ ---
     stage_->DrawDebug();
-    safeZone_->DrawDebug();
+    
 
     // --- プレイヤー ---
     PlayerManager::Instnace().DrawDebug();
@@ -163,6 +179,8 @@ void GameScene::DrawDebug()
 
     // --- ポイズンハニー ---
     PoisonHoneyManager::Instance().DrawDebug();
+
+    honey_->DrawDebug();
 
     ui_->DrawDebug();
 

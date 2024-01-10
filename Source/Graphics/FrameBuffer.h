@@ -3,6 +3,8 @@
 #include <wrl.h>
 #include <cstdint>
 
+#include "Descriptor.h"
+
 class FrameBuffer
 {
 public:
@@ -14,7 +16,10 @@ public:
 
 private:
     Microsoft::WRL::ComPtr<ID3D12Resource> resource_;
+    Microsoft::WRL::ComPtr<ID3D12Resource> depthResource_;
     Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> RTVHeap_; // レンダーターゲット用
     Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> SRVHeap_; // テクスチャ用
+
+    std::unique_ptr<DescriptorHeap> DSVHeap_;
 };
 

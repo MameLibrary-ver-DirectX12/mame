@@ -85,13 +85,19 @@ public:// Setter,Getter, etc...
 	[[nodiscard]] const float GetRotationZ() const { return rotation.z; }
 
 	void SetRotation(const DirectX::XMFLOAT4& rot) { rotation = rot; }
-	void SetRotationX(const float rotX) { rotation.x = rotX; }
-	void SetRotationY(const float rotY) { rotation.y = rotY; }
-	void SetRotationZ(const float rotZ) { rotation.z = rotZ; }
+	void SetRotation(const float& rotX, const float& rotY, const float& rotZ)
+	{
+		rotation.x = rotX;
+		rotation.y = rotY;
+		rotation.z = rotZ;
+	}
+	void SetRotationX(const float& rotX) { rotation.x = rotX; }
+	void SetRotationY(const float& rotY) { rotation.y = rotY; }
+	void SetRotationZ(const float& rotZ) { rotation.z = rotZ; }
 
-	void AddRotationX(const float rotX) { rotation.x += rotX; }
-	void AddRotationY(const float rotY) { rotation.y += rotY; }
-	void AddRotationZ(const float rotZ) { rotation.z += rotZ; }
+	void AddRotationX(const float& rotX) { rotation.x += rotX; }
+	void AddRotationY(const float& rotY) { rotation.y += rotY; }
+	void AddRotationZ(const float& rotZ) { rotation.z += rotZ; }
 
 private:
     DirectX::XMFLOAT3 position;

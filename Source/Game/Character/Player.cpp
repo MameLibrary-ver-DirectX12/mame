@@ -10,8 +10,8 @@ Player::Player()
     //: Character("./Resources/Model/Character/golem.fbx", true)
     //: Character("./Resources/Model/Character/nico.fbx", true)
     //: Character("./Resources/Model/Character/sword.fbx", true)
-    : Character("./Resources/Model/Character/Player.fbx", true)
-    //: Character("./Resources/Model/cube.fbx", true)
+    //: Character("./Resources/Model/Character/Player.fbx", true)
+    : Character("./Resources/Model/cube.fbx", true)
 {
     SetName("Player");
 
@@ -69,17 +69,35 @@ void Player::Update(const float& elapsedTime)
 
      // UŒ‚
     GamePad& gamePad = Input::Instance().GetGamePad();
-    if (gamePad.GetButtonDown() & GamePad::BTN_A)
+    if (gamePad.GetButtonDown() & GamePad::BTN_RIGHT_SHOULDER ||
+        gamePad.GetButtonDown() & GamePad::BTN_RIGHT_TRIGGER)
     {
         PoisonHoneyManager::Instance().Shot(PoisonHoneyManager::TYPE::Normal);
     }
 
     // ‚¨‰ÔÝ’u
-    if (gamePad.GetButtonDown() & GamePad::BTN_X)
+    if (gamePad.GetButtonDown() & GamePad::BTN_X &&
+        isAbleUseFlower_)
     {
+
         FlowerBleu* flowerBleu = new FlowerBleu;
         flowerBleu->Initialize();
+
+        flowerTimer_ = 4.0f;
+        flowerMaxTimer_ = 4.0f;
+        isAbleUseFlower_ = false;
     }
+    if (!isAbleUseFlower_)
+    {
+        flowerTimer_ -= elapsedTime;
+
+        if (flowerTimer_ <= 0.0f)
+        {
+            flowerTimer_ = 0.0f;
+            isAbleUseFlower_ = true;
+        }
+    }
+
 
     if (gamePad.GetButtonDown() & GamePad::BTN_Y)
     {
@@ -94,9 +112,9 @@ void Player::Render(ID3D12GraphicsCommandList* commandList, const DirectX::XMMAT
 {
     GetTransform()->SetScaleFactor(1.0f);
     GetTransform()->AddRotationY(DirectX::XMConvertToRadians(90.0f));
-    Character::Render(commandList, GetTransform()->CalcWorldMatrix(0.1f));
+    //Character::Render(commandList, GetTransform()->CalcWorldMatrix(0.1f));
+    Character::Render(commandList, GetTransform()->CalcWorldMatrix(1.0f));
     GetTransform()->AddRotationY(DirectX::XMConvertToRadians(-90.0f));
-    //Character::Render(commandList, GetTransform()->CalcWorldMatrix(1.0f));
 }
 
 // --- ImGui ---

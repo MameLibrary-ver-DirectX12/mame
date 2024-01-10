@@ -10,6 +10,7 @@ NoiseTexture::NoiseTexture()
     Graphics& graphics = Graphics::Instance();
 
     result = graphics.LoadTexture("./Resources/Image/Noise/mask.png", noiseTexture_[0].GetAddressOf());
+    result = graphics.LoadTexture("./Resources/Image/Noise/mask0.png", noiseTexture_[1].GetAddressOf());
 
     for (int index = 0; index < MAX_NOISE_TEXTURE_NUM; ++index)
     {

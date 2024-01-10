@@ -14,5 +14,12 @@ public:
         const DirectX::XMMATRIX& world = {}) override;   // •`‰æ
 
     void DrawDebug()                        override {} // ImGui—p
+
+public:// --- æ“¾Eİ’è ---
+    int GetType() { return type_; }
+    void SetType(const int& type) { type_ = type; }        
+
+private:
+    int type_ = 0;
 };
 

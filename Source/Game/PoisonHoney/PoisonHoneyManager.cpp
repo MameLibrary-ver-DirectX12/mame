@@ -17,6 +17,7 @@ void PoisonHoneyManager::Finalize()
     {
         poisonHoney->Finalize();
     }
+    Clear();
 }
 
 // --- XV ---

@@ -22,7 +22,7 @@ Sprite::Sprite(const char* filename, const char* imguiName, const char* emissive
 
     // --- ルートシグネチャの生成 ---
 #pragma region ルートシグネチャの生成
-    const int MAX_DATA_NUM = 4;
+    const int MAX_DATA_NUM = 5;
 
     // --- ディスクリプタレンジの設定 ---
     D3D12_DESCRIPTOR_RANGE descriptorRange[MAX_DATA_NUM] = {};
@@ -50,6 +50,12 @@ Sprite::Sprite(const char* filename, const char* imguiName, const char* emissive
     descriptorRange[3].RegisterSpace = 0;                              // つじつまを合わせるためのスペース
     descriptorRange[3].OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
 
+    descriptorRange[4].RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_CBV;    // レンジ種別
+    descriptorRange[4].NumDescriptors = 1;                             // ディスクリプタ数
+    descriptorRange[4].BaseShaderRegister = 3;                         // 先頭レジスタ番号
+    descriptorRange[4].RegisterSpace = 0;                              // つじつまを合わせるためのスペース
+    descriptorRange[4].OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
+
     // --- ルートパラメータの設定 ---
     D3D12_ROOT_PARAMETER rootParameter[MAX_DATA_NUM] = {};
     rootParameter[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;   // パラメータ種別
@@ -71,6 +77,11 @@ Sprite::Sprite(const char* filename, const char* imguiName, const char* emissive
     rootParameter[3].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;             // どのシェーダーから利用可能か
     rootParameter[3].DescriptorTable.NumDescriptorRanges = 1;                      // ディスクリプタレンジ数
     rootParameter[3].DescriptorTable.pDescriptorRanges = &descriptorRange[3];      // ディスクリプタレンジのアドレス
+
+    rootParameter[4].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;   // パラメータ種別
+    rootParameter[4].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;             // どのシェーダーから利用可能か
+    rootParameter[4].DescriptorTable.NumDescriptorRanges = 1;                      // ディスクリプタレンジ数
+    rootParameter[4].DescriptorTable.pDescriptorRanges = &descriptorRange[4];      // ディスクリプタレンジのアドレス
 
     // --- サンプラーの設定 ---
     D3D12_STATIC_SAMPLER_DESC samplerDesc = {};
@@ -160,6 +171,15 @@ Sprite::Sprite(const char* filename, const char* imguiName, const char* emissive
         "main", "ps_5_0",
         D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION,
         0, &psEmissiveBlob_, &errorBlob);
+
+    _ASSERT_EXPR(SUCCEEDED(result), HRTrace(result));
+
+    // --- Charge ---
+    result = D3DCompileFromFile(L"./Source/Shader/SpriteChargePS.hlsl",
+        nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE,
+        "main", "ps_5_0",
+        D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION,
+        0, &psChargeBlob_, &errorBlob);
 
     _ASSERT_EXPR(SUCCEEDED(result), HRTrace(result));
     
@@ -414,6 +434,8 @@ Sprite::Sprite(const char* filename, const char* imguiName, const char* emissive
 #pragma endregion フレームリソース
 
 
+    chargeConstants_ = std::make_unique<ConstantBuffer>(sizeof(ChargeConstant));
+
     //---ImGui名前かぶり防止用---//
     std::string space = " ";
     std::string name = imguiName + space + std::to_string(nameNum++);
@@ -566,6 +588,9 @@ void Sprite::Render(ID3D12GraphicsCommandList* commandList, const int& noiseText
     commandList->IASetIndexBuffer(&frameResource.indexBufferView_);
     commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
+    chargeConstants_->UpdateSubresource(&charge_);
+    commandList->SetGraphicsRootDescriptorTable(4, chargeConstants_->GetDescriptor()->GetGpuHandle());
+
     // 描画
     commandList->DrawIndexedInstanced(6, 1, 0, 0, 0);
 }
@@ -577,6 +602,8 @@ void Sprite::DrawDebug()
     {
         // --- Transform ---
         GetTransform()->DrawDebug();
+
+        ImGui::DragFloat("charge_", &charge_.value_);
 
         // --- 振動 ---
         ImGui::Checkbox(reinterpret_cast<const char*>(u8"振動"), &isVibration_);
@@ -856,6 +883,91 @@ void Sprite::UseEmissivePixelShader()
     );
     _ASSERT_EXPR(SUCCEEDED(result), HRTrace(result));
 
+}
+
+void Sprite::UseChargePixelShader()
+{
+    HRESULT result = S_OK;
+
+    Graphics::Instance().WaitIdle();
+
+    // --- ルートシグネチャ ---
+    graphicsPipeline_.pRootSignature = rootSignature_.Get();
+
+    // --- シェーダー ---
+    graphicsPipeline_.VS.pShaderBytecode = vsBlob_->GetBufferPointer();
+    graphicsPipeline_.VS.BytecodeLength = vsBlob_->GetBufferSize();
+
+    graphicsPipeline_.PS.pShaderBytecode = psChargeBlob_->GetBufferPointer();
+    graphicsPipeline_.PS.BytecodeLength = psChargeBlob_->GetBufferSize();
+
+    // --- 入力レイアウト ---
+    D3D12_INPUT_ELEMENT_DESC inputElementDesc[] =
+    {
+        { "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D12_APPEND_ALIGNED_ELEMENT, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 },
+        { "COLOR",    0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, D3D12_APPEND_ALIGNED_ELEMENT, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 },
+        { "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT,    0, D3D12_APPEND_ALIGNED_ELEMENT, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 },
+    };
+
+    graphicsPipeline_.InputLayout.pInputElementDescs = inputElementDesc;
+    graphicsPipeline_.InputLayout.NumElements = _countof(inputElementDesc);
+
+    // --- ブレンドステート ---
+    graphicsPipeline_.BlendState.AlphaToCoverageEnable = false;
+    graphicsPipeline_.BlendState.IndependentBlendEnable = false;
+    graphicsPipeline_.BlendState.RenderTarget[0].BlendEnable = true;
+    graphicsPipeline_.BlendState.RenderTarget[0].LogicOpEnable = false;
+    graphicsPipeline_.BlendState.RenderTarget[0].SrcBlend = D3D12_BLEND_SRC_ALPHA;
+    graphicsPipeline_.BlendState.RenderTarget[0].DestBlend = D3D12_BLEND_INV_SRC_ALPHA;
+    graphicsPipeline_.BlendState.RenderTarget[0].BlendOp = D3D12_BLEND_OP_ADD;
+    graphicsPipeline_.BlendState.RenderTarget[0].SrcBlendAlpha = D3D12_BLEND_ONE;
+    graphicsPipeline_.BlendState.RenderTarget[0].DestBlendAlpha = D3D12_BLEND_ZERO;
+    graphicsPipeline_.BlendState.RenderTarget[0].BlendOpAlpha = D3D12_BLEND_OP_ADD;
+    graphicsPipeline_.BlendState.RenderTarget[0].RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL;
+
+    // --- 深度ステンシルステート ---
+    graphicsPipeline_.DepthStencilState.DepthEnable = true;
+    graphicsPipeline_.DepthStencilState.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;
+    graphicsPipeline_.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_ALWAYS;
+    graphicsPipeline_.DepthStencilState.StencilEnable = false;
+
+    // --- ラスタライザーステート ---
+    graphicsPipeline_.SampleMask = D3D12_DEFAULT_SAMPLE_MASK;
+    graphicsPipeline_.RasterizerState.FillMode = D3D12_FILL_MODE_SOLID;
+    graphicsPipeline_.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;
+    graphicsPipeline_.RasterizerState.FrontCounterClockwise = false;
+    graphicsPipeline_.RasterizerState.DepthBias = D3D12_DEFAULT_DEPTH_BIAS;
+    graphicsPipeline_.RasterizerState.DepthBiasClamp = D3D12_DEFAULT_DEPTH_BIAS_CLAMP;
+    graphicsPipeline_.RasterizerState.SlopeScaledDepthBias = D3D12_DEFAULT_SLOPE_SCALED_DEPTH_BIAS;
+    graphicsPipeline_.RasterizerState.DepthClipEnable = true;
+    graphicsPipeline_.RasterizerState.MultisampleEnable = false;
+    graphicsPipeline_.RasterizerState.AntialiasedLineEnable = false;
+    graphicsPipeline_.RasterizerState.ForcedSampleCount = 0;
+    graphicsPipeline_.RasterizerState.ConservativeRaster = D3D12_CONSERVATIVE_RASTERIZATION_MODE_OFF;
+
+    // --- プリミティブトポロジー ---
+    graphicsPipeline_.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
+
+    // --- ストリップ時のカット値 ---
+    graphicsPipeline_.IBStripCutValue = D3D12_INDEX_BUFFER_STRIP_CUT_VALUE_DISABLED;
+
+    // --- レンダーターゲット数 ---
+    graphicsPipeline_.NumRenderTargets = 1;
+    graphicsPipeline_.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM;
+    graphicsPipeline_.DSVFormat = DXGI_FORMAT_D32_FLOAT;
+
+    // --- マルチサンプリング ---
+    graphicsPipeline_.SampleDesc.Count = 1;
+    graphicsPipeline_.SampleDesc.Quality = 0;
+
+    // --- アダプタ ---
+    graphicsPipeline_.NodeMask = 0;
+
+    result = Graphics::Instance().GetDevice()->CreateGraphicsPipelineState(
+        &graphicsPipeline_,
+        IID_PPV_ARGS(&pipelineState_)
+    );
+    _ASSERT_EXPR(SUCCEEDED(result), HRTrace(result));
 }
 
 // ----- Sprite::Transform ImGui用 -----

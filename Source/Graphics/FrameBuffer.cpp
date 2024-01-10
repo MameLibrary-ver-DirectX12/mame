@@ -22,19 +22,29 @@ FrameBuffer::FrameBuffer()
     resourceDesc.SampleDesc.Count = 1;
     resourceDesc.SampleDesc.Quality = 0;
     resourceDesc.Layout = D3D12_TEXTURE_LAYOUT_UNKNOWN;
+    resourceDesc.Flags = D3D12_RESOURCE_FLAG_ALLOW_RENDER_TARGET;
+    
+    result = Graphics::Instance().GetDevice()->CreateCommittedResource(
+        &heapProp,
+        D3D12_HEAP_FLAG_NONE,
+        &resourceDesc,
+        D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE,
+        nullptr,
+        IID_PPV_ARGS(resource_.ReleaseAndGetAddressOf())
+    );
+    _ASSERT_EXPR(SUCCEEDED(result), HRTrace(result));
+
+    // DepthStencil
+    D3D12_CLEAR_VALUE clearValue = CD3DX12_CLEAR_VALUE(DXGI_FORMAT_D24_UNORM_S8_UINT, 1.0f, 0);
+    resourceDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
     resourceDesc.Flags = D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL;
-    //resourceDesc.Flags = D3D12_RESOURCE_FLAG_ALLOW_RENDER_TARGET;
-
-    float clearColor[4] = { 0.5f, 0.5f, 0.5f, 1.0f };
-    D3D12_CLEAR_VALUE clearValue = CD3DX12_CLEAR_VALUE(DXGI_FORMAT_D32_FLOAT, clearColor);
-
     result = Graphics::Instance().GetDevice()->CreateCommittedResource(
         &heapProp,
         D3D12_HEAP_FLAG_NONE,
         &resourceDesc,
         D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE,
         &clearValue,
-        IID_PPV_ARGS(resource_.ReleaseAndGetAddressOf())
+        IID_PPV_ARGS(depthResource_.ReleaseAndGetAddressOf())
     );
     _ASSERT_EXPR(SUCCEEDED(result), HRTrace(result));
 
@@ -83,25 +93,43 @@ FrameBuffer::FrameBuffer()
         SRVHeap_->GetCPUDescriptorHandleForHeapStart()
     );
 
+    // DSV
+    DSVHeap_ = std::make_unique<DescriptorHeap>(Graphics::Instance().GetDevice(), D3D12_DESCRIPTOR_HEAP_TYPE_DSV, 10);
+
 }
 
 void FrameBuffer::Activate(ID3D12GraphicsCommandList* commandList)
 {
     auto rtvHeapPointer = RTVHeap_->GetCPUDescriptorHandleForHeapStart();
-    auto dsvHeapPointer = Graphics::Instance().GetDsvDescriptorHeap()->GetD3DDescriptorHeap()->GetCPUDescriptorHandleForHeapStart();
+    //auto dsvHeapPointer = Graphics::Instance().GetDsvDescriptorHeap()->GetD3DDescriptorHeap()->GetCPUDescriptorHandleForHeapStart();
+    auto dsvHeapPointer = DSVHeap_->GetD3DDescriptorHeap()->GetCPUDescriptorHandleForHeapStart();
 
     commandList->OMSetRenderTargets(1, &rtvHeapPointer, false, &dsvHeapPointer);
 
     float clearColor[4] = { 0.5f, 0.5f, 0.5f, 1.0f };
     commandList->ClearRenderTargetView(rtvHeapPointer, clearColor, 0, nullptr);
     commandList->ClearDepthStencilView(dsvHeapPointer, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
+
+#if 0
+    auto barrier = CD3DX12_RESOURCE_BARRIER::Transition(
+        resource_.Get(), D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE,
+        D3D12_RESOURCE_STATE_RENDER_TARGET);
+
+    commandList->ResourceBarrier(1, &barrier);
+#endif
 }
 
 void FrameBuffer::Deactivate(ID3D12GraphicsCommandList* commandList)
 {
+#if 0
     auto barrier = CD3DX12_RESOURCE_BARRIER::Transition(
         resource_.Get(), D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE,
         D3D12_RESOURCE_STATE_RENDER_TARGET);
+#else
+    auto barrier = CD3DX12_RESOURCE_BARRIER::Transition(
+        resource_.Get(), D3D12_RESOURCE_STATE_RENDER_TARGET,
+        D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE);
+#endif
 
     commandList->ResourceBarrier(1, &barrier);
 }

@@ -5,6 +5,7 @@
 
 #include "../Resource/Sprite.h"
 #include "../Game/Stage/StageNormal.h"
+#include "../Game/Character/Honey.h"
 
 #include "../Game/CutIn/ChickenCutIn.h"
 
@@ -25,9 +26,10 @@ public:
 
 private:
     std::unique_ptr<StageNormal> stage_;
-    std::unique_ptr<StageNormal> safeZone_;
 
     std::unique_ptr<ChickenCutIn> chickenCutIn_;
+
+    std::unique_ptr<Honey> honey_; // ‚Í‚¿‚Ý‚Â(Žç‚é‚à‚Ì)
 
     std::unique_ptr<GameUI> ui_;
 

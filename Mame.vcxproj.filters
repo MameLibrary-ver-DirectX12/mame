@@ -133,6 +133,9 @@
     <Filter Include="Mame\Game\UI">
       <UniqueIdentifier>{dbd8bd93-4939-4756-ab3c-2a9dfa7cec60}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Mame\Game\Character\Honey">
+      <UniqueIdentifier>{ad667727-5e76-4df7-bf03-8379087e6a2e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Core\Main.cpp">
@@ -332,6 +335,12 @@
     </ClCompile>
     <ClCompile Include="Source\Graphics\FrameBuffer.cpp">
       <Filter>Mame\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Character\Honey.cpp">
+      <Filter>Mame\Game\Character\Honey</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Character\BeeEnemy.cpp">
+      <Filter>Mame\Game\Character\Enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -571,6 +580,12 @@
     <ClInclude Include="Source\Graphics\FrameBuffer.h">
       <Filter>Mame\Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Game\Character\Honey.h">
+      <Filter>Mame\Game\Character\Honey</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Character\BeeEnemy.h">
+      <Filter>Mame\Game\Character\Enemy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Source\Shader\SpritePS.hlsl">
@@ -602,6 +617,9 @@
     </FxCompile>
     <FxCompile Include="Source\Shader\SkyMapVS.hlsl">
       <Filter>Mame\Shader\SkyMap</Filter>
+    </FxCompile>
+    <FxCompile Include="Source\Shader\SpriteChargePS.hlsl">
+      <Filter>Mame\Shader\Sprite</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>
