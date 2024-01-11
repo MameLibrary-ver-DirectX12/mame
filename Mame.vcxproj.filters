@@ -136,6 +136,9 @@
     <Filter Include="Mame\Game\Character\Honey">
       <UniqueIdentifier>{ad667727-5e76-4df7-bf03-8379087e6a2e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Mame\Shader\PostProcess">
+      <UniqueIdentifier>{067a328f-6f91-4221-83b6-05a45b75a908}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Core\Main.cpp">
@@ -360,6 +363,9 @@
     <ClCompile Include="Source\Game\Character\TurtleEnemy.cpp">
       <Filter>Mame\Game\Character\Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Graphics\PostProcess.cpp">
+      <Filter>Mame\Graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Source\Shader\Sprite.hlsli">
@@ -373,6 +379,9 @@
     </None>
     <None Include="Source\Shader\SkyMap.hlsli">
       <Filter>Mame\Shader\SkyMap</Filter>
+    </None>
+    <None Include="Source\Shader\PostProcess.hlsli">
+      <Filter>Mame\Shader\PostProcess</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -622,6 +631,9 @@
     <ClInclude Include="Source\Game\Character\TurtleEnemy.h">
       <Filter>Mame\Game\Character\Enemy</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Graphics\PostProcess.h">
+      <Filter>Mame\Graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Source\Shader\SpritePS.hlsl">
@@ -656,6 +668,12 @@
     </FxCompile>
     <FxCompile Include="Source\Shader\SpriteChargePS.hlsl">
       <Filter>Mame\Shader\Sprite</Filter>
+    </FxCompile>
+    <FxCompile Include="Source\Shader\PostProcessPS.hlsl">
+      <Filter>Mame\Shader\PostProcess</Filter>
+    </FxCompile>
+    <FxCompile Include="Source\Shader\PostProcessVS.hlsl">
+      <Filter>Mame\Shader\PostProcess</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

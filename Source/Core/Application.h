@@ -6,6 +6,7 @@
 #include "../Input/Input.h"
 #include "../Graphics/Graphics.h"
 #include "../Graphics/FrameBuffer.h"
+#include "../Graphics/PostProcess.h"
 
 CONST LONG SCREEN_WIDTH{ 1280 };
 CONST LONG SCREEN_HEIGHT{ 720 };
@@ -47,4 +48,5 @@ private:
     Input               input_;
 
     std::unique_ptr<FrameBuffer> frameBuffer_;
+    std::unique_ptr<PostProcess> postProcess_;
 };

@@ -17,6 +17,7 @@ public:
 
     void Update(const float& elapsedTime);                  // 更新
     void Render(ID3D12GraphicsCommandList* commandList);    // 描画
+    void UIRender(ID3D12GraphicsCommandList* commnadList);
 
     
     void Clear();                                           // シーンクリア

@@ -153,6 +153,11 @@ void GameScene::Render(ID3D12GraphicsCommandList* commandList)
         //chickenCutIn_->Render(commandList);
     }
 
+    
+}
+
+void GameScene::UIRender(ID3D12GraphicsCommandList* commandList)
+{
     ui_->Render(commandList);
 }
 

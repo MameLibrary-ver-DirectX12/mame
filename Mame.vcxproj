@@ -194,6 +194,7 @@
     <ClCompile Include="Source\Graphics\LambertShader.cpp" />
     <ClCompile Include="Source\Graphics\NoiseTexture.cpp" />
     <ClCompile Include="Source\Graphics\PipelineState.cpp" />
+    <ClCompile Include="Source\Graphics\PostProcess.cpp" />
     <ClCompile Include="Source\Graphics\Shader.cpp" />
     <ClCompile Include="Source\Graphics\SkyMap.cpp" />
     <ClCompile Include="Source\Graphics\VertexBuffer.cpp" />
@@ -218,6 +219,7 @@
   <ItemGroup>
     <None Include="Source\Shader\FbxModel.hlsli" />
     <None Include="Source\Shader\ImGui.hlsli" />
+    <None Include="Source\Shader\PostProcess.hlsli" />
     <None Include="Source\Shader\SkyMap.hlsli" />
     <None Include="Source\Shader\Sprite.hlsli" />
   </ItemGroup>
@@ -278,6 +280,7 @@
     <ClInclude Include="Source\Graphics\LambertShader.h" />
     <ClInclude Include="Source\Graphics\NoiseTexture.h" />
     <ClInclude Include="Source\Graphics\PipelineState.h" />
+    <ClInclude Include="Source\Graphics\PostProcess.h" />
     <ClInclude Include="Source\Graphics\Shader.h" />
     <ClInclude Include="Source\Graphics\SkyMap.h" />
     <ClInclude Include="Source\Graphics\VertexBuffer.h" />
@@ -329,6 +332,18 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Source\Shader\PostProcessPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Source\Shader\PostProcessVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
     <FxCompile Include="Source\Shader\SkyMapPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>

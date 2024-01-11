@@ -43,6 +43,13 @@ void SceneManager::Render(ID3D12GraphicsCommandList* commandList)
     currentScene_->Render(commandList);
 }
 
+void SceneManager::UIRender(ID3D12GraphicsCommandList* commnadList)
+{
+    if (!currentScene_) return;
+
+    currentScene_->UIRender(commnadList);
+}
+
 // ----- シーンクリア -----
 void SceneManager::Clear()
 {

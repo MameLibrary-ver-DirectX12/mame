@@ -21,6 +21,7 @@ Application::Application(HWND hwnd)
     graphics_(hwnd, 2)
 {
     frameBuffer_ = std::make_unique<FrameBuffer>();
+    postProcess_ = std::make_unique<PostProcess>();
 }
 
 // --- デストラクタ ---
@@ -71,6 +72,8 @@ void Application::Render()
     frameBuffer_->Deactivate(commandList);
     
     Graphics::Instance().SetRenderTarget();
+    postProcess_->Draw(commandList, frameBuffer_->GetGpuHandle());
+    SceneManager::Instance().UIRender(commandList);
 
     Graphics::Instance().GetImGuiRenderer()->Render(commandList);
     Graphics::Instance().End();

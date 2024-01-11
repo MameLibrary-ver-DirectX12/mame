@@ -50,6 +50,10 @@ void LoadingScene::Render(ID3D12GraphicsCommandList* commandList)
 {
 }
 
+void LoadingScene::UIRender(ID3D12GraphicsCommandList* commandList)
+{
+}
+
 // ----- ImGui—p -----
 void LoadingScene::DrawDebug()
 {

@@ -107,6 +107,10 @@ void TitleScene::Render(ID3D12GraphicsCommandList* commandList)
     //quitGameSprite_->Render(commandList);
 }
 
+void TitleScene::UIRender(ID3D12GraphicsCommandList* commandList)
+{
+}
+
 // ----- ImGui—p -----
 void TitleScene::DrawDebug()
 {
