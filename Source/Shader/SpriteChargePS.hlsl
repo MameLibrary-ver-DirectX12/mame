@@ -16,7 +16,7 @@ float4 main(PSIn psIn) : SV_TARGET
     float noise = noiseTexture.Sample(samplerState, psIn.texcoord).r;
     
     float alpha = step(value, noise);
-    alpha = max(alpha, 0.3f);
+    alpha = max(alpha, 0.5f);
     
     //float edgeValue = step(noise - dissolveValue, dissolveValue) * step(dissolveValue, noise) * step(noise, dissolveValue + edgeThrehold);
     

@@ -23,6 +23,7 @@ public:
     void Execute();                     // 描画実行
     ID3D12GraphicsCommandList* Begin(); // 描画開始
     void End();                         // 描画終了
+    void SetRenderTarget();
 
     // シーン用定数バッファー更新
     Descriptor* UpdateSceneConstantBuffer(const DirectX::XMFLOAT4X4& view, const DirectX::XMFLOAT4X4& projection, const DirectX::XMFLOAT3& lightDirection);

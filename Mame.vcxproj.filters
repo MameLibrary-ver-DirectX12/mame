@@ -342,6 +342,24 @@
     <ClCompile Include="Source\Game\Character\BeeEnemy.cpp">
       <Filter>Mame\Game\Character\Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Game\Character\BearEnemy.cpp">
+      <Filter>Mame\Game\Character\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Character\BoxManEnemy.cpp">
+      <Filter>Mame\Game\Character\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Character\BoxManExEnemy.cpp">
+      <Filter>Mame\Game\Character\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Character\MushroomEnemy.cpp">
+      <Filter>Mame\Game\Character\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Character\TaiyakiEnemy.cpp">
+      <Filter>Mame\Game\Character\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Character\TurtleEnemy.cpp">
+      <Filter>Mame\Game\Character\Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Source\Shader\Sprite.hlsli">
@@ -584,6 +602,24 @@
       <Filter>Mame\Game\Character\Honey</Filter>
     </ClInclude>
     <ClInclude Include="Source\Game\Character\BeeEnemy.h">
+      <Filter>Mame\Game\Character\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Character\BearEnemy.h">
+      <Filter>Mame\Game\Character\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Character\BoxManEnemy.h">
+      <Filter>Mame\Game\Character\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Character\BoxManExEnemy.h">
+      <Filter>Mame\Game\Character\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Character\MushroomEnemy.h">
+      <Filter>Mame\Game\Character\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Character\TaiyakiEnemy.h">
+      <Filter>Mame\Game\Character\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Character\TurtleEnemy.h">
       <Filter>Mame\Game\Character\Enemy</Filter>
     </ClInclude>
   </ItemGroup>

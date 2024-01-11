@@ -6,6 +6,6 @@ inline void SafeDeletePtr(T*& p)
 {
     if (nullptr == p) return;
 
-    delete p;
+    delete (p);
     p = nullptr;
 }

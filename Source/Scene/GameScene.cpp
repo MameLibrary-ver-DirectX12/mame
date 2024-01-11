@@ -18,7 +18,7 @@
 #include "../Game/PoisonHoney/PoisonHoneyManager.h"
 #include "../Game/PoisonHoney/PoisonHoneyNormal.h"
 
-#define FRAME_BUFFER 0
+#define FRAME_BUFFER 1
 
 // ----- コンストラクタ -----
 GameScene::GameScene()
@@ -86,10 +86,10 @@ void GameScene::Update(const float& elapsedTime)
 {
     GamePad& gamePad = Input::Instance().GetGamePad();
     
-    if (gamePad.GetButtonDown() & GamePad::BTN_A)
+    if (gamePad.GetButtonDown() & GamePad::BTN_LEFT_TRIGGER)
     {
-        //SceneManager::Instance().ChangeScene(new LoadingScene(new TitleScene));
-        //return;
+        SceneManager::Instance().ChangeScene(new LoadingScene(new TitleScene));
+        return;
     }
 
     chickenCutIn_->Play(elapsedTime);
@@ -123,8 +123,8 @@ void GameScene::Render(ID3D12GraphicsCommandList* commandList)
     Camera::Instance().SetPerSpectiveFovGame();
 
 #if FRAME_BUFFER
-    frameBuffer_->Activate(commandList);
-    frameBuffer_->Deactivate(commandList);
+    //frameBuffer_->Activate(commandList);
+    //frameBuffer_->Deactivate(commandList);
 #endif
 
     // --- Model ---

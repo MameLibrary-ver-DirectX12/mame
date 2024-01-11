@@ -83,8 +83,8 @@ void Player::Update(const float& elapsedTime)
         FlowerBleu* flowerBleu = new FlowerBleu;
         flowerBleu->Initialize();
 
-        flowerTimer_ = 4.0f;
-        flowerMaxTimer_ = 4.0f;
+        flowerTimer_ = 0.5f;
+        flowerMaxTimer_ = flowerTimer_;
         isAbleUseFlower_ = false;
     }
     if (!isAbleUseFlower_)

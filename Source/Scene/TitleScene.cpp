@@ -28,7 +28,7 @@ void TitleScene::CreateResource()
     loadGameSprite_ = std::make_unique<Sprite>("./Resources/Image/Title/LoadGame.png", "LoadGame");
     quitGameSprite_ = std::make_unique<Sprite>("./Resources/Image/Title/QuitGame.png", "QuitGame");
 
-    stage_ = std::make_unique<StageNormal>("./Resources/Model/Stage/StageBase.fbx");
+    stage_ = std::make_unique<StageNormal>("./Resources/Model/Stage/stage.fbx");
     skyMap_ = std::make_unique<SkyMap>();
     player_ = std::make_unique<Player>();
 }

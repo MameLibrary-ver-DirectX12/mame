@@ -24,38 +24,36 @@ FrameBuffer::FrameBuffer()
     resourceDesc.Layout = D3D12_TEXTURE_LAYOUT_UNKNOWN;
     resourceDesc.Flags = D3D12_RESOURCE_FLAG_ALLOW_RENDER_TARGET;
     
-    result = Graphics::Instance().GetDevice()->CreateCommittedResource(
-        &heapProp,
-        D3D12_HEAP_FLAG_NONE,
-        &resourceDesc,
-        D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE,
-        nullptr,
-        IID_PPV_ARGS(resource_.ReleaseAndGetAddressOf())
-    );
-    _ASSERT_EXPR(SUCCEEDED(result), HRTrace(result));
 
-    // DepthStencil
-    D3D12_CLEAR_VALUE clearValue = CD3DX12_CLEAR_VALUE(DXGI_FORMAT_D24_UNORM_S8_UINT, 1.0f, 0);
-    resourceDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
-    resourceDesc.Flags = D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL;
+    float color[4] = { 0.5f, 0.5f, 0.5f, 1.0f };
+    D3D12_CLEAR_VALUE clearValue = CD3DX12_CLEAR_VALUE(DXGI_FORMAT_R8G8B8A8_UNORM, color);
+
     result = Graphics::Instance().GetDevice()->CreateCommittedResource(
         &heapProp,
         D3D12_HEAP_FLAG_NONE,
         &resourceDesc,
         D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE,
         &clearValue,
+        IID_PPV_ARGS(resource_.ReleaseAndGetAddressOf())
+    );
+    _ASSERT_EXPR(SUCCEEDED(result), HRTrace(result));
+
+    // DepthStencil
+   clearValue = CD3DX12_CLEAR_VALUE(DXGI_FORMAT_D32_FLOAT, 1.0f, 0);
+    resourceDesc.Format = DXGI_FORMAT_D32_FLOAT;
+    resourceDesc.Flags = D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL;
+    result = Graphics::Instance().GetDevice()->CreateCommittedResource(
+        &heapProp,
+        D3D12_HEAP_FLAG_NONE,
+        &resourceDesc,
+        D3D12_RESOURCE_STATE_DEPTH_WRITE,
+        &clearValue,
         IID_PPV_ARGS(depthResource_.ReleaseAndGetAddressOf())
     );
     _ASSERT_EXPR(SUCCEEDED(result), HRTrace(result));
 
 
-    // RTV用ヒープを作る
-    auto heapDesc = Graphics::Instance().GetRtvDescriptorHeap()->GetD3DDescriptorHeap()->GetDesc();
-    heapDesc.NumDescriptors = 1;
-    result = Graphics::Instance().GetDevice()->CreateDescriptorHeap(
-        &heapDesc,
-        IID_PPV_ARGS(RTVHeap_.ReleaseAndGetAddressOf())
-    );
+
 
     D3D12_RENDER_TARGET_VIEW_DESC rtvDesc = {};
     rtvDesc.ViewDimension = D3D12_RTV_DIMENSION_TEXTURE2D;
@@ -63,22 +61,15 @@ FrameBuffer::FrameBuffer()
     
 
     // レンダーターゲットビューを(RTV)作る
+    rtvDescriptor_ = Graphics::Instance().GetRtvDescriptorHeap()->PopDescriptor();
     Graphics::Instance().GetDevice()->CreateRenderTargetView(
         resource_.Get(),
         &rtvDesc,
-        RTVHeap_->GetCPUDescriptorHandleForHeapStart()
+        rtvDescriptor_->GetCpuHandle()
     );
 
     // SRV用ヒープを作る
-    heapDesc.NumDescriptors = 1;
-    heapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
-    heapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
-
-    result = Graphics::Instance().GetDevice()->CreateDescriptorHeap(
-        &heapDesc,
-        IID_PPV_ARGS(SRVHeap_.ReleaseAndGetAddressOf())
-    );
-    _ASSERT_EXPR(SUCCEEDED(result), HRTrace(result));
+    srvDescriptor_ = Graphics::Instance().GetSrvCbvUavDescriptorHeap()->PopDescriptor();
 
     D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc = {};
     srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
@@ -90,19 +81,38 @@ FrameBuffer::FrameBuffer()
     Graphics::Instance().GetDevice()->CreateShaderResourceView(
         resource_.Get(),
         &srvDesc,
-        SRVHeap_->GetCPUDescriptorHandleForHeapStart()
+        srvDescriptor_->GetCpuHandle()
     );
 
-    // DSV
-    DSVHeap_ = std::make_unique<DescriptorHeap>(Graphics::Instance().GetDevice(), D3D12_DESCRIPTOR_HEAP_TYPE_DSV, 10);
+    // --- ディスクリプタ取得 ---
+    dsvDescriptor_ = Graphics::Instance().GetDsvDescriptorHeap()->PopDescriptor();
 
+    // --- デプスステンシルビューの設定 ---
+    D3D12_DEPTH_STENCIL_VIEW_DESC depthStencilViewDesc = {};
+    depthStencilViewDesc.Format = DXGI_FORMAT_D32_FLOAT;
+    //depthStencilViewDesc.Format = DXGI_FORMAT_D32_FLOAT;
+    depthStencilViewDesc.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2D;
+    depthStencilViewDesc.Flags = D3D12_DSV_FLAG_NONE;
+
+    // --- デプスステンシルビュー生成 ---
+    Graphics::Instance().GetDevice()->CreateDepthStencilView(
+        depthResource_.Get(),
+        &depthStencilViewDesc,
+        dsvDescriptor_->GetCpuHandle()
+    );
 }
 
 void FrameBuffer::Activate(ID3D12GraphicsCommandList* commandList)
 {
-    auto rtvHeapPointer = RTVHeap_->GetCPUDescriptorHandleForHeapStart();
-    //auto dsvHeapPointer = Graphics::Instance().GetDsvDescriptorHeap()->GetD3DDescriptorHeap()->GetCPUDescriptorHandleForHeapStart();
-    auto dsvHeapPointer = DSVHeap_->GetD3DDescriptorHeap()->GetCPUDescriptorHandleForHeapStart();
+#if 1
+    auto barrier = CD3DX12_RESOURCE_BARRIER::Transition(
+        resource_.Get(), D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE,
+        D3D12_RESOURCE_STATE_RENDER_TARGET);
+
+    commandList->ResourceBarrier(1, &barrier);
+#endif
+    D3D12_CPU_DESCRIPTOR_HANDLE rtvHeapPointer = rtvDescriptor_->GetCpuHandle();
+    D3D12_CPU_DESCRIPTOR_HANDLE dsvHeapPointer = dsvDescriptor_->GetCpuHandle();
 
     commandList->OMSetRenderTargets(1, &rtvHeapPointer, false, &dsvHeapPointer);
 
@@ -111,25 +121,34 @@ void FrameBuffer::Activate(ID3D12GraphicsCommandList* commandList)
     commandList->ClearDepthStencilView(dsvHeapPointer, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 
 #if 0
-    auto barrier = CD3DX12_RESOURCE_BARRIER::Transition(
-        resource_.Get(), D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE,
-        D3D12_RESOURCE_STATE_RENDER_TARGET);
+    // --- ビューポートの設定 ---
+    D3D12_VIEWPORT viewport;
+    viewport.TopLeftX = 0;
+    viewport.TopLeftY = 0;
+    viewport.Width = screenWidth_;
+    viewport.Height = screenHeight_;
+    viewport.MinDepth = 0.0f;
+    viewport.MaxDepth = 1.0f;
 
-    commandList->ResourceBarrier(1, &barrier);
+    frameResource.commandList_->RSSetViewports(1, &viewport);
+
+    // --- シザーの設定 ---
+    D3D12_RECT scissorRect;
+    scissorRect.left = 0;
+    scissorRect.top = 0;
+    scissorRect.right = static_cast<LONG>(screenWidth_);
+    scissorRect.bottom = static_cast<LONG>(screenHeight_);
+
+    frameResource.commandList_->RSSetScissorRects(1, &scissorRect);
 #endif
+
 }
 
 void FrameBuffer::Deactivate(ID3D12GraphicsCommandList* commandList)
 {
-#if 0
-    auto barrier = CD3DX12_RESOURCE_BARRIER::Transition(
-        resource_.Get(), D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE,
-        D3D12_RESOURCE_STATE_RENDER_TARGET);
-#else
     auto barrier = CD3DX12_RESOURCE_BARRIER::Transition(
         resource_.Get(), D3D12_RESOURCE_STATE_RENDER_TARGET,
         D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE);
-#endif
 
     commandList->ResourceBarrier(1, &barrier);
 }

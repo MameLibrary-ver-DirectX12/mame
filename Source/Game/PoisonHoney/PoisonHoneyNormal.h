@@ -13,5 +13,8 @@ public:
     void Render(ID3D12GraphicsCommandList* commandList,
         const DirectX::XMMATRIX& world)     override;
     void DrawDebug()                        override;
+
+private:
+    void Remove();
 };
 

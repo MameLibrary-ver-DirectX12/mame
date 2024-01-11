@@ -600,26 +600,6 @@ ID3D12GraphicsCommandList* Graphics::Begin()
 
     frameResource.commandList_->RSSetScissorRects(1, &scissorRect);
 
-    // --- 状態遷移バリアを張る ---
-    D3D12_RESOURCE_BARRIER resourceBarrier = {};
-    resourceBarrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
-    resourceBarrier.Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE;
-    resourceBarrier.Transition.pResource = frameResource.renderTargetView_.Get();
-    resourceBarrier.Transition.Subresource = 0;
-    resourceBarrier.Transition.StateBefore = D3D12_RESOURCE_STATE_PRESENT;
-    resourceBarrier.Transition.StateAfter = D3D12_RESOURCE_STATE_RENDER_TARGET;
-
-    frameResource.commandList_->ResourceBarrier(1, &resourceBarrier);
-
-    // --- レンダーターゲット設定 ---
-    FLOAT clearColor[4] = { 1, 1, 1, 1 };
-    //FLOAT clearColor[4] = { 0, 0, 0, 1 };
-    D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle = frameResource.renderTargetViewDescriptor_->GetCpuHandle();
-    D3D12_CPU_DESCRIPTOR_HANDLE dsvHandle = frameResource.depthStencilViewDescriptor_->GetCpuHandle();
-    frameResource.commandList_->OMSetRenderTargets(1, &rtvHandle, false, &dsvHandle);
-    frameResource.commandList_->ClearRenderTargetView(rtvHandle, clearColor, 0, nullptr);
-    frameResource.commandList_->ClearDepthStencilView(dsvHandle, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
-
 #pragma endregion
 
     return frameResource.commandList_.Get();
@@ -643,6 +623,57 @@ void Graphics::End()
     frameResource.commandList_->ResourceBarrier(1, &resourceBarrier);
 
     frameResource.commandList_->Close();
+}
+
+// ----- レンダーターゲットの指定 -----
+void Graphics::SetRenderTarget()
+{
+    UINT frameBufferIndex = swapChain_->GetCurrentBackBufferIndex();
+    FrameResource& frameResource = frameResource_.at(frameBufferIndex);
+
+    // ----- レンダーターゲットの指定 -----
+#pragma region レンダーターゲットの指定
+    // --- ビューポートの設定 ---
+    D3D12_VIEWPORT viewport;
+    viewport.TopLeftX = 0;
+    viewport.TopLeftY = 0;
+    viewport.Width = screenWidth_;
+    viewport.Height = screenHeight_;
+    viewport.MinDepth = 0.0f;
+    viewport.MaxDepth = 1.0f;
+
+    frameResource.commandList_->RSSetViewports(1, &viewport);
+
+    // --- シザーの設定 ---
+    D3D12_RECT scissorRect;
+    scissorRect.left = 0;
+    scissorRect.top = 0;
+    scissorRect.right = static_cast<LONG>(screenWidth_);
+    scissorRect.bottom = static_cast<LONG>(screenHeight_);
+
+    frameResource.commandList_->RSSetScissorRects(1, &scissorRect);
+
+    // --- 状態遷移バリアを張る ---
+    D3D12_RESOURCE_BARRIER resourceBarrier = {};
+    resourceBarrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
+    resourceBarrier.Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE;
+    resourceBarrier.Transition.pResource = frameResource.renderTargetView_.Get();
+    resourceBarrier.Transition.Subresource = 0;
+    resourceBarrier.Transition.StateBefore = D3D12_RESOURCE_STATE_PRESENT;
+    resourceBarrier.Transition.StateAfter = D3D12_RESOURCE_STATE_RENDER_TARGET;
+
+    frameResource.commandList_->ResourceBarrier(1, &resourceBarrier);
+
+    // --- レンダーターゲット設定 ---
+    FLOAT clearColor[4] = { 1, 1, 1, 1 };
+    //FLOAT clearColor[4] = { 0, 0, 0, 1 };
+    D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle = frameResource.renderTargetViewDescriptor_->GetCpuHandle();
+    D3D12_CPU_DESCRIPTOR_HANDLE dsvHandle = frameResource.depthStencilViewDescriptor_->GetCpuHandle();
+    frameResource.commandList_->OMSetRenderTargets(1, &rtvHandle, false, &dsvHandle);
+    frameResource.commandList_->ClearRenderTargetView(rtvHandle, clearColor, 0, nullptr);
+    frameResource.commandList_->ClearDepthStencilView(dsvHandle, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
+
+#pragma endregion
 }
 
 // シーン用定数バッファー更新

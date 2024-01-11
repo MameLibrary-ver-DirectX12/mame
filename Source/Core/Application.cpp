@@ -20,6 +20,7 @@ Application::Application(HWND hwnd)
     input_(hwnd),
     graphics_(hwnd, 2)
 {
+    frameBuffer_ = std::make_unique<FrameBuffer>();
 }
 
 // --- デストラクタ ---
@@ -64,8 +65,12 @@ void Application::Update(const float& elapsedTime)
 void Application::Render()
 {
     ID3D12GraphicsCommandList* commandList = Graphics::Instance().Begin();
-
+    
+    frameBuffer_->Activate(commandList);
     SceneManager::Instance().Render(commandList);
+    frameBuffer_->Deactivate(commandList);
+    
+    Graphics::Instance().SetRenderTarget();
 
     Graphics::Instance().GetImGuiRenderer()->Render(commandList);
     Graphics::Instance().End();

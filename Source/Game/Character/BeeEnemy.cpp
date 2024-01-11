@@ -3,7 +3,7 @@
 
 // --- コンストラクタ ---
 BeeEnemy::BeeEnemy()
-    : Enemy("./Resources/Model/Character/E_Bee.fbx")
+    : Enemy("./Resources/Model/Character/Enemy/Bee.fbx")
 {
     // 自分の種類を設定してマネージャーに登録
     Enemy::SetType(static_cast<UINT>(EnemyManager::TYPE::Bee));

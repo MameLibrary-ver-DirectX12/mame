@@ -77,7 +77,7 @@ void PoisonHoneyManager::Clear()
         SafeDeletePtr(poisonHoney);
     }
     poisonHoneies_.clear();
-    poisonHoneies_.shrink_to_fit();
+    poisonHoneies_.shrink_to_fit();    
 
     // Š”‚ğƒŠƒZƒbƒg
     for (int typeIndex = 0; typeIndex < static_cast<int>(TYPE::Max); ++typeIndex)
