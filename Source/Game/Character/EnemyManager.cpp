@@ -23,10 +23,23 @@ void EnemyManager::Finalize()
 // --- 更新 ---
 void EnemyManager::Update(const float& elapsedTIme)
 {
-    // 更新
     for (Enemy*& enemy : enemies_)
     {
+        // 更新
         enemy->Update(elapsedTIme);
+
+        // 消去登録されたやつをカウントする
+        if (enemy->GetIsRemove())
+        {
+            if (enemy->GetRemoveCount() <= Graphics::Instance().GetBufferCount() + 1)
+            {
+                enemy->AddRemoveCount();
+            }
+            else
+            {
+                Remove(enemy);
+            }
+        }
     }
 
     // 解放

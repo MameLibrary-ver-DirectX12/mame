@@ -51,6 +51,14 @@ void ShopScene::Render(ID3D12GraphicsCommandList* commandList)
     Shop::Instance().Render(commandList);
 }
 
+void ShopScene::UIRender(ID3D12GraphicsCommandList* commandList)
+{
+}
+
+void ShopScene::ShadowRender(ID3D12GraphicsCommandList* commandList)
+{
+}
+
 // --- ImGui—p ---
 void ShopScene::DrawDebug()
 {

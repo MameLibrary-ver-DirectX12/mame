@@ -49,12 +49,28 @@ public:
     // --- アニメーションが再生中なら true ---
     const bool IsPlayAnimation() { model_->IsPlayAnimation(); }
 
+    // --- 消去フラグ など ---
+    const int GetRemoveCount() const { return removeCount_; }
+    void SetRemoveCount(const int& count) { removeCount_ = count; }
+    void AddRemoveCount() { ++removeCount_; }
+    const bool GetIsRemove() const { return isRemove_; }
+    void SetIsRemove() 
+    {
+        isRemove_ = true;
+        isRender_ = false;
+    }
+    const bool GetIsRender() const { return isRender_; }
+    void SetIsRender(const bool& isRender) { isRender_ = isRender; }
 
     // --- ImGui用 ---
     const char* const GetName() const { return model_->GetName(); }
     void SetName(const std::string& name) { model_->SetName(name); }
 
 private:
-    std::unique_ptr<Model> model_;
+    std::unique_ptr<Model>  model_;
+
+    int     removeCount_    = 0;        // 消去前のフレーム数える用
+    bool    isRemove_       = false;    // 消去する
+    bool    isRender_       = true;     // 描画フラグ
 };
 

@@ -31,6 +31,10 @@ public:
 
     Flower* GetFlower(const int& index) const { return flowers_.at(index); }
 
+    Flower* GetMostNearFlower(const DirectX::XMFLOAT3& pos);    // 引数の位置から最も近い花を返す
+    int GetMostNearFlowerIndex(const DirectX::XMFLOAT3& pos);   // 引数の位置から最も近い花のインデックスを返す
+
+
 private:
     std::vector<Flower*>    flowers_ = {};
     std::set<Flower*>       removes_ = {};

@@ -18,6 +18,8 @@
 #include "../Game/PoisonHoney/PoisonHoneyManager.h"
 #include "../Game/PoisonHoney/PoisonHoneyNormal.h"
 
+#include "../Game/Character/EnemyManager.h"
+
 #define FRAME_BUFFER 1
 
 // ----- コンストラクタ -----
@@ -57,6 +59,9 @@ void GameScene::Initialize()
     // --- ポイズンハニー 初期化 ---
     PoisonHoneyManager::Instance().Initialize();
 
+    // --- 敵 初期化 ---
+    EnemyManager::Instance().Initialize();
+
     honey_->Initialize();
 
     ui_->Initialize();
@@ -76,6 +81,9 @@ void GameScene::Finalize()
 
     // --- 蜂 終了化 ---
     BeeManager::Instance().Finalize();
+
+    // --- 敵 終了化 ---
+    EnemyManager::Instance().Finalize();
 
     // --- プレイヤー終了化 ---
     PlayerManager::Instnace().Finalize();
@@ -108,6 +116,9 @@ void GameScene::Update(const float& elapsedTime)
 
     // --- 蜂 更新 ---
     BeeManager::Instance().Update(elapsedTime);
+
+    // --- 敵 更新 ---
+    EnemyManager::Instance().Update(elapsedTime);
 
     // --- はちみつ 更新 ---
     honey_->Update(elapsedTime);
@@ -144,6 +155,9 @@ void GameScene::Render(ID3D12GraphicsCommandList* commandList)
         // --- ポイズンハニー ---
         PoisonHoneyManager::Instance().Render(commandList);
 
+        // --- 敵 ---
+        EnemyManager::Instance().Render(commandList);
+
         // --- プレイヤー ---
         PlayerManager::Instnace().Render(commandList);
 
@@ -159,6 +173,10 @@ void GameScene::Render(ID3D12GraphicsCommandList* commandList)
 void GameScene::UIRender(ID3D12GraphicsCommandList* commandList)
 {
     ui_->Render(commandList);
+}
+
+void GameScene::ShadowRender(ID3D12GraphicsCommandList* commandList)
+{
 }
 
 // ----- ImGui用 -----
@@ -181,6 +199,9 @@ void GameScene::DrawDebug()
 
     // --- 蜂 ---
     BeeManager::Instance().DrawDebug();
+
+    // --- 敵 ---
+    EnemyManager::Instance().DrawDebug();
 
     // --- ポイズンハニー ---
     PoisonHoneyManager::Instance().DrawDebug();

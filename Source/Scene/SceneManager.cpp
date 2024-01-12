@@ -38,16 +38,25 @@ void SceneManager::Update(const float& elapsedTime)
 // ----- 描画 -----
 void SceneManager::Render(ID3D12GraphicsCommandList* commandList)
 {
-    if (!currentScene_)return;
+    if (!currentScene_) return;
 
     currentScene_->Render(commandList);
 }
 
+// --- UI 描画 ---
 void SceneManager::UIRender(ID3D12GraphicsCommandList* commnadList)
 {
     if (!currentScene_) return;
 
     currentScene_->UIRender(commnadList);
+}
+
+// --- 影成分抽出 ---
+void SceneManager::ShadowRender(ID3D12GraphicsCommandList* commandList)
+{
+    if (!currentScene_) return;
+
+    currentScene_->ShadowRender(commandList);
 }
 
 // ----- シーンクリア -----

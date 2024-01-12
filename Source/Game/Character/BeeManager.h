@@ -26,6 +26,11 @@ public:
     void Clear();               // 全削除
     void Remove(Bee* bee);      // 削除
 
+    Bee* GetBee(const int& index) const { return bees_.at(index); }
+
+    Bee* GetMostNearBee(const DirectX::XMFLOAT3& pos);      // 引数の位置から最も近い蜂を返す
+    int GetMostNearBeeIndex(const DirectX::XMFLOAT3& pos);  // 引数の位置から最も近い蜂のインデックスを返す
+
 private:
     std::vector<Bee*> bees_ = {};
     std::set<Bee*> removes_ = {};

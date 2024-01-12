@@ -47,12 +47,17 @@ void Bee::Finalize()
 void Bee::Update(const float& elapsedTime)
 {
     GetStateMachine()->Update(elapsedTime);
+
+    //time += elapsedTime;
+    //if (time > 3.0f) BeeManager::Instance().Remove(this);
+
 }
 
 // --- •`‰æ ---
 void Bee::Render(ID3D12GraphicsCommandList* commandList, const DirectX::XMMATRIX& world)
 {
-    Character::Render(commandList, GetTransform()->CalcWorldMatrix(1.0f));
+    //if(time < 2.0f)
+        Character::Render(commandList, GetTransform()->CalcWorldMatrix(1.0f));
 }
 
 // --- ImGui—p ---

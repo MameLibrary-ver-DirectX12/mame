@@ -24,6 +24,7 @@ void TaiyakiEnemy::Finalize()
 
 void TaiyakiEnemy::Update(const float& elapsedTime)
 {
+    Enemy::Update(elapsedTime);
 }
 
 void TaiyakiEnemy::Render(ID3D12GraphicsCommandList* commandList, const DirectX::XMMATRIX& world)

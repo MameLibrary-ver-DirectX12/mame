@@ -23,10 +23,23 @@ void FlowerManager::Finalize()
 // --- 更新 ---
 void FlowerManager::Update(const float& elapsedTime)
 {
-    // --- 更新 ---
     for (Flower*& flower : flowers_)
     {
+        // 更新 
         flower->Update(elapsedTime);
+
+        // 消去登録されたやつをカウントする
+        if (flower->GetIsRemove())
+        {
+            if (flower->GetRemoveCount() <= Graphics::Instance().GetBufferCount() + 1)
+            {
+                flower->AddRemoveCount();
+            }
+            else
+            {
+                Remove(flower);
+            }
+        }
     }
 
     // --- 開放 ---
@@ -130,4 +143,64 @@ void FlowerManager::Clear()
 void FlowerManager::Remove(Flower* flower)
 {
     removes_.insert(flower);
+}
+
+// --- 引数の位置から最も近い花を返す ---
+Flower* FlowerManager::GetMostNearFlower(const DirectX::XMFLOAT3& pos)
+{
+    DirectX::XMFLOAT3 position = pos;
+    float mostNearLength = FLT_MAX;
+    int mostNearFlowerIndex = 0;
+    int num = -1;
+    for (Flower*& flower : flowers_)
+    {
+        ++num;
+
+        DirectX::XMFLOAT3 flowerPos = flower->GetTransform()->GetPosition();
+        flowerPos.y = 0;
+        position.y = 0;
+
+        float len = DirectX::XMVectorGetX(DirectX::XMVector3Length(DirectX::XMVectorSubtract(DirectX::XMLoadFloat3(&flowerPos), DirectX::XMLoadFloat3(&position))));
+
+        if (mostNearLength > len)
+        {
+            mostNearLength = len;
+            mostNearFlowerIndex = num;
+        }
+    }
+
+    return flowers_.at(mostNearFlowerIndex);
+}
+
+// --- 引数の位置から最も近い花のIndexを返す ---
+int FlowerManager::GetMostNearFlowerIndex(const DirectX::XMFLOAT3& pos)
+{
+    DirectX::XMFLOAT3 position = pos;
+    float mostNearLength = FLT_MAX;
+    int mostNearFlowerIndex = 0;
+    int num = -1;
+    for (Flower*& flower : flowers_)
+    {
+        ++num;
+
+        // もう既にペアがいる
+        if (flower->GetIsEenmyPaired()) continue;
+
+        DirectX::XMFLOAT3 flowerPos = flower->GetTransform()->GetPosition();
+        flowerPos.y = 0;
+        position.y = 0;
+
+        float len = DirectX::XMVectorGetX(DirectX::XMVector3Length(DirectX::XMVectorSubtract(DirectX::XMLoadFloat3(&flowerPos), DirectX::XMLoadFloat3(&position))));
+
+        if (mostNearLength > len)
+        {
+            mostNearLength = len;
+            mostNearFlowerIndex = num;
+        }
+    }
+
+    // ペアを組む
+    flowers_.at(mostNearFlowerIndex)->SetIsEnemyPaired(true);
+
+    return mostNearFlowerIndex;
 }

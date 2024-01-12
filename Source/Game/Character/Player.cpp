@@ -4,6 +4,7 @@
 
 #include "FlowerBleu.h"
 #include "Bee.h"
+#include "BeeManager.h"
 
 // --- コンストラクタ ---
 Player::Player()

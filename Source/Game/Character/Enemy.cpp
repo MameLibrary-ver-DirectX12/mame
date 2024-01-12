@@ -4,6 +4,13 @@
 Enemy::Enemy(const char* fbxFilename, bool triangulate, float samplingRate)
     : Character(fbxFilename, triangulate, samplingRate)
 {
+    stateMachine_.reset(new StateMachine<State<Enemy>>);
+}
+
+// --- XV ---
+void Enemy::Update(const float& elapsedTime)
+{
+    GetStateMachine()->Update(elapsedTime);
 }
 
 // --- •`‰æ ---

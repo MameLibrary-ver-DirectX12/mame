@@ -31,6 +31,9 @@ public:// --- æ“¾Eİ’è ---
     bool GetIsPaired() { return isPaired_; }
     void SetIsPaired(const bool& pair) { isPaired_ = pair; }
 
+    bool GetIsEenmyPaired() { return isEnemyPaired_; }
+    void SetIsEnemyPaired(const bool& pair) { isEnemyPaired_ = pair; }
+
     // --- ‚Í‚¿‚İ‚ÂÌæ”ÍˆÍ ---
     float GetRadius() { return radius_; }
     void SetRadius(const float& radius) { radius_ = radius; }
@@ -44,6 +47,7 @@ public:// --- æ“¾Eİ’è ---
 private:
     FlowerType type_    = FlowerType::Blue; // ‰Ô‚Ìí—Ş
     bool isPaired_      = false;    // –I‚ª©•ª‚Ì‚±‚Æ‚ğŒ©‚Â‚¯‚Ä‚é‚©(ˆê‚Â‚É‚Â‚«ˆê‚Â‚Ì‚½‚ß)
+    bool isEnemyPaired_ = false;    // “G‚Ì–I‚ª©•ª‚Ì‚±‚Æ‚ğŒ©‚Â‚¯‚Ä‚é‚©(ˆê‚Â‚É‚Â‚«ˆê‚Â‚Ì‚½‚ß)
     float radius_       = 0.0f;     // ”¼Œa(–I‚ªO‚Â‚ğÌæ‚Å‚«‚é”ÍˆÍ)
     float collectTime_  = 0.0f;     // Ìæ‚Å‚«‚é‚Ü‚Å‚ÌŠÔ
 };

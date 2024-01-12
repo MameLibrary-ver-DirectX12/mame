@@ -2,8 +2,7 @@
 
 #include <d3dx12.h>
 #include <memory>
-#include "VertexBuffer.h"
-#include "IndexBuffer.h"
+#include "FrameBuffer.h"
 
 class PostProcess
 {
@@ -11,8 +10,10 @@ public:
     PostProcess();
     ~PostProcess();
 
-    void Draw(ID3D12GraphicsCommandList* commandList,
-        D3D12_GPU_DESCRIPTOR_HANDLE gpuHandle);
+    void ActivateSceneBuffer(ID3D12GraphicsCommandList* commandList) { sceneBuffer_->Activate(commandList); }
+    void DeactivateSceneBuffer(ID3D12GraphicsCommandList* commandList) { sceneBuffer_->Deactivate(commandList); }
+
+    void Draw(ID3D12GraphicsCommandList* commandList);
 
 private:
     D3D12_GRAPHICS_PIPELINE_STATE_DESC graphicsPipeline_ = {};
@@ -23,7 +24,7 @@ private:
     Microsoft::WRL::ComPtr<ID3DBlob> vsBlob_;
     Microsoft::WRL::ComPtr<ID3DBlob> psBlob_;
 
-    std::unique_ptr<VertexBuffer> vertexBuffer_;
-    std::unique_ptr<IndexBuffer>  indexBuffer_;
+    std::unique_ptr<FrameBuffer> sceneBuffer_; // シーン描画用バッファー
+
 };
 

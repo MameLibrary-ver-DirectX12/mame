@@ -171,21 +171,22 @@ PostProcess::PostProcess()
 
     pipelineState_->SetName(L"SpriteGraphicsPipelineState");
 
-    //vertexBuffer_ = std::make_unique<VertexBuffer>()
+    // frameBuffer‚Ì¶¬
+    sceneBuffer_ = std::make_unique<FrameBuffer>();
 }
 
 PostProcess::~PostProcess()
 {
 }
 
-void PostProcess::Draw(ID3D12GraphicsCommandList* commandList, D3D12_GPU_DESCRIPTOR_HANDLE gpuHandle)
+void PostProcess::Draw(ID3D12GraphicsCommandList* commandList)
 {
     commandList->SetPipelineState(pipelineState_.Get());
     commandList->SetGraphicsRootSignature(rootSignature_.Get());
 
     commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
 
-    commandList->SetGraphicsRootDescriptorTable(0, gpuHandle);
+    commandList->SetGraphicsRootDescriptorTable(0, sceneBuffer_->GetGpuHandle());
 
     commandList->DrawInstanced(4, 1, 0, 0);
 }

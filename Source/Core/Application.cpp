@@ -20,7 +20,6 @@ Application::Application(HWND hwnd)
     input_(hwnd),
     graphics_(hwnd, 2)
 {
-    frameBuffer_ = std::make_unique<FrameBuffer>();
     postProcess_ = std::make_unique<PostProcess>();
 }
 
@@ -67,12 +66,12 @@ void Application::Render()
 {
     ID3D12GraphicsCommandList* commandList = Graphics::Instance().Begin();
     
-    frameBuffer_->Activate(commandList);
-    SceneManager::Instance().Render(commandList);
-    frameBuffer_->Deactivate(commandList);
+    postProcess_->ActivateSceneBuffer(commandList);     // Scene‚Ì‘‚«ž‚Ýæ‚ðŽw’è
+    SceneManager::Instance().Render(commandList);       // Scene‚Ì•`‰æ
+    postProcess_->DeactivateSceneBuffer(commandList);   // Œãˆ—‚È‚Ç
     
     Graphics::Instance().SetRenderTarget();
-    postProcess_->Draw(commandList, frameBuffer_->GetGpuHandle());
+    postProcess_->Draw(commandList);
     SceneManager::Instance().UIRender(commandList);
 
     Graphics::Instance().GetImGuiRenderer()->Render(commandList);

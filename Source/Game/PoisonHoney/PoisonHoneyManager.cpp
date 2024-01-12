@@ -29,6 +29,37 @@ void PoisonHoneyManager::Update(const float& elapsedTime)
         poisonHoney->Update(elapsedTime);
     }
 
+    float minPosX = -100.0f;
+    float maxPosX = 100.0f;
+    float minPosZ = -100.0f;
+    float maxPosZ = 16.0f;
+
+    for (PoisonHoney*& poisonHoney : poisonHoneies_)
+    {
+        // 範囲外判定
+        if (poisonHoney->GetTransform()->GetPositionX() < minPosX ||
+            poisonHoney->GetTransform()->GetPositionZ() > maxPosX ||
+            poisonHoney->GetTransform()->GetPositionZ() < minPosZ ||
+            poisonHoney->GetTransform()->GetPositionZ() > maxPosZ)
+        {
+            poisonHoney->SetIsRemove(true);
+            poisonHoney->SetIsRender(false);
+        }
+
+        // 消去登録されたやつをカウントする
+        if (poisonHoney->GetIsRemove())
+        {
+            if (poisonHoney->GetRemoveCount() <= Graphics::Instance().GetBufferCount() + 1)
+            {
+                poisonHoney->AddRemoveCount();
+            }
+            else
+            {
+                Remove(poisonHoney);
+            }
+        }
+    }    
+
     // 開放
     for (PoisonHoney* poisonHoney : removes_)
     {
@@ -38,6 +69,7 @@ void PoisonHoneyManager::Update(const float& elapsedTime)
         {
             poisonHoneies_.erase(it);
         }
+        SafeDeletePtr(poisonHoney);
     }
     removes_.clear();
 }

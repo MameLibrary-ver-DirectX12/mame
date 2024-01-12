@@ -111,6 +111,10 @@ void TitleScene::UIRender(ID3D12GraphicsCommandList* commandList)
 {
 }
 
+void TitleScene::ShadowRender(ID3D12GraphicsCommandList* commandList)
+{
+}
+
 // ----- ImGui—p -----
 void TitleScene::DrawDebug()
 {

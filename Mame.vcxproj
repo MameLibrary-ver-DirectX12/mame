@@ -161,6 +161,7 @@
     <ClCompile Include="Source\Game\Character\Character.cpp" />
     <ClCompile Include="Source\Game\Character\Enemy.cpp" />
     <ClCompile Include="Source\Game\Character\EnemyManager.cpp" />
+    <ClCompile Include="Source\Game\Character\EnemyState.cpp" />
     <ClCompile Include="Source\Game\Character\Flower.cpp" />
     <ClCompile Include="Source\Game\Character\FlowerBleu.cpp" />
     <ClCompile Include="Source\Game\Character\FlowerManager.cpp" />
@@ -196,6 +197,7 @@
     <ClCompile Include="Source\Graphics\PipelineState.cpp" />
     <ClCompile Include="Source\Graphics\PostProcess.cpp" />
     <ClCompile Include="Source\Graphics\Shader.cpp" />
+    <ClCompile Include="Source\Graphics\Shadow.cpp" />
     <ClCompile Include="Source\Graphics\SkyMap.cpp" />
     <ClCompile Include="Source\Graphics\VertexBuffer.cpp" />
     <ClCompile Include="Source\Input\GamePad.cpp" />
@@ -247,6 +249,7 @@
     <ClInclude Include="Source\Game\Character\Character.h" />
     <ClInclude Include="Source\Game\Character\Enemy.h" />
     <ClInclude Include="Source\Game\Character\EnemyManager.h" />
+    <ClInclude Include="Source\Game\Character\EnemyState.h" />
     <ClInclude Include="Source\Game\Character\Flower.h" />
     <ClInclude Include="Source\Game\Character\FlowerBleu.h" />
     <ClInclude Include="Source\Game\Character\FlowerManager.h" />
@@ -282,6 +285,7 @@
     <ClInclude Include="Source\Graphics\PipelineState.h" />
     <ClInclude Include="Source\Graphics\PostProcess.h" />
     <ClInclude Include="Source\Graphics\Shader.h" />
+    <ClInclude Include="Source\Graphics\Shadow.h" />
     <ClInclude Include="Source\Graphics\SkyMap.h" />
     <ClInclude Include="Source\Graphics\VertexBuffer.h" />
     <ClInclude Include="Source\Graphics\ImGuiJaGryphRanges.h" />

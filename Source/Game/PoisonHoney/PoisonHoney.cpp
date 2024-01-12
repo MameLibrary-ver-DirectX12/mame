@@ -1,4 +1,5 @@
 #include "PoisonHoney.h"
+#include "PoisonHoneyManager.h"
 
 int PoisonHoney::nameNum_ = 0;
 

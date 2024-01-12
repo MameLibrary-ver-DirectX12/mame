@@ -24,6 +24,7 @@ void BoxManExEnemy::Finalize()
 
 void BoxManExEnemy::Update(const float& elapsedTime)
 {
+    Enemy::Update(elapsedTime);
 }
 
 void BoxManExEnemy::Render(ID3D12GraphicsCommandList* commandList, const DirectX::XMMATRIX& world)

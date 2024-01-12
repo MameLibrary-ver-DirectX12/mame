@@ -16,6 +16,7 @@ TurtleEnemy::~TurtleEnemy()
 
 void TurtleEnemy::Initialize()
 {
+    SetMoveTime(2.0f); // ˆÚ“®ŠÔ‚ğİ’è
 }
 
 void TurtleEnemy::Finalize()
@@ -24,6 +25,7 @@ void TurtleEnemy::Finalize()
 
 void TurtleEnemy::Update(const float& elapsedTime)
 {
+    Enemy::Update(elapsedTime);
 }
 
 void TurtleEnemy::Render(ID3D12GraphicsCommandList* commandList, const DirectX::XMMATRIX& world)

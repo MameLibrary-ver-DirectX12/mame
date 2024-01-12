@@ -22,8 +22,10 @@ void BearEnemy::Finalize()
 {
 }
 
+// --- çXêV ---
 void BearEnemy::Update(const float& elapsedTime)
 {
+    Enemy::Update(elapsedTime);
 }
 
 void BearEnemy::Render(ID3D12GraphicsCommandList* commandList, const DirectX::XMMATRIX& world)

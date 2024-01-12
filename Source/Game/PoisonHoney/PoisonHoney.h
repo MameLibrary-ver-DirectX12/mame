@@ -62,6 +62,12 @@ public:// --- 取得・設定 ---
     float GetRadius() { return radius_; }
     void SetRadius(const float& radius) { radius_ = radius; }
 
+    bool GetIsRemove() { return isRemove_; }
+    void SetIsRemove(const bool& remove) { isRemove_ = remove; }
+    int GetRemoveCount() { return removeCount_; }
+    void SetRemoveCount(const int& count) { removeCount_ = count; }
+    void AddRemoveCount() { ++removeCount_; }
+
     // --- ImGui用 ---
     const char* const GetName() const { return model_->GetName(); }
     void SetName(const std::string& name) { model_->SetName(name + std::to_string(nameNum_++)); }
@@ -86,5 +92,8 @@ private:
     DirectX::XMFLOAT3   direction_  = {};   // 進行方向
 
     float               radius_     = 0.0f; // 判定用半径
+
+    bool                isRemove_       = false;    // 消去する
+    int                 removeCount_    = 0;        // 待つフレームをカウントする
 };
 

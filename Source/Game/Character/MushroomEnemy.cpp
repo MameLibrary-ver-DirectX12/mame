@@ -24,6 +24,7 @@ void MushroomEnemy::Finalize()
 
 void MushroomEnemy::Update(const float& elapsedTime)
 {
+    Enemy::Update(elapsedTime);
 }
 
 void MushroomEnemy::Render(ID3D12GraphicsCommandList* commandList, const DirectX::XMMATRIX& world)

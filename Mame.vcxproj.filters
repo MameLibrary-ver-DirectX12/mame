@@ -139,6 +139,9 @@
     <Filter Include="Mame\Shader\PostProcess">
       <UniqueIdentifier>{067a328f-6f91-4221-83b6-05a45b75a908}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Mame\Graphics\PostProcess">
+      <UniqueIdentifier>{15042df1-3c26-453c-a02b-f4b45d674098}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Core\Main.cpp">
@@ -364,7 +367,13 @@
       <Filter>Mame\Game\Character\Enemy</Filter>
     </ClCompile>
     <ClCompile Include="Source\Graphics\PostProcess.cpp">
-      <Filter>Mame\Graphics</Filter>
+      <Filter>Mame\Graphics\PostProcess</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Graphics\Shadow.cpp">
+      <Filter>Mame\Graphics\PostProcess</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Character\EnemyState.cpp">
+      <Filter>Mame\Game\Character\Enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -632,7 +641,13 @@
       <Filter>Mame\Game\Character\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="Source\Graphics\PostProcess.h">
-      <Filter>Mame\Graphics</Filter>
+      <Filter>Mame\Graphics\PostProcess</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Graphics\Shadow.h">
+      <Filter>Mame\Graphics\PostProcess</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Character\EnemyState.h">
+      <Filter>Mame\Game\Character\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -78,16 +78,5 @@ void PoisonHoneyNormal::DrawDebug()
 // --- ‰æ–ÊŠO‚Éo‚½’e‚ðÁ‚· ---
 void PoisonHoneyNormal::Remove()
 {
-    float minPosX = -100.0f;
-    float maxPosX =  100.0f;
-    float minPosZ = -100.0f;
-    float maxPosZ =  16.0f;
 
-    if (GetTransform()->GetPositionX() < minPosX ||
-        GetTransform()->GetPositionZ() > maxPosX ||
-        GetTransform()->GetPositionZ() < minPosZ || 
-        GetTransform()->GetPositionZ() > maxPosZ)
-    {
-        PoisonHoneyManager::Instance().Remove(this);
-    }
 }

@@ -15,9 +15,10 @@ public:
         return instance;
     }
 
-    void Update(const float& elapsedTime);                  // 更新
-    void Render(ID3D12GraphicsCommandList* commandList);    // 描画
-    void UIRender(ID3D12GraphicsCommandList* commnadList);
+    void Update(const float& elapsedTime);                      // 更新
+    void Render(ID3D12GraphicsCommandList* commandList);        // 描画
+    void UIRender(ID3D12GraphicsCommandList* commnadList);      // UI描画
+    void ShadowRender(ID3D12GraphicsCommandList* commandList);  // 影抽出
 
     
     void Clear();                                           // シーンクリア
