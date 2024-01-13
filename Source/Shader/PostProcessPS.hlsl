@@ -8,12 +8,14 @@ float4 main(PSIn psIn) : SV_TARGET
     
     // ビネット
     {
+#if 0
         float2 samplePoint = psIn.texcoord;
         float vignette = length(float2(0.5, 0.5) - psIn.texcoord);
         //vignette = clamp(vignette - vignetteValue, 0, 1);
-        vignette = clamp(vignette - 0.2, 0, 1);
+        vignette = clamp(vignette - 0.7, 0, 1);
         color.rgb -= vignette;
         //color.r += vignette;
+#endif
     }
     
 #if 0 // ぼかし処理

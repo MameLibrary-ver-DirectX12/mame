@@ -37,5 +37,7 @@ private:
 
     std::unique_ptr<FrameBuffer> frameBuffer_;
 
+    DirectX::XMFLOAT3 createPos_ = {};
+
 };
 

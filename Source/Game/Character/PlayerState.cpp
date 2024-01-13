@@ -1,5 +1,6 @@
 #include "PlayerState.h"
 #include "../../Input/Input.h"
+#include "EnemyState.h"
 
 // ----- IdleState -----
 namespace PlayerState
@@ -118,9 +119,11 @@ namespace PlayerState
 
             float speed = 10.0f * elapsedTime;
 
+            // ¬‚³‚·‚¬‚é‰ñ“]‚Í‚µ‚È‚¢B’l‚ª”ò‚ñ‚Å‚µ‚Ü‚¤‚Ì‚Å
+            if (acosf(dot) < DirectX::XMConvertToRadians(3)) return;
+
             float rotY = (cross > 0.0f) ? acosf(dot) * speed : -acosf(dot) * speed;
-            owner_->GetTransform()->SetRotationY(rotY + owner_->GetTransform()->GetRotationY());
-            //owner_->GetTransform()->SetRotationY(rotY + owner_->GetTransform()->GetRotationY());
+            owner_->GetTransform()->AddRotationY(rotY);
         }
     }
 

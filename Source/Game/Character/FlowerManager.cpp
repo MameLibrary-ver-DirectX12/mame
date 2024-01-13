@@ -150,11 +150,14 @@ Flower* FlowerManager::GetMostNearFlower(const DirectX::XMFLOAT3& pos)
 {
     DirectX::XMFLOAT3 position = pos;
     float mostNearLength = FLT_MAX;
-    int mostNearFlowerIndex = 0;
+    int mostNearFlowerIndex = -1;
     int num = -1;
     for (Flower*& flower : flowers_)
     {
         ++num;
+
+        // ‚à‚¤Šù‚ÉƒyƒA‚ª‚¢‚é
+        if (flower->GetIsEenmyPaired()) continue;
 
         DirectX::XMFLOAT3 flowerPos = flower->GetTransform()->GetPosition();
         flowerPos.y = 0;
@@ -168,6 +171,8 @@ Flower* FlowerManager::GetMostNearFlower(const DirectX::XMFLOAT3& pos)
             mostNearFlowerIndex = num;
         }
     }
+
+    if (mostNearFlowerIndex < 0) return nullptr;
 
     return flowers_.at(mostNearFlowerIndex);
 }

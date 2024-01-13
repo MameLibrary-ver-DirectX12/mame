@@ -20,6 +20,8 @@
 
 #include "../Game/Character/EnemyManager.h"
 
+#include "../Game/Character/BeeEnemy.h"
+
 #define FRAME_BUFFER 1
 
 // ----- コンストラクタ -----
@@ -212,6 +214,14 @@ void GameScene::DrawDebug()
 
     chickenCutIn_->DrawDebug();
     if (ImGui::Button("initialize")) chickenCutIn_->GetStateMachine()->ChangeState(0);
+
+    ImGui::DragFloat3("CreatePos", &createPos_.x);
+    if (ImGui::Button("E_Bee"))
+    {
+        BeeEnemy* bee = new BeeEnemy;
+        bee->Initialize();
+        bee->GetTransform()->SetPosition(createPos_);
+    }
 
     if (ImGui::Button("flower"))
     {
