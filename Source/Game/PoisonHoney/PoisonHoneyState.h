@@ -16,6 +16,9 @@ namespace PoisonHoneyState
 
     private:
         float timer_ = 0.0f;
+
+        float speed_ = 0.0f;
+        float maxSpeed_ = 4.0f;
     };
 
     class IdleState : public State<PoisonHoney>

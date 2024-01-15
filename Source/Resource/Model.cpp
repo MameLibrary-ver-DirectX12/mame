@@ -351,7 +351,17 @@ bool Model::UpdateBlendAnimation(const float& elapsedTime)
 
     // --- ブレンド率を更新 ---
     blendRate_ = 1.0f;
-    UpdateBlendRate(blendRate_, elapsedTime);
+    //UpdateBlendRate(blendRate_, elapsedTime);
+    if (animationBlendTime_ < animationBlendSeconds_)
+    {
+        animationBlendTime_ += elapsedTime;
+        if (animationBlendTime_ >= animationBlendSeconds_)
+        {
+            animationBlendTime_ = animationBlendSeconds_;
+        }
+        blendRate_ = animationBlendTime_ / animationBlendSeconds_;
+        blendRate_ *= blendRate_;
+    }
 
     // --- キーフレーム取得 ---
     const std::vector<ModelResource::Animation::Keyframe>& keyframes1 = bAnimation1.sequence_;

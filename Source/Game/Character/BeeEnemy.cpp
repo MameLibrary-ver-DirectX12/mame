@@ -28,6 +28,7 @@ void BeeEnemy::Initialize()
     GetStateMachine()->RegisterState(new EnemyState::MoveState(this));
     GetStateMachine()->RegisterState(new EnemyState::CollectState(this));
     GetStateMachine()->RegisterState(new EnemyState::CarryState(this));
+    GetStateMachine()->RegisterState(new EnemyState::ChargeState(this));
 
     GetStateMachine()->SetState(1);
 
@@ -48,8 +49,6 @@ void BeeEnemy::Finalize()
 void BeeEnemy::Update(const float& elapsedTime)
 {
     Enemy::Update(elapsedTime);
-
-    Character::UpdateAnimation(elapsedTime);
 }
 
 // --- •`‰æ ---

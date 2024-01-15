@@ -124,7 +124,7 @@ namespace BeeState
     void MoveToStoragePlaceState::Initialize()
     {
         // 置きに行く場所を設定
-        targetPos = {};
+        targetPos = { 10, 0, -4 };
     }
 
     // --- 更新 ---
@@ -150,6 +150,7 @@ namespace BeeState
 
             PoisonHoneyNormal* poison = new PoisonHoneyNormal;
             poison->Initialize();
+            poison->GetTransform()->SetPosition(owner_->GetTransform()->GetPosition());
 
             return;
         }

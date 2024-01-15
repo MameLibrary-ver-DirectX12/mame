@@ -14,6 +14,13 @@ void Enemy::Update(const float& elapsedTime)
 {
     // ステートマシン更新
     GetStateMachine()->Update(elapsedTime);
+
+    // アニメーション更新
+    Character::UpdateAnimation(elapsedTime);
+
+    // 回転角度制御
+    if (GetTransform()->GetRotationY() > DirectX::XMConvertToRadians(360)) GetTransform()->AddRotationY(-DirectX::XMConvertToRadians(360));
+    if (GetTransform()->GetRotationY() < DirectX::XMConvertToRadians(0))   GetTransform()->AddRotationY( DirectX::XMConvertToRadians(360));
 }
 
 // --- 描画 ---

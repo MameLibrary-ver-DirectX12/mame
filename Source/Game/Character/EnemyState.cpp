@@ -1,7 +1,11 @@
 #include "EnemyState.h"
+#include "../../Other/Easing.h"
+
 #include "EnemyManager.h"
 #include "FlowerManager.h"
 #include "BeeManager.h"
+
+#include "BeeEnemy.h"
 
 // ----- IdleState -----
 namespace EnemyState
@@ -224,6 +228,7 @@ namespace EnemyState
     void CollectState::Initialize()
     {
         // アニメーション設定
+        //owner_->PlayBlendAnimation(1, 0, true);
         owner_->PlayAnimation(0, true);
 
         // 採取にかかる時間を設定
@@ -242,6 +247,18 @@ namespace EnemyState
         {
             // 次のステートへ 4: 帰る
             owner_->GetStateMachine()->ChangeState(4);
+
+            // ペアの解除をする
+            if (owner_->GetSearchType() == static_cast<int>(Enemy::SearchType::Flower))
+            {
+                FlowerManager::Instance().GetFlower(owner_->GetPairIndex())->SetIsEnemyPaired(false);
+            }
+            else if (owner_->GetSearchType() == static_cast<int>(Enemy::SearchType::Bee))
+            {
+                //BeeManager::Instance().GetBee(owner_->GetPairIndex())
+            }            
+
+            return;
         }
 
     }
@@ -261,14 +278,18 @@ namespace EnemyState
     {
         // アニメーション設定
         owner_->PlayAnimation(1, true);
+        //owner_->PlayBlendAnimation(0, 1, true);
 
         // 戻る位置を設定 ( 敵陣 ) 
-        owner_->SetTargetPos({ 0, 0, -86.0f });
+        owner_->SetTargetPos({ 0, 0, -90.0f });
     }
 
     // --- 更新 ---
     void CarryState::Update(const float& elapsedTime)
     {
+        // 場所についたか判定
+        if (Judge()) return;
+
         // 移動
         Move(elapsedTime);
 
@@ -279,6 +300,22 @@ namespace EnemyState
     // --- 終了化 ---
     void CarryState::Finalize()
     {
+    }
+
+    // --- 場所についたか判定 ---
+    bool CarryState::Judge()
+    {
+        DirectX::XMFLOAT3 ownerPos = owner_->GetTransform()->GetPosition();
+        DirectX::XMFLOAT3 targetPos = owner_->GetTargetPos();
+        float length = DirectX::XMVectorGetX(DirectX::XMVector3Length(DirectX::XMVectorSubtract(DirectX::XMLoadFloat3(&targetPos), DirectX::XMLoadFloat3(&ownerPos))));
+
+        if (owner_->GetRadius() > length)
+        {
+            owner_->GetStateMachine()->SetState(5);
+            return true;
+        }
+
+        return false;
     }
 
     // --- 移動 ---
@@ -317,5 +354,85 @@ namespace EnemyState
         float cross = (direction.x * ownerFront.z) - (direction.z * ownerFront.x);
         float rotY = (cross > 0.0f) ? acosf(dot) * speed : -acosf(dot) * speed;
         owner_->GetTransform()->AddRotationY(rotY);
+    }
+}
+
+// ----- ChargeState -----
+namespace EnemyState
+{
+    // --- 初期化 ---
+    void ChargeState::Initialize()
+    {
+        SetTimer(2.0f);
+
+        oldRot_ = owner_->GetTransform()->GetRotationY();
+
+        easingTimer_ = 0.0f;
+    }
+
+    // --- 更新 ---
+    void ChargeState::Update(const float& elapsedTime)
+    {
+        SubtractTime(elapsedTime);
+
+        if (easingTimer_ <= 1.5f)
+        {
+            float rotY = Easing::InSine(easingTimer_, 1.5f, 0.0f, oldRot_);
+            owner_->GetTransform()->SetRotationY(rotY);
+            easingTimer_ += elapsedTime;
+        }
+
+        if (GetTimer() <= 0.0f)
+        {
+            owner_->GetStateMachine()->ChangeState(1);
+
+            EnemyManager::Instance().AddSpawnGauge();
+
+            return;
+        }
+    }
+
+    // --- 終了化 ---
+    void ChargeState::Finalize()
+    {
+    }
+}
+
+// ----- CreateEnemyState -----
+namespace EnemyState
+{
+    // --- 初期化 ---
+    void CreateEnemyState::Initialize()
+    {
+        owner_->PlayAnimation(0, true);
+
+        // 生成までの時間を設定
+        SetTimer(3.0f);
+
+    }
+
+    // --- 更新 ---
+    void CreateEnemyState::Update(const float& elapsedTime)
+    {
+        SubtractTime(elapsedTime);
+
+        if (GetTimer() <= 0.0f)
+        {
+            DirectX::XMFLOAT3 createPos = owner_->GetTransform()->GetPosition();
+            DirectX::XMFLOAT3 ownerFront = owner_->GetTransform()->CalcForward();
+            DirectX::XMStoreFloat3(&createPos, DirectX::XMVectorAdd(DirectX::XMVectorScale(DirectX::XMLoadFloat3(&ownerFront), 2.0f), DirectX::XMLoadFloat3(&createPos)));
+
+            BeeEnemy* bee = new BeeEnemy;
+            bee->Initialize();
+            bee->GetTransform()->SetPosition(createPos);
+
+            owner_->GetStateMachine()->ChangeState(1);
+            return;
+        }
+    }
+
+    // --- 終了化 ---
+    void CreateEnemyState::Finalize()
+    {
     }
 }

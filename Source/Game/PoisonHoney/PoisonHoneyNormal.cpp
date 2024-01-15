@@ -41,6 +41,8 @@ void PoisonHoneyNormal::Initialize()
 
     // ”»’è—p”¼Œaİ’è
     PoisonHoney::SetRadius(2.0f);
+
+    SetColor(1, 0, 1, 1);
 }
 
 // --- I—¹‰» ---

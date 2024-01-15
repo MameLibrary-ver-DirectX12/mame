@@ -9,8 +9,8 @@
 // 2  : MoveState
 // 3~ : 各自 別ステート
 #pragma region ステート管理表
-// - TYPE - : 0    : 1      : 2    : 3       : 4
-// Bee      : Idle : Search : Move : Collect : 
+// - TYPE - : 0    : 1      : 2    : 3       : 4     : 5      :
+// Bee      : Idle : Search : Move : Collect : Carry : Charge :
 // Tutle    : Idle : Search : Move :         :
 // Taiyaki  : Idle : Search : Move :         :
 // Mushroom : Idle : Search : Move :         :
@@ -82,7 +82,35 @@ namespace EnemyState
         void Finalize()                         override;
 
     private:
+        bool Judge();
         void Move(const float& elapsedTime);
         void Turn(const float& elapsedTime);
     };
+
+    class ChargeState : public State<Enemy>
+    {
+    public:
+        ChargeState(Enemy* enemy) : State(enemy, "CarryState") {}
+        ~ChargeState() {}
+
+        void Initialize()                       override;
+        void Update(const float& elapsedTime)   override;
+        void Finalize()                         override;
+
+    private:
+        float easingTimer_ = 0.0f;
+        float oldRot_ = 0;
+    };
+
+    class CreateEnemyState : public State<Enemy>
+    {
+    public:
+        CreateEnemyState(Enemy* enemy) : State(enemy, "CarryState") {}
+        ~CreateEnemyState() {}
+
+        void Initialize()                       override;
+        void Update(const float& elapsedTime)   override;
+        void Finalize()                         override;
+    };
+    
 }

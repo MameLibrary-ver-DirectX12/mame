@@ -21,6 +21,7 @@
 #include "../Game/Character/EnemyManager.h"
 
 #include "../Game/Character/BeeEnemy.h"
+#include "../Game/Character/TurtleEnemy.h"
 
 #define FRAME_BUFFER 1
 
@@ -221,6 +222,12 @@ void GameScene::DrawDebug()
         BeeEnemy* bee = new BeeEnemy;
         bee->Initialize();
         bee->GetTransform()->SetPosition(createPos_);
+    }
+    if (ImGui::Button("E_TurtleEnemy"))
+    {
+        TurtleEnemy* turtleEnemy = new TurtleEnemy;
+        turtleEnemy->Initialize();
+        turtleEnemy->GetTransform()->SetPosition(createPos_);
     }
 
     if (ImGui::Button("flower"))

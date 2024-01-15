@@ -8,6 +8,9 @@ void EnemyManager::Initialize()
     {
         enemy->Initialize();
     }
+
+    SetSpawnGauge(0);
+    SetMaxSpawnGauge(3);
 }
 
 // --- 終了化 ---
@@ -23,6 +26,13 @@ void EnemyManager::Finalize()
 // --- 更新 ---
 void EnemyManager::Update(const float& elapsedTIme)
 {
+    // 生成
+    for (Enemy* enemy : generates_)
+    {
+        enemies_.emplace_back(enemy);
+    }
+    generates_.clear();
+
     for (Enemy*& enemy : enemies_)
     {
         // 更新
@@ -80,7 +90,7 @@ void EnemyManager::DrawDebug()
 // --- 登録 ---
 void EnemyManager::Register(Enemy* enemy)
 {
-    enemies_.emplace_back(enemy);
+    generates_.insert(enemy);
 }
 
 // --- 全削除 ---

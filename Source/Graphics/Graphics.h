@@ -11,7 +11,7 @@
 #include "Shader.h"
 
 // ‚’¼“¯ŠúŠÔŠuİ’è
-static const int SyncInterval = 0;
+static const int SyncInterval = 1;
 
 class Graphics
 {
