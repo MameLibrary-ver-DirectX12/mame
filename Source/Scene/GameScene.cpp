@@ -71,6 +71,24 @@ void GameScene::Initialize()
 
     stage_->SetColor({ 0.8f,1.0f,1.0f,1.0f });
     stage_->GetTransform()->SetScaleFactor(10.0f);
+
+    DirectX::XMFLOAT3 createPos[5] =
+    {
+        { 0, 1, -25 },
+        { -30, 1, -25 },
+        { 30, 1, -25 },
+        { 15, 1, -50 },
+        { -15, 1,-50 },
+    };
+
+    for (int i = 0; i < 5; ++i)
+    {
+        FlowerBleu* flowerBleu = new FlowerBleu;
+        flowerBleu->Initialize();
+        flowerBleu->GetTransform()->SetPosition(createPos[i]);
+    }
+
+
 }
 
 // ----- èIóπâª -----

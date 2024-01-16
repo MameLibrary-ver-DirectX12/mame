@@ -86,9 +86,14 @@ void PoisonHoneyManager::Render(ID3D12GraphicsCommandList* commandList)
 // --- ImGui—p ---
 void PoisonHoneyManager::DrawDebug()
 {
-    for (PoisonHoney*& poisonHoney : poisonHoneies_)
+    if (ImGui::TreeNode("PoisonHoney"))
     {
-        poisonHoney->DrawDebug();
+        for (PoisonHoney*& poisonHoney : poisonHoneies_)
+        {
+            poisonHoney->DrawDebug();
+        }
+
+        ImGui::TreePop();
     }
 }
 

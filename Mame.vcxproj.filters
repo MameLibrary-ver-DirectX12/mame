@@ -375,6 +375,7 @@
     <ClCompile Include="Source\Game\Character\EnemyState.cpp">
       <Filter>Mame\Game\Character\Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Graphics\Bloom.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Source\Shader\Sprite.hlsli">
@@ -649,6 +650,7 @@
     <ClInclude Include="Source\Game\Character\EnemyState.h">
       <Filter>Mame\Game\Character\Enemy</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Graphics\Bloom.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Source\Shader\SpritePS.hlsl">

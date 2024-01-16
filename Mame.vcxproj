@@ -185,6 +185,7 @@
     <ClCompile Include="Source\Game\Stage\StageNormal.cpp" />
     <ClCompile Include="Source\Game\UI\UI.cpp" />
     <ClCompile Include="Source\Game\Wave\WaveManager.cpp" />
+    <ClCompile Include="Source\Graphics\Bloom.cpp" />
     <ClCompile Include="Source\Graphics\Camera.cpp" />
     <ClCompile Include="Source\Graphics\ConstantBuffer.cpp" />
     <ClCompile Include="Source\Graphics\Descriptor.cpp" />
@@ -273,6 +274,7 @@
     <ClInclude Include="Source\Game\Stage\StageNormal.h" />
     <ClInclude Include="Source\Game\UI\UI.h" />
     <ClInclude Include="Source\Game\Wave\WaveManager.h" />
+    <ClInclude Include="Source\Graphics\Bloom.h" />
     <ClInclude Include="Source\Graphics\Camera.h" />
     <ClInclude Include="Source\Graphics\ConstantBuffer.h" />
     <ClInclude Include="Source\Graphics\Descriptor.h" />

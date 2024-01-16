@@ -6,6 +6,7 @@ float4 main(PSIn psIn) : SV_TARGET
 {   
     float4 color = textureMap.Sample(samplerState, psIn.texcoord);
     
+
     // ビネット
     {
 #if 0
@@ -17,6 +18,11 @@ float4 main(PSIn psIn) : SV_TARGET
         //color.r += vignette;
 #endif
     }
+
+#if 1 // モノクロ
+    float Y = 0.299f * color.r + 0.587f * color.g + 0.114f * color.b;
+    color.rgb = Y;
+#endif // モノクロ
     
 #if 0 // ぼかし処理
     float w, h, levels;
